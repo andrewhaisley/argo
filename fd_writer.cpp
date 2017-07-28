@@ -19,3 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file fd_writer.cpp The fd_writer class implementation.
+
+#include <unistd.h>
+#include <errno.h>
+
+#include "common.hpp"
+#include "fd_writer.hpp"
+#include "json_io_exception.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+fd_writer::fd_writer(int fd) : writer(), m_fd(fd)
+{
+}
+
+void fd_writer::write(const string &s)
+{
+    if (::write(m_fd, s.c_str(), s.size()) == -1)
+    {
+        throw json_io_exception(json_io_exception::write_fd_failed_e, errno);
+    }
+}

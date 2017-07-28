@@ -19,3 +19,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file stream_reader.cpp The stream_reader class implementation.
+
+#include "common.hpp"
+#include "stream_reader.hpp"
+#include "json_io_exception.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+
+stream_reader::stream_reader(istream *s, int max_message_length, bool block_read) : 
+                                reader(max_message_length, block_read), 
+                                m_stream(s)
+{
+}
+
+int stream_reader::read_next_char()
+{
+    return m_stream->get();
+}
+
+bool stream_reader::read_next_block()
+{
+    m_stream->read(reinterpret_cast<char *>(m_block), block_size);
+
+    streamsize n = m_stream->gcount();
+
+    if (n > 0)
+    {
+        m_block_num_bytes = static_cast<int>(n);
+        m_block_index = 0;
+        return true;
+    }
+    else
+    {
+        if (m_stream->eof())
+        {
+            return false;
+        }
+        else
+        {
+            throw json_io_exception(json_io_exception::read_failed_e, errno);
+        }
+    }
+}

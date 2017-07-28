@@ -1,0 +1,10 @@
+json1.json valid
+json2.json valid
+json3.json invalid
+json4.json invalid
+json5.json invalid
+json6.json invalid
+json7.json invalid
+json8.json invalid
+json9.json valid
+json10.json invalid

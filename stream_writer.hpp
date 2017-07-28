@@ -1,3 +1,6 @@
+#ifndef _json_stream_writer_hpp_
+#define _json_stream_writer_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file stream_writer.hpp The stream_writer class.
+
+#include <ostream>
+
+#include "common.hpp"
+#include "writer.hpp"
+
+namespace NAMESPACE
+{
+    /// A class to write JSON messages to a C++ istream.
+    class stream_writer : public writer
+    {
+    public:
+
+        /**
+         * Constructor. Does not take over owenership of the stream,
+         * the caller is required to close it and deallocate (if needed)
+         * when done.
+         */
+        stream_writer(std::ostream *s);
+
+        /**
+         * Write a string to the stream.
+         */
+        virtual void write(const std::string &s);
+
+    private:
+
+        std::ostream *m_stream;
+
+    };
+
+}
+
+#endif

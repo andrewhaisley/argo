@@ -1,3 +1,6 @@
+#ifndef _json_file_writer_hpp_
+#define _json_file_writer_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file file_writer.hpp The file_writer class.
+
+#include <stdio.h>
+
+#include "common.hpp"
+#include "writer.hpp"
+
+namespace NAMESPACE
+{
+    /// A derived class of writer that writes to stdio FILEs.
+    class file_writer : public writer
+    {
+    public:
+
+        /// Constructor.
+        file_writer(FILE *f);
+
+        /**
+         * Writes a character to the file using fwrite()
+         * \throw json_io_exception Thrown if fwrite fails in some way.
+         */
+        virtual void write(const std::string &s);
+
+    private:
+
+        /// File to write to
+        FILE *m_file;
+
+    };
+}
+
+#endif

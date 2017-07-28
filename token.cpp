@@ -19,3 +19,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file token.cpp The token class implementation.
+
+#include "common.hpp"
+#include "token.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+token::token() noexcept : m_type(null_e)
+{
+}
+
+token::token(const token &other)
+{
+    *this = other;
+}
+
+token::token(token &&other)
+{
+    *this = other;
+}
+
+token &token::operator=(const token &other)
+{
+    if (this != &other)
+    {
+        m_type = other.m_type;
+        m_raw_value = other.m_raw_value;
+    }
+    return *this;
+}
+
+token &token::operator=(token &&other)
+{
+    if (this != &other)
+    {
+        m_type = other.m_type;
+        other.m_type = null_e;
+        m_raw_value = move(other.m_raw_value);
+    }
+    return *this;
+}
+
+token::token(token_type t) : m_type(t)
+{
+}
+
+token::token(token_type t, const char *raw_value, size_t len) : m_raw_value(raw_value, len), m_type(t)
+{
+}
+
+token::~token()
+{
+}
+
+const string &token::get_raw_value() const
+{
+    return m_raw_value;
+}
+
+token::token_type token::get_type() const
+{
+    return m_type;
+}

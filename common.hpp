@@ -1,3 +1,6 @@
+#ifndef _json_common_hpp_
+#define _json_common_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file common.hpp Common defs needed everywhere and, as far as is possible, platform specific changes.
+
+/// You can change the namespace of the whole library by changing this value.
+#define NAMESPACE argonaut
+
+#ifdef _MSC_VER
+#define strerror_r(e, b, l) strerror_s(b, l, e)
+#define _JSON_WINDOWS_
+#endif
+
+#endif

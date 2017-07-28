@@ -1,3 +1,6 @@
+#ifndef _json_invalid_key_exception_hpp_
+#define _json_invalid_key_exception_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file json_invalid_key_exception.hpp The json_invalid_key_exception class.
+
+#include "json_exception.hpp"
+
+namespace NAMESPACE
+{
+    /// Specific class of exceptions for an invalid object key.
+    class json_invalid_key_exception : public json_exception
+    {
+    public:
+
+        /// Constructor for string key error.
+        json_invalid_key_exception(exception_type et, const std::string &key) noexcept;
+
+    };
+}
+
+#endif

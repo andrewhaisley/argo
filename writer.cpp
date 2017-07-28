@@ -19,3 +19,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file writer.cpp The writer class implementation.
+
+#include <sstream>
+#include <iomanip>
+
+#include "common.hpp"
+#include "writer.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+writer::writer()
+{
+}
+
+writer &NAMESPACE::operator<<(writer& w, const std::string &s)
+{
+    w.write(s);
+    return w;
+}
+
+writer &NAMESPACE::operator<<(writer& w, char c)
+{
+    char s[2];
+    s[0] = c;
+    s[1] = '\0';
+    w.write(s);
+    return w;
+}
+
+writer &NAMESPACE::operator<<(writer& w, int i)
+{
+    ostringstream ss;
+    ss << i;
+    w.write(ss.str());
+    return w;
+}
+
+writer &NAMESPACE::operator<<(writer& w, double d)
+{
+    ostringstream ss;
+    ss << setprecision(17) << fixed << d;
+    w.write(ss.str());
+    return w;
+}

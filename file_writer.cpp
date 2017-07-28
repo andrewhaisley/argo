@@ -19,3 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file file_writer.cpp The file_writer class implementation.
+
+#include <errno.h>
+
+#include "common.hpp"
+#include "file_writer.hpp"
+#include "json_io_exception.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+file_writer::file_writer(FILE *f) : writer(), m_file(f)
+{
+}
+
+void file_writer::write(const string &s)
+{
+    if (fwrite(s.c_str(), s.size(), 1, m_file) != 1)
+    {
+        throw json_io_exception(json_io_exception::write_file_failed_e, errno);
+    }
+}

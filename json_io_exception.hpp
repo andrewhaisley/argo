@@ -1,3 +1,6 @@
+#ifndef _json_io_exception_hpp_
+#define _json_io_exception_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file json_io_exception.hpp The json_io_exception class.
+
+#include "json_exception.hpp"
+
+namespace NAMESPACE
+{
+    /// Specific class of exceptions for IO errors of various types.
+    class json_io_exception : public json_exception
+    {
+    public:
+
+        /// Constructor for generic error.
+        json_io_exception(exception_type et) noexcept;
+
+        /// Constructor with a POSIX errno.
+        json_io_exception(exception_type et, int posix_errno) noexcept;
+
+        /// Constructor with a size_t
+        json_io_exception(exception_type et, size_t s) noexcept;
+
+    private:
+
+        /// Get the main part of the message based on the exception type
+        const char *get_main_message();
+
+    };
+}
+
+#endif

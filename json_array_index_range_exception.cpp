@@ -19,3 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file json_array_index_range_exception.cpp The json_array_index_range_exception class implementation.
+
+#include <string.h>
+
+#include "common.hpp"
+#include "json_array_index_range_exception.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+json_array_index_range_exception::json_array_index_range_exception(exception_type et, size_t i) noexcept : json_exception(et)
+{
+    if (et == array_index_range_e)
+    {
+        snprintf(m_message, max_message_length, "invalid array index: %lu", i);
+    }
+    else
+    {
+        strncpy(m_message, "generic", max_message_length);
+    }
+}

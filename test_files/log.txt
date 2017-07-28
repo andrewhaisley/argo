@@ -1,0 +1,423 @@
+PASS: load and dump and load again produced equal results
+PASS: load and dump and load again produced equal results
+test_scalar_constructors()
+null
+true
+false
+123
+123.40000000000000568
+"asdasd"
+test_scalar_assign()
+null
+true
+false
+123
+123.40000000000000568
+"asdasd"
+test_scalar_copy()
+null
+true
+false
+123
+123.40000000000000568
+"asdasd"
+test_scalar_equality()
+PASS: null pass
+PASS: int pass
+PASS: double pass
+PASS: string pass
+PASS: int/double pass
+PASS: double/int pass
+PASS: missmatched types pass
+null
+true
+false
+1
+1.10000000000000009
+"asdasd"
+null
+boolean
+number (int)
+number (double)
+string
+array
+object
+"123"
+"123.456"
+"asdf"
+testing int comparisons
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+testing double comparisons
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+testing string comparisons
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+testing int/double comparisons
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+PASS: == same worked
+PASS: != same worked
+PASS: == greater worked
+PASS: == greater worked
+PASS: != same worked
+PASS: <= same worked
+PASS: <= greater worked
+PASS: >= same worked
+PASS: >= greater worked 
+PASS: < same worked
+PASS: < greater worked
+PASS: > same worked
+PASS: > greater worked
+appended was 1 len is 1
+appended was "asdf" len is 2
+ len is 3
+[ 1, "asdf", 1.22999999999999998 ]
+{ "four" : 1.22999999999999998,"one" : 1,"three" : "asfdsad","two" : 2.12300000000000022 }
+const array access 10
+const object access 1.10000000000000009
+test_scalar_casts()
+1
+0
+123
+123
+true
+123.4
+123
+asdasd
+PASS: construct invalid type threw correct exception type
+PASS: construct invalid type with raw value threw correct exception type
+PASS: cast raw to int threw correct exception type
+PASS: cast string to int threw correct exception type
+PASS: cast raw double to double threw correct exception type
+PASS: cast string to double threw correct exception type
+PASS: cast raw string to string threw correct exception type
+PASS: cast int to string threw correct exception type
+PASS: cast string to bool threw correct exception type
+PASS: access string via ["name"] threw correct exception type
+PASS: access string via [1] threw correct exception type
+PASS: access empty array via [1] threw correct exception type
+PASS: access empty array via [-1] threw correct exception type
+PASS: access non-existing element of const object threw correct exception type
+PASS: append to non-array threw correct exception type
+PASS: insert into non-object threw correct exception type
+PASS: compare raw ints threw correct exception type
+PASS: compare raw int with int threw correct exception type
+PASS: compare raw strings threw correct exception type
+PASS: compare raw strings threw correct exception type
+PASS: < compare incomparable types threw correct exception type
+PASS: <= compare incomparable types threw correct exception type
+PASS: > compare incomparable types threw correct exception type
+PASS: >= compare incomparable types threw correct exception type
+123
+-123
+123
+-123.456
+123456
+0.123456
+0
+PASS: range test 1 passed, correct exception type thrown:parser exception, number out of range, at or near byte 14 : 123.456e+2000
+PASS: range 2 test passed, correct exception type thrown:parser exception, number out of range, at or near byte 1281 : 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+PASS: bad format test 1 passed, correct exception type thrown:parser exception, invalid character, at or near byte 2
+PASS: bad format test 2 passed, correct exception type thrown:parser exception, invalid character, at or near byte 4
+PASS: bad format test 3 passed, correct exception type thrown:parser exception, invalid number format, at or near byte 5 : 0x31
+TESTING FD READER - BLOCK READER
+FIRST CHAR : 123
+LENGTH : 287
+SUM    : 409
+TESTING FD READER - BYTE READER
+FIRST CHAR : 123
+LENGTH : 287
+SUM    : 409
+TESTING IOSTREAM READER - BLOCK READER
+FIRST CHAR : 123
+LENGTH : 287
+SUM    : 409
+TESTING IOSTREAM READER - BYTE READER
+FIRST CHAR : 123
+LENGTH : 287
+SUM    : 409
+TESTING FILE READER - BLOCK READER
+FIRST CHAR : 123
+LENGTH : 287
+SUM    : 409
+TESTING FILE READER - BYTE READER
+FIRST CHAR : 123
+LENGTH : 287
+SUM    : 409
+TESTING FD READER - BLOCK READER
+FIRST CHAR : 122
+LENGTH : 8192
+SUM    : 8313
+TESTING FD READER - BYTE READER
+FIRST CHAR : 122
+LENGTH : 8192
+SUM    : 8313
+TESTING IOSTREAM READER - BLOCK READER
+FIRST CHAR : 122
+LENGTH : 8192
+SUM    : 8313
+TESTING IOSTREAM READER - BYTE READER
+FIRST CHAR : 122
+LENGTH : 8192
+SUM    : 8313
+TESTING FILE READER - BLOCK READER
+FIRST CHAR : 122
+LENGTH : 8192
+SUM    : 8313
+TESTING FILE READER - BYTE READER
+FIRST CHAR : 122
+LENGTH : 8192
+SUM    : 8313
+TESTING FD READER - BLOCK READER
+FIRST CHAR : 112
+LENGTH : 8193
+SUM    : 8304
+TESTING FD READER - BYTE READER
+FIRST CHAR : 112
+LENGTH : 8193
+SUM    : 8304
+TESTING IOSTREAM READER - BLOCK READER
+FIRST CHAR : 112
+LENGTH : 8193
+SUM    : 8304
+TESTING IOSTREAM READER - BYTE READER
+FIRST CHAR : 112
+LENGTH : 8193
+SUM    : 8304
+TESTING FILE READER - BLOCK READER
+FIRST CHAR : 112
+LENGTH : 8193
+SUM    : 8304
+TESTING FILE READER - BYTE READER
+FIRST CHAR : 112
+LENGTH : 8193
+SUM    : 8304
+TESTING FD READER - BLOCK READER
+FIRST CHAR : 100
+LENGTH : 8293
+SUM    : 8392
+TESTING FD READER - BYTE READER
+FIRST CHAR : 100
+LENGTH : 8293
+SUM    : 8392
+TESTING IOSTREAM READER - BLOCK READER
+FIRST CHAR : 100
+LENGTH : 8293
+SUM    : 8392
+TESTING IOSTREAM READER - BYTE READER
+FIRST CHAR : 100
+LENGTH : 8293
+SUM    : 8392
+TESTING FILE READER - BLOCK READER
+FIRST CHAR : 100
+LENGTH : 8293
+SUM    : 8392
+TESTING FILE READER - BYTE READER
+FIRST CHAR : 100
+LENGTH : 8293
+SUM    : 8392
+TESTING FD READER - BLOCK READER
+FIRST CHAR : 97
+LENGTH : 16384
+SUM    : 16480
+TESTING FD READER - BYTE READER
+FIRST CHAR : 97
+LENGTH : 16384
+SUM    : 16480
+TESTING IOSTREAM READER - BLOCK READER
+FIRST CHAR : 97
+LENGTH : 16384
+SUM    : 16480
+TESTING IOSTREAM READER - BYTE READER
+FIRST CHAR : 97
+LENGTH : 16384
+SUM    : 16480
+TESTING FILE READER - BLOCK READER
+FIRST CHAR : 97
+LENGTH : 16384
+SUM    : 16480
+TESTING FILE READER - BYTE READER
+FIRST CHAR : 97
+LENGTH : 16384
+SUM    : 16480
+TESTING FD READER - BLOCK READER
+FIRST CHAR : 98
+LENGTH : 16385
+SUM    : 16482
+TESTING FD READER - BYTE READER
+FIRST CHAR : 98
+LENGTH : 16385
+SUM    : 16482
+TESTING IOSTREAM READER - BLOCK READER
+FIRST CHAR : 98
+LENGTH : 16385
+SUM    : 16482
+TESTING IOSTREAM READER - BYTE READER
+FIRST CHAR : 98
+LENGTH : 16385
+SUM    : 16482
+TESTING FILE READER - BLOCK READER
+FIRST CHAR : 98
+LENGTH : 16385
+SUM    : 16482
+TESTING FILE READER - BYTE READER
+FIRST CHAR : 98
+LENGTH : 16385
+SUM    : 16482
+PASS: stream value of field one is 1
+PASS: file value of field one is 1
+PASS: fd value of field one is 1
+PASS: UTF8 test passed, valid file s1.json was read, written, reread and compared
+PASS: UTF8 test passed, valid file s2.json was read, written, reread and compared
+PASS: UTF8 test passed, valid file s3.json was read, written, reread and compared
+PASS: UTF8 test passed, valid file s4.json was read, written, reread and compared
+PASS: UTF8 test passed, valid file s5.json was read, written, reread and compared
+PASS: UTF8 test passed, invalid file s6.json caused an exception:parser exception, invalid character, at or near byte 4 : 0x0a
+PASS: UTF8 test passed, invalid file s7.json caused an exception:parser exception, invalid character, at or near byte 1
+PASS: UTF8 test passed, invalid file s8.json caused an exception:parser exception, invalid character, at or near byte 8 : 0x0a
+PASS: UTF8 test passed, invalid file s9.json caused an exception:invalid escape character found in string at or near byte 10
+PASS: UTF8 test passed, valid file s10.json was read, written, reread and compared
+PASS: UTF8 test passed, invalid file s11.json caused an exception:string encoding is invalid at or near byte 7
+PASS: UTF8 test passed, invalid file s12.json caused an exception:string encoding is invalid at or near byte 12
+PASS: UTF8 test passed, invalid file s13.json caused an exception:string encoding is invalid at or near byte 13
+PASS: UTF8 test passed, invalid file s14.json caused an exception:invalid hex character at or near byte 8
+PASS: parse test passed, valid file json1.json was read, written, reread and compared
+PASS: parse test passed, valid file json2.json was read, written, reread and compared
+PASS: parse test passed, invalid file json3.json caused an exception:parser exception, unexpected end of file, at or near byte 5
+PASS: parse test passed, invalid file json4.json caused an exception:parser exception, unexpected token, at or near byte 2 : 
+PASS: parse test passed, invalid file json5.json caused an exception:parser exception, unexpected token, at or near byte 18 : 
+PASS: parse test passed, invalid file json6.json caused an exception:parser exception, unexpected token, at or near byte 12 : 
+PASS: parse test passed, invalid file json7.json caused an exception:parser exception, unexpected token, at or near byte 16 : 123
+PASS: parse test passed, invalid file json8.json caused an exception:parser exception, invalid character, at or near byte 67
+PASS: parse test passed, valid file json9.json was read, written, reread and compared
+PASS: parse test passed, invalid file json10.json caused an exception:parser exception, invalid character, at or near byte 14
+PASS: message too long threw correct exception type
+PASS: parsed three messages from file
+PASS: int that was too large to be an int threw correct exception type
+PASS: don't convert number returned the correct raw value
+PASS: don't convert string returned the correct raw value
+PASS: message nested too deeply threw correct exception type

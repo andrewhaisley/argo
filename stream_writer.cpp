@@ -19,3 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file stream_writer.cpp The stream_writer class implementation.
+
+#include "common.hpp"
+#include "stream_writer.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+stream_writer::stream_writer(ostream *s) : writer(), m_stream(s)
+{
+}
+
+void stream_writer::write(const string &s)
+{
+    // for some reason writing the string direct confuses Visual C++ hence the .c_str() call
+    (*m_stream) << s.c_str();
+}

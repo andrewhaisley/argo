@@ -19,3 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file json_invalid_key_exception.cpp The json_invalid_key_exception class implementation.
+
+#include <string.h>
+
+#include "common.hpp"
+#include "json_invalid_key_exception.hpp"
+
+using namespace std;
+using namespace NAMESPACE;
+
+json_invalid_key_exception::json_invalid_key_exception(exception_type et, const string &key) noexcept : json_exception(et)
+{
+    if (et == invalid_key_e)
+    {
+        strncpy(m_message, "invalid object key: ", max_message_length);
+        strncpy(m_message, key.c_str(), max_message_length);
+    }
+    else
+    {
+        strncpy(m_message, "generic", max_message_length);
+    }
+}

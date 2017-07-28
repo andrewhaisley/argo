@@ -1,3 +1,6 @@
+#ifndef _json_writer_hpp_
+#define _json_writer_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file writer.hpp The writer class.
+
+#include <ostream>
+
+#include "common.hpp"
+
+namespace NAMESPACE
+{
+    /**
+     * \brief Simple proxy for write operations on various types of stream.
+     *
+     * A class that acts as a proxy for the various places that JSON messages
+     * can be written to (or to which they can be written even).
+     * Actually writing to somewhere is in in derived classes.
+     */
+    class writer
+    {
+    public:
+
+        /// Constructor.
+        writer();
+
+        /// Write a string - implemented by derived classes.
+        virtual void write(const std::string &s) = 0;
+
+    };
+
+    /// Write a string to a writer.
+    writer &operator<<(writer& w, const std::string &s);
+    /// Write a single character.
+    writer &operator<<(writer& w, char c);
+    /// Write an int (formatted as a string. i.e. 123 is written as "123").
+    writer &operator<<(writer& w, int i);
+    /// Write a double (formatted as a string. i.e. 123e23 is written as "123e23").
+    writer &operator<<(writer& w, double d);
+}
+
+#endif

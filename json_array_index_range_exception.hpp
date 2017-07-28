@@ -1,3 +1,6 @@
+#ifndef _json_array_index_range_exception_hpp_
+#define _json_array_index_range_exception_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file json_array_index_range_exception.hpp The json_array_index_range_exception class.
+
+#include "json_exception.hpp"
+
+namespace NAMESPACE
+{
+    /// Specific class of exceptions for an invalid object key.
+    class json_array_index_range_exception : public json_exception
+    {
+    public:
+
+        /// Constructor for string key error.
+        json_array_index_range_exception(exception_type et, size_t i) noexcept;
+
+    };
+}
+
+#endif

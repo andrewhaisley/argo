@@ -1,3 +1,6 @@
+#ifndef _json_argonaut_hpp_
+#define _json_argonaut_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file argonaut.hpp Single file to include to get the full set of headers needed.
+
+#include "common.hpp"
+#include "json.hpp"
+#include "parser.hpp"
+#include "unparser.hpp"
+#include "json_array_index_range_exception.hpp"
+#include "json_invalid_key_exception.hpp"
+#include "json_parser_exception.hpp"
+#include "json_exception.hpp"
+#include "json_io_exception.hpp"
+#include "json_utf8_exception.hpp"
+
+#endif

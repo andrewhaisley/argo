@@ -1,3 +1,6 @@
+#ifndef _json_fd_writer_hpp_
+#define _json_fd_writer_hpp_
+
 /*
  * Copyright (c) 2017 Andrew Haisley
  *
@@ -19,3 +22,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// \file fd_writer.hpp The fd_writer class.
+
+#include "common.hpp"
+#include "writer.hpp"
+
+namespace NAMESPACE
+{
+    /// A derived class of writer that writes to POSIX file descriptors.
+    class fd_writer : public writer
+    {
+    public:
+
+        /// constructor
+        fd_writer(int fd);
+
+        /**
+         * Write a character to the file descriptor using the write() system call.
+         * \throw json_io_exception Thrown in the event the write() call fails.
+         */
+        virtual void write(const std::string &s);
+
+    private:
+
+        int m_fd;
+    };
+}
+
+#endif
