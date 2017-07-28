@@ -9,4 +9,4 @@ unparser::save(*j, "newfile.json");
 ```
 
 # Documentation
-There is some fairly [full documentation](https://andrewhaisley.github.io/).
+There is full documentation [here](https://andrewhaisley.github.io/argonaut/).
