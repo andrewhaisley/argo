@@ -47,6 +47,12 @@ json_exception::json_exception(exception_type et) noexcept : exception(), m_type
     case cant_cast_raw_e:
         strncpy(m_message, "raw values can't be cast", max_message_length);
         break;
+    case pointer_not_matched_e:
+        strncpy(m_message, "pointer doesn't match a location in the instance", max_message_length);
+        break;
+    case pointer_token_type_invalid_e:
+        strncpy(m_message, "pointer token type is invalid", max_message_length);
+        break;
     default:
         strncpy(m_message, "generic", max_message_length);
         break;

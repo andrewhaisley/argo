@@ -27,6 +27,7 @@
 
 #include "common.hpp"
 #include "json.hpp"
+#include "pointer.hpp"
 #include "parser.hpp"
 #include "unparser.hpp"
 #include "json_array_index_range_exception.hpp"
@@ -35,5 +36,14 @@
 #include "json_exception.hpp"
 #include "json_io_exception.hpp"
 #include "json_utf8_exception.hpp"
+#include "stream_reader.hpp"
+#include "file_reader.hpp"
+#include "stream_writer.hpp"
+#include "file_writer.hpp"
+
+#ifndef _JSON_WINDOWS_
+#include "fd_reader.hpp"
+#include "fd_writer.hpp"
+#endif
 
 #endif

@@ -39,6 +39,12 @@ void parse_file()
     argonaut::unparser::save(*j, "test_files/tmp.json");
 }
 
+void json_pointer()
+{
+    auto j = argonaut::parser::load("test_files/test2.json");
+    std::cout << j->find(argonaut::pointer("/0/address")) << std::endl;
+}
+
 void construct()
 {
     // create an object
@@ -62,6 +68,7 @@ int main(int argc, char *argv[])
     {
         hello_world();
         parse_file();
+        json_pointer();
         construct();
     }
     catch (argonaut::json_exception &e)

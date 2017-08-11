@@ -10,8 +10,8 @@ add_library(argonaut
         fd_writer.cpp file_writer.cpp token.cpp json_exception.cpp 
         parser.cpp unparser.cpp json_io_exception.cpp 
         json_parser_exception.cpp json_utf8_exception.cpp
-        json_array_index_range_exception.cpp
-        json_invalid_key_exception.cpp)
+        json_array_index_range_exception.cpp json_pointer_exception.cpp
+        json_invalid_key_exception.cpp pointer.cpp)
 
 add_executable(json_test json_test.cpp)
 target_link_libraries(json_test argonaut)

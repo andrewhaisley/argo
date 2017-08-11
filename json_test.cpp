@@ -26,18 +26,12 @@
 #include <fstream>
 #include <sstream>
 #include "argonaut.hpp"
-#include "stream_reader.hpp"
-#include "file_reader.hpp"
-#include "stream_writer.hpp"
-#include "file_writer.hpp"
 
 #ifndef _JSON_WINDOWS_
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "fd_reader.hpp"
-#include "fd_writer.hpp"
 #endif
 
 using namespace std;
@@ -1613,8 +1607,90 @@ int check_results()
         cerr << "TESTS FAILED - compare test_files/jlog.txt with test_files/known_good_jlog.txt\n";
         return 1;
     }
-    cout << "TESTS PASSED\n";
+
+    (void)getline(f2, line2);
+
+    if (f2.eof())
+    {
+        cout << "TESTS PASSED\n";
+    }
+    else
+    {
+        cerr << "TESTS FAILED - compare test_files/jlog.txt with test_files/known_good_jlog.txt\n";
+        return 1;
+    }
+
     return 0;
+}
+
+void test_pointer()
+{
+    // RFC tests
+    {
+        auto j = parser::load("test_files/test7.json");
+
+        jlog << j->find(pointer("")) << endl;
+        jlog << j->find(pointer("/foo")) << endl;
+        jlog << j->find(pointer("/foo/0")) << endl;
+        jlog << j->find(pointer("/")) << endl;
+        jlog << j->find(pointer("/a~1b")) << endl;
+        jlog << j->find(pointer("/c%d")) << endl;
+        jlog << j->find(pointer("/e^f")) << endl;
+        jlog << j->find(pointer("/g|h")) << endl;
+        jlog << j->find(pointer("/i\\\\j")) << endl;
+        jlog << j->find(pointer("/k\"l")) << endl;
+        jlog << j->find(pointer("/ ")) << endl;
+        jlog << j->find(pointer("/m~0n")) << endl;
+
+        jlog << j->find(pointer("#")) << endl;
+        jlog << j->find(pointer("#/foo")) << endl;
+        jlog << j->find(pointer("#/foo/0")) << endl;
+        jlog << j->find(pointer("#/")) << endl;
+        jlog << j->find(pointer("#/a~1b")) << endl;
+        jlog << j->find(pointer("#/c%25d")) << endl;
+        jlog << j->find(pointer("#/e%5Ef")) << endl;
+        jlog << j->find(pointer("#/g%7Ch")) << endl;
+        jlog << j->find(pointer("#/i%5Cj")) << endl;
+        jlog << j->find(pointer("#/k%22l")) << endl;
+        jlog << j->find(pointer("#/%20")) << endl;
+        jlog << j->find(pointer("#/m~0n")) << endl;
+    }
+
+    ifstream f("test_files/pointer_tests.txt");
+
+    string line;
+
+    while (getline(f, line))
+    {
+        auto x = line.find_first_of(":");
+        auto pointer_text = line.substr(0, x);
+        auto valid = line.substr(x + 1, line.size() - x -1);
+
+        try
+        {
+            pointer p(pointer_text);
+            if (valid == "valid")
+            {
+                jlog << "PASS: pointer " << pointer_text << " compiled successfully" << endl;
+            }
+            else
+            {
+                jlog << "FAIL: invalid pointer " << pointer_text << " compiled successfully" << endl;
+            }
+        }
+        catch (exception &e)
+        {
+            if (valid == "valid")
+            {
+                jlog << "FAIL: pointer " << pointer_text << " failed to compile" << endl;
+                jlog << e.what() << endl;
+            }
+            else
+            {
+                jlog << "PASS: pointer " << pointer_text << " caused an exception" << endl;
+            }
+        }
+    }
 }
 
 int main(int argc, char *argv[])
@@ -1642,6 +1718,7 @@ int main(int argc, char *argv[])
         test_strings();
         test_parse();
         test_options();
+        test_pointer();
     }
     catch (json_exception &e)
     {

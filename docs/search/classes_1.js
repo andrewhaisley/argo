@@ -6,5 +6,6 @@ var searchData=
   ['json_5finvalid_5fkey_5fexception',['json_invalid_key_exception',['../classargonaut_1_1json__invalid__key__exception.html',1,'argonaut']]],
   ['json_5fio_5fexception',['json_io_exception',['../classargonaut_1_1json__io__exception.html',1,'argonaut']]],
   ['json_5fparser_5fexception',['json_parser_exception',['../classargonaut_1_1json__parser__exception.html',1,'argonaut']]],
+  ['json_5fpointer_5fexception',['json_pointer_exception',['../classargonaut_1_1json__pointer__exception.html',1,'argonaut']]],
   ['json_5futf8_5fexception',['json_utf8_exception',['../classargonaut_1_1json__utf8__exception.html',1,'argonaut']]]
 ];

@@ -12,6 +12,8 @@ var searchData=
   ['json_5fio_5fexception_2ehpp',['json_io_exception.hpp',['../json__io__exception_8hpp.html',1,'']]],
   ['json_5fparser_5fexception_2ecpp',['json_parser_exception.cpp',['../json__parser__exception_8cpp.html',1,'']]],
   ['json_5fparser_5fexception_2ehpp',['json_parser_exception.hpp',['../json__parser__exception_8hpp.html',1,'']]],
+  ['json_5fpointer_5fexception_2ecpp',['json_pointer_exception.cpp',['../json__pointer__exception_8cpp.html',1,'']]],
+  ['json_5fpointer_5fexception_2ehpp',['json_pointer_exception.hpp',['../json__pointer__exception_8hpp.html',1,'']]],
   ['json_5futf8_5fexception_2ecpp',['json_utf8_exception.cpp',['../json__utf8__exception_8cpp.html',1,'']]],
   ['json_5futf8_5fexception_2ehpp',['json_utf8_exception.hpp',['../json__utf8__exception_8hpp.html',1,'']]]
 ];

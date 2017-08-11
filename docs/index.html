@@ -126,6 +126,24 @@ Construct A Message From Scratch</h2>
 <div class="line"></div>
 <div class="line"><span class="comment">// print it</span></div>
 <div class="line">std::cout &lt;&lt; j &lt;&lt; std::endl;</div>
+</div><!-- fragment --><h2><a class="anchor" id="pointers"></a>
+Extract a value using a JSON pointer.</h2>
+<p>Given the following JSON in a file named foo.json: </p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">   <span class="stringliteral">&quot;foo&quot;</span>: [<span class="stringliteral">&quot;bar&quot;</span>, <span class="stringliteral">&quot;baz&quot;</span>],</div>
+<div class="line">   <span class="stringliteral">&quot;&quot;</span>: 0,</div>
+<div class="line">   <span class="stringliteral">&quot;a/b&quot;</span>: 1,</div>
+<div class="line">   <span class="stringliteral">&quot;c%d&quot;</span>: 2,</div>
+<div class="line">   <span class="stringliteral">&quot;e^f&quot;</span>: 3,</div>
+<div class="line">   <span class="stringliteral">&quot;g|h&quot;</span>: 4,</div>
+<div class="line">   <span class="stringliteral">&quot;i\\j&quot;</span>: 5,</div>
+<div class="line">   <span class="stringliteral">&quot;k\&quot;l&quot;</span>: 6,</div>
+<div class="line">   <span class="stringliteral">&quot; &quot;</span>: 7,</div>
+<div class="line">   <span class="stringliteral">&quot;m~n&quot;</span>: 8</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> Extract the value of the zeroeth element of the foo array:</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> j = <a class="code" href="classargonaut_1_1parser.html#aea46bdbc47437bb5739b6c93b20ec3e7">argonaut::parser::load</a>(<span class="stringliteral">&quot;foo.json&quot;</span>);</div>
+<div class="line">std::cout &lt;&lt; j-&gt;find(<a class="code" href="classargonaut_1_1pointer.html">argonaut::pointer</a>(<span class="stringliteral">&quot;/foo/0&quot;</span>)) &lt;&lt; std::endl;</div>
 </div><!-- fragment --><h1><a class="anchor" id="overview"></a>
 Overview</h1>
 <p>The Argonaut library provides a set of C++ classes for manipulating JSON structures as defined by <a href="https://tools.ietf.org/html/rfc7159">RFC7159</a>. It was designed with the following goals in mind:</p>
@@ -142,6 +160,7 @@ Features</h1>
 <li>Concise API.</li>
 <li>Direct handling of multiple IO styles (streams, FILEs, file descriptors, strings).</li>
 <li>DOM style representation of JSON messages.</li>
+<li>JSON Pointer access as per <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>.</li>
 <li><a href="https://tools.ietf.org/html/rfc7159">RFC7159</a> compliance.</li>
 <li>Full unicode support.</li>
 <li>Good performance in the context of the amount of error checking carried out.</li>
@@ -224,8 +243,7 @@ Windows</h2>
 <h1><a class="anchor" id="stuff"></a>
 Bits &amp; Pieces</h1>
 <p>JSON vs json - I've tried to stick to the convention of using JSON to refer to bits of text in the JSON format and json to refer to the Argonaut json class.</p>
-<p>JSON Pointer / Path - the library doesn't have support for this right now but I do plan to add it at some point as I need it for another project.</p>
-<p>AVRO - ditto.</p>
+<p>AVRO - the library doesn't have support for this right now but I do plan to add it at some point as I need it for another project.</p>
 <p>SAX style parser - I'm not sure about this one. Does anyone really use JSON to represent anything so large and/or complex that it's a genuinely useful approach? I get why the monster than XML has become needs such a thing but I'm not convinced of its usefulness for JSON, at least not from the use cases I've observed or considered. Please tell me otherwise if you disagree.</p>
 <h1><a class="anchor" id="licence"></a>
 License</h1>
@@ -247,7 +265,7 @@ SOFTWARE.
 </pre> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 28 2017 17:55:39 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 11 2017 11:08:47 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

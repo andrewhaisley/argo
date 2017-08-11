@@ -115,30 +115,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8hpp.html">common.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json_8hpp.html">json.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="parser_8hpp.html">parser.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="unparser_8hpp.html">unparser.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__array__index__range__exception_8hpp.html">json_array_index_range_exception.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__invalid__key__exception_8hpp.html">json_invalid_key_exception.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__parser__exception_8hpp.html">json_parser_exception.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__exception_8hpp.html">json_exception.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__io__exception_8hpp.html">json_io_exception.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__utf8__exception_8hpp.html">json_utf8_exception.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="pointer_8hpp.html">pointer.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="parser_8hpp.html">parser.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="unparser_8hpp.html">unparser.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__array__index__range__exception_8hpp.html">json_array_index_range_exception.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__invalid__key__exception_8hpp.html">json_invalid_key_exception.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__parser__exception_8hpp.html">json_parser_exception.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__exception_8hpp.html">json_exception.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__io__exception_8hpp.html">json_io_exception.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json__utf8__exception_8hpp.html">json_utf8_exception.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stream__reader_8hpp.html">stream_reader.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="file__reader_8hpp.html">file_reader.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stream__writer_8hpp.html">stream_writer.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="file__writer_8hpp.html">file_writer.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#ifndef _JSON_WINDOWS_</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;<a class="code" href="fd__reader_8hpp.html">fd_reader.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="fd__writer_8hpp.html">fd_writer.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="json__array__index__range__exception_8hpp_html"><div class="ttname"><a href="json__array__index__range__exception_8hpp.html">json_array_index_range_exception.hpp</a></div><div class="ttdoc">The json_array_index_range_exception class. </div></div>
 <div class="ttc" id="json__parser__exception_8hpp_html"><div class="ttname"><a href="json__parser__exception_8hpp.html">json_parser_exception.hpp</a></div><div class="ttdoc">The json_parser_exception class. </div></div>
 <div class="ttc" id="json__exception_8hpp_html"><div class="ttname"><a href="json__exception_8hpp.html">json_exception.hpp</a></div><div class="ttdoc">The json_exception class. </div></div>
+<div class="ttc" id="fd__reader_8hpp_html"><div class="ttname"><a href="fd__reader_8hpp.html">fd_reader.hpp</a></div><div class="ttdoc">The fd_reader class. </div></div>
 <div class="ttc" id="json_8hpp_html"><div class="ttname"><a href="json_8hpp.html">json.hpp</a></div><div class="ttdoc">The json class. </div></div>
+<div class="ttc" id="file__reader_8hpp_html"><div class="ttname"><a href="file__reader_8hpp.html">file_reader.hpp</a></div><div class="ttdoc">The file_reader class. </div></div>
 <div class="ttc" id="common_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div><div class="ttdoc">Common defs needed everywhere and, as far as is possible, platform specific changes. </div></div>
 <div class="ttc" id="json__invalid__key__exception_8hpp_html"><div class="ttname"><a href="json__invalid__key__exception_8hpp.html">json_invalid_key_exception.hpp</a></div><div class="ttdoc">The json_invalid_key_exception class. </div></div>
+<div class="ttc" id="fd__writer_8hpp_html"><div class="ttname"><a href="fd__writer_8hpp.html">fd_writer.hpp</a></div><div class="ttdoc">The fd_writer class. </div></div>
 <div class="ttc" id="json__utf8__exception_8hpp_html"><div class="ttname"><a href="json__utf8__exception_8hpp.html">json_utf8_exception.hpp</a></div><div class="ttdoc">The json_utf8_exception class. </div></div>
 <div class="ttc" id="parser_8hpp_html"><div class="ttname"><a href="parser_8hpp.html">parser.hpp</a></div><div class="ttdoc">The parser class. </div></div>
+<div class="ttc" id="stream__reader_8hpp_html"><div class="ttname"><a href="stream__reader_8hpp.html">stream_reader.hpp</a></div><div class="ttdoc">The stream_reader class. </div></div>
+<div class="ttc" id="pointer_8hpp_html"><div class="ttname"><a href="pointer_8hpp.html">pointer.hpp</a></div><div class="ttdoc">The pointer class. </div></div>
+<div class="ttc" id="file__writer_8hpp_html"><div class="ttname"><a href="file__writer_8hpp.html">file_writer.hpp</a></div><div class="ttdoc">The file_writer class. </div></div>
+<div class="ttc" id="stream__writer_8hpp_html"><div class="ttname"><a href="stream__writer_8hpp.html">stream_writer.hpp</a></div><div class="ttdoc">The stream_writer class. </div></div>
 <div class="ttc" id="unparser_8hpp_html"><div class="ttname"><a href="unparser_8hpp.html">unparser.hpp</a></div><div class="ttdoc">The unparser class. </div></div>
 <div class="ttc" id="json__io__exception_8hpp_html"><div class="ttname"><a href="json__io__exception_8hpp.html">json_io_exception.hpp</a></div><div class="ttdoc">The json_io_exception class. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 28 2017 17:55:39 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 11 2017 11:08:47 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['unexpected_5feof_5fe',['unexpected_eof_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7aceb37f30b345dff6014546b06651f70b',1,'argonaut::json_exception']]],
-  ['unexpected_5fresult_5ffrom_5fread_5fe',['unexpected_result_from_read_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7ac23c9cb124d3e039bc913e3d7118baad',1,'argonaut::json_exception']]],
-  ['unexpected_5ftoken_5fe',['unexpected_token_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7aba77238fadac8ab812fad100bc7a3f05',1,'argonaut::json_exception']]]
+  ['too_5fmany_5fput_5fback_5fe',['too_many_put_back_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7ab5171c4f05a04e77954ff15deb7c882e',1,'argonaut::json_exception']]],
+  ['true_5fe',['true_e',['../classargonaut_1_1token.html#aef51e3d0b29bf671788a8919fb0e547cae76ff8fa176991570aad44987728c959',1,'argonaut::token']]],
+  ['types_5fnot_5fcomparable_5fe',['types_not_comparable_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7a06eed375f097b84ac881a61204b15208',1,'argonaut::json_exception']]]
 ];

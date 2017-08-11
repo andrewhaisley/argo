@@ -421,3 +421,32 @@ PASS: int that was too large to be an int threw correct exception type
 PASS: don't convert number returned the correct raw value
 PASS: don't convert string returned the correct raw value
 PASS: message nested too deeply threw correct exception type
+{ "" : 0," " : 7,"a/b" : 1,"c%d" : 2,"e^f" : 3,"foo" : [ "bar", "baz" ],"g|h" : 4,"i\j" : 5,"k"l" : 6,"m~n" : 8 }
+[ "bar", "baz" ]
+"bar"
+0
+1
+2
+3
+4
+5
+6
+7
+8
+{ "" : 0," " : 7,"a/b" : 1,"c%d" : 2,"e^f" : 3,"foo" : [ "bar", "baz" ],"g|h" : 4,"i\j" : 5,"k"l" : 6,"m~n" : 8 }
+[ "bar", "baz" ]
+"bar"
+0
+1
+2
+3
+4
+5
+6
+7
+8
+PASS: pointer / compiled successfully
+PASS: pointer // compiled successfully
+PASS: pointer #/%2 caused an exception
+PASS: pointer #/%2H caused an exception
+PASS: pointer #/%20 compiled successfully

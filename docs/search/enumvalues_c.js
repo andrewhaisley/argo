@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['value_5fseparator_5fe',['value_separator_e',['../classargonaut_1_1token.html#aef51e3d0b29bf671788a8919fb0e547caada9421277f6126150a6782f6a87df31',1,'argonaut::token']]]
+  ['unexpected_5feof_5fe',['unexpected_eof_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7aceb37f30b345dff6014546b06651f70b',1,'argonaut::json_exception']]],
+  ['unexpected_5fresult_5ffrom_5fread_5fe',['unexpected_result_from_read_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7ac23c9cb124d3e039bc913e3d7118baad',1,'argonaut::json_exception']]],
+  ['unexpected_5ftoken_5fe',['unexpected_token_e',['../classargonaut_1_1json__exception.html#a37f7a492f59bed450dea09545aab8bb7aba77238fadac8ab812fad100bc7a3f05',1,'argonaut::json_exception']]]
 ];

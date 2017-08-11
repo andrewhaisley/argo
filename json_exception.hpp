@@ -83,6 +83,10 @@ namespace NAMESPACE
             cant_cast_raw_e,
             /// Tried to compare two different types (e.g. int vs string)
             types_not_comparable_e,
+            /// Pointer doesn't point to anything in the json instance
+            pointer_not_matched_e,
+            /// Invalid pointer token type
+            pointer_token_type_invalid_e,
 
             /// The stdio fgetc call failed in an unexpected way.
             fgetc_failed_e,
@@ -131,7 +135,10 @@ namespace NAMESPACE
             /// Invalid hex character was found. (e.g. "\uAA8Z").
             invalid_hex_char_e,
             /// Internal error, invalid hex number was found (< 0 or > 15).
-            invalid_hex_number_e
+            invalid_hex_number_e,
+
+            /// Syntax error parsing a pointer definition
+            syntax_error_in_pointer_string_e
         }
         exception_type;
 

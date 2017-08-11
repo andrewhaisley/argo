@@ -30,6 +30,7 @@
 #include <vector>
 
 #include "common.hpp"
+#include "pointer.hpp"
 
 namespace NAMESPACE
 {
@@ -498,6 +499,12 @@ namespace NAMESPACE
         /// >= operator - throws for raw values 
         bool operator>=(const char *s) const;
 
+        /**
+         * Find the thing pointed at by a pointer.
+         * \throw   json_exception  If the pointer didn't match, a json_exception is throw.
+         */
+        const json &find(const pointer &p) const;
+
     private:
 
         /**
@@ -566,6 +573,7 @@ namespace NAMESPACE
 
         /// operator == helper method for arrays
         bool array_equal(const json &other) const;
+
     };
 }
 

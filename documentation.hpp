@@ -67,7 +67,32 @@
  *    // print it
  *    std::cout << j << std::endl;
  * \endcode
- * 
+ *
+ * \subsection pointers Extract a value using a JSON pointer.
+ *
+ * Given the following JSON in a file named foo.json:
+ * \code{.javascript}
+ *
+ * {
+ *    "foo": ["bar", "baz"],
+ *    "": 0,
+ *    "a/b": 1,
+ *    "c%d": 2,
+ *    "e^f": 3,
+ *    "g|h": 4,
+ *    "i\\j": 5,
+ *    "k\"l": 6,
+ *    " ": 7,
+ *    "m~n": 8
+ * }
+ *
+ * \endcode
+ * Extract the value of the zeroeth element of the foo array:
+ *
+ * \code{.cpp}
+ *     auto j = argonaut::parser::load("foo.json");
+ *     std::cout << j->find(argonaut::pointer("/foo/0")) << std::endl;
+ * \endcode
  *
  * \section overview Overview
  *
@@ -93,6 +118,7 @@
  *     - Concise API.
  *     - Direct handling of multiple IO styles (streams, FILEs, file descriptors, strings).
  *     - DOM style representation of JSON messages.
+ *     - JSON Pointer access as per <a href="https://tools.ietf.org/html/rfc6901">RFC6901</a>.
  *     - <a href="https://tools.ietf.org/html/rfc7159">RFC7159</a> compliance.
  *     - Full unicode support.
  *     - Good performance in the context of the amount of error checking carried out.
@@ -261,10 +287,8 @@
  * to bits of text in the JSON format and json to refer to the Argonaut json
  * class.
  *
- * JSON Pointer / Path - the library doesn't have support for this right now
+ * AVRO - the library doesn't have support for this right now
  * but I do plan to add it at some point as I need it for another project.
- *
- * AVRO - ditto.
  *
  * SAX style parser - I'm not sure about this one. Does anyone really use
  * JSON to represent anything so large and/or complex that it's a genuinely 

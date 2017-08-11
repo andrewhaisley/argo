@@ -835,3 +835,59 @@ bool json::operator>=(const json &other) const
 {
     return !(*this < other);
 }
+
+const json &json::find(const pointer &p) const
+{
+    const json *res = this;
+
+    for (auto t : p.get_path())
+    {
+        switch (t.get_type())
+        {
+        case pointer::token::all_e:
+            break;
+
+        case pointer::token::object_e:
+            if (res->m_type == object_e)
+            {
+                auto i = res->m_value.u_object->find(t.get_name());
+                if (i == res->m_value.u_object->end())
+                {
+                    throw json_exception(json_exception::pointer_not_matched_e);
+                }
+                else
+                {
+                    res = i->second.get();
+                }
+            }
+            else
+            {
+                throw json_exception(json_exception::pointer_not_matched_e);
+            }
+            break;
+
+        case pointer::token::array_e:
+            if (res->m_type == array_e)
+            {
+                if (t.get_index() < res->m_value.u_array->size())
+                {
+                    res = (*res->m_value.u_array)[t.get_index()].get();
+                }
+                else
+                {
+                    throw json_exception(json_exception::pointer_not_matched_e);
+                }
+            }
+            else
+            {
+                throw json_exception(json_exception::pointer_not_matched_e);
+            }
+            break;
+
+        default:
+            throw json_exception(json_exception::pointer_token_type_invalid_e);
+        }
+    }
+
+    return *res;
+}

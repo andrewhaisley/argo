@@ -1,0 +1,5 @@
+/:valid
+//:valid
+#/%2:invalid
+#/%2H:invalid
+#/%20:valid
