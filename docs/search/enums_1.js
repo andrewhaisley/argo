@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['token_5ftype',['token_type',['../classargonaut_1_1token.html#aef51e3d0b29bf671788a8919fb0e547c',1,'argonaut::token']]],
-  ['type',['type',['../classargonaut_1_1json.html#a060f40c08fb3860df3dc187c8bee1937',1,'argonaut::json']]],
-  ['type_5ft',['type_t',['../classargonaut_1_1pointer_1_1token.html#ae5f1d2249b440a17b4d03e5599478099',1,'argonaut::pointer::token']]]
+  ['token_5ftype',['token_type',['../classargo_1_1token.html#a46c94575a65bd671730e9212b65e242c',1,'argo::token']]],
+  ['type',['type',['../classargo_1_1json.html#a48c690c45f7e1b8f992c7367208cd879',1,'argo::json']]],
+  ['type_5ft',['type_t',['../classargo_1_1pointer_1_1token.html#a555e92b25e76bbf110c7cfec6bec1157',1,'argo::pointer::token']]]
 ];

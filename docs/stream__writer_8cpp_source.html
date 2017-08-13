@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Argonaut: stream_writer.cpp Source File</title>
+<title>Argo: stream_writer.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="argonaut.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="argo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Argonaut
+   <div id="projectname">Argo
    &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">A C++ library for handling JSON.</div>
@@ -116,24 +116,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">using namespace </span><a class="code" href="common_8hpp.html#afa7779fe56b160955b535cd6a8aaf8f4">NAMESPACE</a>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classargonaut_1_1stream__writer.html#ac28d852dae7c0b09ace9be16c4ec4dd7">   31</a></span>&#160;stream_writer::stream_writer(ostream *s) : <a class="code" href="classargonaut_1_1writer.html">writer</a>(), m_stream(s)</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classargo_1_1stream__writer.html#ac28d852dae7c0b09ace9be16c4ec4dd7">   31</a></span>&#160;stream_writer::stream_writer(ostream *s) : <a class="code" href="classargo_1_1writer.html">writer</a>(), m_stream(s)</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classargonaut_1_1stream__writer.html#af728e46dab417fafd94d47bf81d9986b">   35</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classargonaut_1_1stream__writer.html#af728e46dab417fafd94d47bf81d9986b">stream_writer::write</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;s)</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classargo_1_1stream__writer.html#af728e46dab417fafd94d47bf81d9986b">   35</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classargo_1_1stream__writer.html#af728e46dab417fafd94d47bf81d9986b">stream_writer::write</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;s)</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="comment">// for some reason writing the string direct confuses Visual C++ hence the .c_str() call</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    (*m_stream) &lt;&lt; s.c_str();</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="ttc" id="classargonaut_1_1stream__writer_html_af728e46dab417fafd94d47bf81d9986b"><div class="ttname"><a href="classargonaut_1_1stream__writer.html#af728e46dab417fafd94d47bf81d9986b">argonaut::stream_writer::write</a></div><div class="ttdeci">virtual void write(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> <a href="stream__writer_8cpp_source.html#l00035">stream_writer.cpp:35</a></div></div>
+<div class="ttc" id="classargo_1_1writer_html"><div class="ttname"><a href="classargo_1_1writer.html">argo::writer</a></div><div class="ttdoc">Simple proxy for write operations on various types of stream. </div><div class="ttdef"><b>Definition:</b> <a href="writer_8hpp_source.html#l00041">writer.hpp:41</a></div></div>
 <div class="ttc" id="common_8hpp_html_afa7779fe56b160955b535cd6a8aaf8f4"><div class="ttname"><a href="common_8hpp.html#afa7779fe56b160955b535cd6a8aaf8f4">NAMESPACE</a></div><div class="ttdeci">#define NAMESPACE</div><div class="ttdoc">You can change the namespace of the whole library by changing this value. </div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00029">common.hpp:29</a></div></div>
 <div class="ttc" id="common_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div><div class="ttdoc">Common defs needed everywhere and, as far as is possible, platform specific changes. </div></div>
-<div class="ttc" id="classargonaut_1_1writer_html"><div class="ttname"><a href="classargonaut_1_1writer.html">argonaut::writer</a></div><div class="ttdoc">Simple proxy for write operations on various types of stream. </div><div class="ttdef"><b>Definition:</b> <a href="writer_8hpp_source.html#l00041">writer.hpp:41</a></div></div>
 <div class="ttc" id="stream__writer_8hpp_html"><div class="ttname"><a href="stream__writer_8hpp.html">stream_writer.hpp</a></div><div class="ttdoc">The stream_writer class. </div></div>
+<div class="ttc" id="classargo_1_1stream__writer_html_af728e46dab417fafd94d47bf81d9986b"><div class="ttname"><a href="classargo_1_1stream__writer.html#af728e46dab417fafd94d47bf81d9986b">argo::stream_writer::write</a></div><div class="ttdeci">virtual void write(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> <a href="stream__writer_8cpp_source.html#l00035">stream_writer.cpp:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 11 2017 11:08:47 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 13 2017 17:31:18 for Argo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

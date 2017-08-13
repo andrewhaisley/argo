@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['block_5fsize',['block_size',['../classargonaut_1_1reader.html#a6f05a22ac9194e0d151ab87303c3e8c7',1,'argonaut::reader']]]
+  ['block_5fsize',['block_size',['../classargo_1_1reader.html#aa26745a30e9c62a4a6fc6bd908507b65',1,'argo::reader']]]
 ];

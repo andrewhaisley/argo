@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Argonaut: unparser.hpp Source File</title>
+<title>Argo: unparser.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="argonaut.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="argo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Argonaut
+   <div id="projectname">Argo
    &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">A C++ library for handling JSON.</div>
@@ -125,13 +125,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> operator&lt;&lt;(std::string &amp;s, <span class="keyword">const</span> json &amp;e);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classargonaut_1_1unparser.html">   54</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classargonaut_1_1unparser.html">unparser</a></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classargo_1_1unparser.html">   54</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classargo_1_1unparser.html">unparser</a></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> unparse(</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                std::ostream &amp;o,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a>   &amp;j,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a>   &amp;j,</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>   *space = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>   *newline = <span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>   *indent = <span class="stringliteral">&quot; &quot;</span>,</div>
@@ -141,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> unparse(</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                <span class="keywordtype">int</span>        fd,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a> &amp;j,</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a> &amp;j,</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *space = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *newline = <span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *indent = <span class="stringliteral">&quot; &quot;</span>,</div>
@@ -150,36 +150,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> unparse(</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                FILE       *s,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a> &amp;j,</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a> &amp;j,</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *space = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *newline = <span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span> *indent = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                <span class="keywordtype">int</span>        indent_inc = 0);</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> save(</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a>        &amp;j,</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                <span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a>        &amp;j,</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                <span class="keyword">const</span> std::string &amp;file_name,</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>        *space = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>        *newline = <span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">char</span>        *indent = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                <span class="keywordtype">int</span>               indent_inc = 0);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <a class="code" href="classargonaut_1_1unparser.html">unparser</a>(<a class="code" href="classargonaut_1_1writer.html">writer</a>     &amp;w,</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <a class="code" href="classargo_1_1unparser.html">unparser</a>(<a class="code" href="classargo_1_1writer.html">writer</a>     &amp;w,</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                 <span class="keyword">const</span> <span class="keywordtype">char</span> *space = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                 <span class="keyword">const</span> <span class="keywordtype">char</span> *newline = <span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                 <span class="keyword">const</span> <span class="keywordtype">char</span> *indent = <span class="stringliteral">&quot; &quot;</span>,</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                 <span class="keywordtype">int</span>        indent_inc = 0);</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keywordtype">void</span> unparse(<span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a> &amp;j, <span class="keywordtype">int</span> indent_level = 0);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keywordtype">void</span> unparse(<span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a> &amp;j, <span class="keywordtype">int</span> indent_level = 0);</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keywordtype">void</span> print_indent(<span class="keywordtype">int</span> indent_level);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordtype">void</span> unparse_object(<span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a> &amp;j, <span class="keywordtype">int</span> indent_level);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordtype">void</span> unparse_array(<span class="keyword">const</span> <a class="code" href="classargonaut_1_1json.html">json</a> &amp;j, <span class="keywordtype">int</span> indent_level);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keywordtype">void</span> unparse_object(<span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a> &amp;j, <span class="keywordtype">int</span> indent_level);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordtype">void</span> unparse_array(<span class="keyword">const</span> <a class="code" href="classargo_1_1json.html">json</a> &amp;j, <span class="keywordtype">int</span> indent_level);</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <a class="code" href="classargonaut_1_1writer.html">writer</a>     &amp;m_writer;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <a class="code" href="classargo_1_1writer.html">writer</a>     &amp;m_writer;</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_space;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_newline;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *m_indent;</div>
@@ -190,17 +190,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;}</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classargo_1_1writer_html"><div class="ttname"><a href="classargo_1_1writer.html">argo::writer</a></div><div class="ttdoc">Simple proxy for write operations on various types of stream. </div><div class="ttdef"><b>Definition:</b> <a href="writer_8hpp_source.html#l00041">writer.hpp:41</a></div></div>
 <div class="ttc" id="common_8hpp_html_afa7779fe56b160955b535cd6a8aaf8f4"><div class="ttname"><a href="common_8hpp.html#afa7779fe56b160955b535cd6a8aaf8f4">NAMESPACE</a></div><div class="ttdeci">#define NAMESPACE</div><div class="ttdoc">You can change the namespace of the whole library by changing this value. </div><div class="ttdef"><b>Definition:</b> <a href="common_8hpp_source.html#l00029">common.hpp:29</a></div></div>
 <div class="ttc" id="json_8hpp_html"><div class="ttname"><a href="json_8hpp.html">json.hpp</a></div><div class="ttdoc">The json class. </div></div>
+<div class="ttc" id="classargo_1_1unparser_html"><div class="ttname"><a href="classargo_1_1unparser.html">argo::unparser</a></div><div class="ttdoc">Class to unparse json instances into JSON messages. </div><div class="ttdef"><b>Definition:</b> <a href="unparser_8hpp_source.html#l00054">unparser.hpp:54</a></div></div>
 <div class="ttc" id="common_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div><div class="ttdoc">Common defs needed everywhere and, as far as is possible, platform specific changes. </div></div>
-<div class="ttc" id="classargonaut_1_1writer_html"><div class="ttname"><a href="classargonaut_1_1writer.html">argonaut::writer</a></div><div class="ttdoc">Simple proxy for write operations on various types of stream. </div><div class="ttdef"><b>Definition:</b> <a href="writer_8hpp_source.html#l00041">writer.hpp:41</a></div></div>
-<div class="ttc" id="classargonaut_1_1json_html"><div class="ttname"><a href="classargonaut_1_1json.html">argonaut::json</a></div><div class="ttdoc">All json things are represented by instances of this class. </div><div class="ttdef"><b>Definition:</b> <a href="json_8hpp_source.html#l00063">json.hpp:63</a></div></div>
+<div class="ttc" id="classargo_1_1json_html"><div class="ttname"><a href="classargo_1_1json.html">argo::json</a></div><div class="ttdoc">All json things are represented by instances of this class. </div><div class="ttdef"><b>Definition:</b> <a href="json_8hpp_source.html#l00063">json.hpp:63</a></div></div>
 <div class="ttc" id="writer_8hpp_html"><div class="ttname"><a href="writer_8hpp.html">writer.hpp</a></div><div class="ttdoc">The writer class. </div></div>
-<div class="ttc" id="classargonaut_1_1unparser_html"><div class="ttname"><a href="classargonaut_1_1unparser.html">argonaut::unparser</a></div><div class="ttdoc">Class to unparse json instances into JSON messages. </div><div class="ttdef"><b>Definition:</b> <a href="unparser_8hpp_source.html#l00054">unparser.hpp:54</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 11 2017 11:08:47 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 13 2017 17:31:18 for Argo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

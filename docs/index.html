@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Argonaut: Argonaut JSON Library Main Page</title>
+<title>Argo: Argo JSON Library Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="argonaut.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="argo.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Argonaut
+   <div id="projectname">Argo
    &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">A C++ library for handling JSON.</div>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Argonaut JSON Library Main Page </div>  </div>
+<div class="title">Argo JSON Library Main Page </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="first"></a>
@@ -91,30 +91,30 @@ Examples</h1>
 Hello World</h2>
 <p>All of these examples can be found in json_example.cpp. json_test.cpp also includes a lot of example code.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="argonaut_8hpp.html">argonaut.hpp</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="argo_8hpp.html">argo.hpp</a>&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line">{</div>
 <div class="line">    std::string s = <span class="stringliteral">&quot;{\&quot;one\&quot; : \&quot;hello world\&quot;}&quot;</span>;</div>
-<div class="line">    <a class="code" href="classargonaut_1_1json.html">argonaut::json</a> j;</div>
+<div class="line">    <a class="code" href="classargo_1_1json.html">argo::json</a> j;</div>
 <div class="line">    s &gt;&gt; j;</div>
 <div class="line">    std::cout &lt;&lt; j[<span class="stringliteral">&quot;one&quot;</span>] &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="file"></a>
 Read From File &amp; Write To File</h2>
 <p>Read a JSON message from one file and write it back out to another.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="argonaut_8hpp.html">argonaut.hpp</a>&quot;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="argo_8hpp.html">argo.hpp</a>&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line">{</div>
-<div class="line">    <span class="keyword">auto</span> j = <a class="code" href="classargonaut_1_1parser.html#aea46bdbc47437bb5739b6c93b20ec3e7">argonaut::parser::load</a>(<span class="stringliteral">&quot;test_files/test2.json&quot;</span>);</div>
-<div class="line">    <a class="code" href="classargonaut_1_1unparser.html#a0d71fd5f3a7a2e54a47ca98ffc9478e0">argonaut::unparser::save</a>(*j, <span class="stringliteral">&quot;test_files/tmp.json&quot;</span>);</div>
+<div class="line">    <span class="keyword">auto</span> j = <a class="code" href="classargo_1_1parser.html#aea46bdbc47437bb5739b6c93b20ec3e7">argo::parser::load</a>(<span class="stringliteral">&quot;test_files/test2.json&quot;</span>);</div>
+<div class="line">    <a class="code" href="classargo_1_1unparser.html#a0d71fd5f3a7a2e54a47ca98ffc9478e0">argo::unparser::save</a>(*j, <span class="stringliteral">&quot;test_files/tmp.json&quot;</span>);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="construct"></a>
 Construct A Message From Scratch</h2>
 <p>Create an object with some scalar values in it:</p>
 <div class="fragment"><div class="line"><span class="comment">// create an object</span></div>
-<div class="line"><a class="code" href="classargonaut_1_1json.html">argonaut::json</a> j(argonaut::json::object_e);</div>
+<div class="line"><a class="code" href="classargo_1_1json.html">argo::json</a> j(argo::json::object_e);</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// add some values</span></div>
 <div class="line">j[<span class="stringliteral">&quot;one&quot;</span>] = 1;</div>
@@ -122,7 +122,7 @@ Construct A Message From Scratch</h2>
 <div class="line">j[<span class="stringliteral">&quot;three&quot;</span>] = <span class="stringliteral">&quot;three&quot;</span>;</div>
 <div class="line">j[<span class="stringliteral">&quot;four&quot;</span>] = <span class="keyword">true</span>;</div>
 <div class="line">j[<span class="stringliteral">&quot;five&quot;</span>] = <span class="keyword">false</span>;</div>
-<div class="line">j[<span class="stringliteral">&quot;six&quot;</span>] = <a class="code" href="classargonaut_1_1json.html">argonaut::json</a>(); <span class="comment">// null</span></div>
+<div class="line">j[<span class="stringliteral">&quot;six&quot;</span>] = <a class="code" href="classargo_1_1json.html">argo::json</a>(); <span class="comment">// null</span></div>
 <div class="line"></div>
 <div class="line"><span class="comment">// print it</span></div>
 <div class="line">std::cout &lt;&lt; j &lt;&lt; std::endl;</div>
@@ -142,20 +142,20 @@ Extract a value using a JSON pointer.</h2>
 <div class="line">   <span class="stringliteral">&quot;m~n&quot;</span>: 8</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> Extract the value of the zeroeth element of the foo array:</p>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> j = <a class="code" href="classargonaut_1_1parser.html#aea46bdbc47437bb5739b6c93b20ec3e7">argonaut::parser::load</a>(<span class="stringliteral">&quot;foo.json&quot;</span>);</div>
-<div class="line">std::cout &lt;&lt; j-&gt;find(<a class="code" href="classargonaut_1_1pointer.html">argonaut::pointer</a>(<span class="stringliteral">&quot;/foo/0&quot;</span>)) &lt;&lt; std::endl;</div>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> j = <a class="code" href="classargo_1_1parser.html#aea46bdbc47437bb5739b6c93b20ec3e7">argo::parser::load</a>(<span class="stringliteral">&quot;foo.json&quot;</span>);</div>
+<div class="line">std::cout &lt;&lt; j-&gt;find(<a class="code" href="classargo_1_1pointer.html">argo::pointer</a>(<span class="stringliteral">&quot;/foo/0&quot;</span>)) &lt;&lt; std::endl;</div>
 </div><!-- fragment --><h1><a class="anchor" id="overview"></a>
 Overview</h1>
-<p>The Argonaut library provides a set of C++ classes for manipulating JSON structures as defined by <a href="https://tools.ietf.org/html/rfc7159">RFC7159</a>. It was designed with the following goals in mind:</p>
+<p>The Argo library provides a set of C++ classes for manipulating JSON structures as defined by <a href="https://tools.ietf.org/html/rfc7159">RFC7159</a>. It was designed with the following goals in mind:</p>
 <ul>
 <li>Ease of use. C++'s type system doesn't map naturally onto the dynamic type systems used by Javascript, Python and others. The aim is to provide an interface that is brief and intuitive.</li>
-<li>Performance. If you're using C++ then you probably care about performance. Argonaut provides efficient ways to manipulate large JSON structures whilst still providing coding simplicity for smaller ones.</li>
-<li>Flexibility. Not all JSON messages follow the standard. Argonaut allows calling code to decide how to handle some of those situations should it choose to.</li>
+<li>Performance. If you're using C++ then you probably care about performance. Argo provides efficient ways to manipulate large JSON structures whilst still providing coding simplicity for smaller ones.</li>
+<li>Flexibility. Not all JSON messages follow the standard. Argo allows calling code to decide how to handle some of those situations should it choose to.</li>
 <li>Conformant. Every attempt has been made to conform to the <a href="https://tools.ietf.org/html/rfc7159">RFC</a>.</li>
 </ul>
 <h1><a class="anchor" id="featured"></a>
 Features</h1>
-<p>Argonaut has a number of features:</p>
+<p>Argo has a number of features:</p>
 <ul>
 <li>Concise API.</li>
 <li>Direct handling of multiple IO styles (streams, FILEs, file descriptors, strings).</li>
@@ -181,21 +181,21 @@ Unicode Strings, Unicode and UTF-8</h1>
 <div class="line">    <span class="stringliteral">&quot;three&quot;</span> : <span class="stringliteral">&quot;😂 &quot;</span>,          <span class="comment">// Directly embedded unicode emoji</span></div>
 <div class="line">    <span class="stringliteral">&quot;three&quot;</span> : <span class="stringliteral">&quot;\ud83d\ude02&quot;</span>  <span class="comment">// The same emoji in \u form</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p>When reading, Argonaut handles translates everything into <a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a>. When writing it encodes all unicode characaters using \u sequences.</p>
+</div><!-- fragment --><p>When reading, Argo handles translates everything into <a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a>. When writing it encodes all unicode characaters using \u sequences.</p>
 <h1><a class="anchor" id="numbers"></a>
 Numbers, Ints and Doubles</h1>
-<p>JSON has just numbers. C++, on the other hand, has ints and doubles. When parsing messages Argonaut handles this as follows:</p>
+<p>JSON has just numbers. C++, on the other hand, has ints and doubles. When parsing messages Argo handles this as follows:</p>
 <ul>
 <li>if the number is an integer (i.e. if it consists of a sequence of 0-9 digits and an options leading '-' sign) then it is parsed as an integer. If it is out of range for the int POD type, then, if the parser fallback_to_double option is true (the default) an attempt is then made to convert it to a double instead, otherwise parsing fails and an exception is thrown.</li>
-<li>if the number is floating point, (e.g. 1.2, 3e+10 etc.) then Argonaut attempts to convert it to a double. If it is out of range, then parsing fails and an exception is thrown.</li>
+<li>if the number is floating point, (e.g. 1.2, 3e+10 etc.) then Argo attempts to convert it to a double. If it is out of range, then parsing fails and an exception is thrown.</li>
 </ul>
 <p>An option is provided for programs that need to handle larger numbers using code of their own whereby numbers are syntax checked only and returned as a string for conversion by the caller.</p>
 <h2><a class="anchor" id="precision"></a>
 Floating Point Precision</h2>
-<p>Turning floating point numbers into strings is <a href="http://www.serpentine.com/blog/2011/06/29/here-be-dragons-advances-in-problems-you-didnt-even-know-you-had/">harder than it looks</a>. Argonaut take the approach of writing doubles to the full available precision (17 digits) which means that, in string terms, what comes out will not always match what comes out of a Python or Javascript (or other) program but, in numeric terms once parsed and held in an IEEE floating point number, will. If you care about the exact formatting of floating point numbers in your output file then use the json(json::number_double_e, "123.5678") constructor to control the exact output format. To produce optimal number strings (broadly the shortest string that produces the exact same floating point number when converted back) from C++ code I recommend <a href="https://github.com/google/double-conversion/blob/master/double-conversion/strtod.h">Google's double conversion library</a>.</p>
+<p>Turning floating point numbers into strings is <a href="http://www.serpentine.com/blog/2011/06/29/here-be-dragons-advances-in-problems-you-didnt-even-know-you-had/">harder than it looks</a>. Argo take the approach of writing doubles to the full available precision (17 digits) which means that, in string terms, what comes out will not always match what comes out of a Python or Javascript (or other) program but, in numeric terms once parsed and held in an IEEE floating point number, will. If you care about the exact formatting of floating point numbers in your output file then use the json(json::number_double_e, "123.5678") constructor to control the exact output format. To produce optimal number strings (broadly the shortest string that produces the exact same floating point number when converted back) from C++ code I recommend <a href="https://github.com/google/double-conversion/blob/master/double-conversion/strtod.h">Google's double conversion library</a>.</p>
 <h2><a class="anchor" id="raw"></a>
 Raw Values</h2>
-<p>Argonaut offers the option to parse JSON messages without converting strings into UTF-8 and without converting numbers into ints or doubles. This allows calling code to handle its own coversions in the case where string values may be invalid (e.g. formatting issues or invalid unicode code points) or where numbers may be too large to fit into the standard types. String and number raw values (created using the json(type, raw_value) constructor) behave differently to normally constructed objects in the following ways: </p>
+<p>Argo offers the option to parse JSON messages without converting strings into UTF-8 and without converting numbers into ints or doubles. This allows calling code to handle its own coversions in the case where string values may be invalid (e.g. formatting issues or invalid unicode code points) or where numbers may be too large to fit into the standard types. String and number raw values (created using the json(type, raw_value) constructor) behave differently to normally constructed objects in the following ways: </p>
 <pre class="fragment">- Cast operators will throw an exception.
 - Comparison operators (== != &lt; &gt; &lt;= &gt;=) will throw an exception.
 </pre><p>If you need to compare them then you must handle your own conversion on the string returned by get_raw_value().</p>
@@ -210,7 +210,7 @@ Thread Safety</h1>
 <p>The library uses only thread safe system calls and has no global variables that are not also constant. This means that multiple threads can safely parse and uparse messages at the same time and that multiple threads can safely call const methods on a shared json instance. Simultaneous update/read or update/update operations on a json instance are not thread safe. This is the same thread safety model implemented by STL containers.</p>
 <h1><a class="anchor" id="performance"></a>
 Efficiency Peformance vs. Convenience</h1>
-<p>The Argonaut json class comes with a copy constructor and an assignment operator. For small objects they're convient to use and don't come with too much of a performance hit. E.g. this is probably fine unless you're doing a very large number of times in a tight loop:</p>
+<p>The Argo json class comes with a copy constructor and an assignment operator. For small objects they're convient to use and don't come with too much of a performance hit. E.g. this is probably fine unless you're doing a very large number of times in a tight loop:</p>
 <div class="fragment"><div class="line">json j1;</div>
 <div class="line">j1[<span class="stringliteral">&quot;a&quot;</span>] = 1;</div>
 <div class="line">j1[<span class="stringliteral">&quot;b&quot;</span>] = <span class="stringliteral">&quot;a string&quot;</span>;</div>
@@ -221,28 +221,28 @@ Efficiency Peformance vs. Convenience</h1>
 Installation</h1>
 <h2><a class="anchor" id="all"></a>
 All Operating Systems &amp; Compilers</h2>
-<p>The simplest way to install Argonaut is to include the code in your own project and then build it along with everything else. All the .hpp files and all the .cpp files are needed except for <a class="el" href="documentation_8hpp.html" title="A file containing just documentation for doxygen to pick up and put on the main page. ">documentation.hpp</a>, json_test.cpp and json_example.cpp.</p>
+<p>The simplest way to install Argo is to include the code in your own project and then build it along with everything else. All the .hpp files and all the .cpp files are needed except for <a class="el" href="documentation_8hpp.html" title="A file containing just documentation for doxygen to pick up and put on the main page. ">documentation.hpp</a>, json_test.cpp and json_example.cpp.</p>
 <h2><a class="anchor" id="linux"></a>
 Linux</h2>
 <p>The -std=c++11 g++ flag is required for compilation with gcc.</p>
 <p>Alternatively, use the included cmake config file to build a static library and link to that:</p>
 <pre>
-cd directory-where-you-downloaded-argonaut
+cd directory-where-you-downloaded-argo
 cmake .
 make
 </pre><p>Then in your own build config on the compile line:</p>
 <pre>
--Idirectory-where-you-downloaded-argonaut
+-Idirectory-where-you-downloaded-argo
 </pre><p>And on the link line: </p>
 <pre>
--Ldirectory-where-you-downloaded-argonaut -largonaut
+-Ldirectory-where-you-downloaded-argo-largo
 </pre><h2><a class="anchor" id="windoze"></a>
 Windows</h2>
-<p>Open Argonaut.vcxproj using Visual Studio 2017 (community edition works fine) and build it. If you want to incorporate it into an existing project you'll need to configure your build not to use precompiled headers for the Argonaut files.</p>
+<p>Open Argo.vcxproj using Visual Studio 2017 (community edition works fine) and build it. If you want to incorporate it into an existing project you'll need to configure your build not to use precompiled headers for the Argo files.</p>
 <p>Note that the Windows version does not provide the file description based read and write options that the Unix version does. On Windows you are limited to string, stdio and iostreams.</p>
 <h1><a class="anchor" id="stuff"></a>
 Bits &amp; Pieces</h1>
-<p>JSON vs json - I've tried to stick to the convention of using JSON to refer to bits of text in the JSON format and json to refer to the Argonaut json class.</p>
+<p>JSON vs json - I've tried to stick to the convention of using JSON to refer to bits of text in the JSON format and json to refer to the Argo json class.</p>
 <p>AVRO - the library doesn't have support for this right now but I do plan to add it at some point as I need it for another project.</p>
 <p>SAX style parser - I'm not sure about this one. Does anyone really use JSON to represent anything so large and/or complex that it's a genuinely useful approach? I get why the monster than XML has become needs such a thing but I'm not convinced of its usefulness for JSON, at least not from the use cases I've observed or considered. Please tell me otherwise if you disagree.</p>
 <h1><a class="anchor" id="licence"></a>
@@ -265,7 +265,7 @@ SOFTWARE.
 </pre> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 11 2017 11:08:47 for Argonaut by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 13 2017 17:31:18 for Argo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
