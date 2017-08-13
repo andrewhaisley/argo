@@ -26,7 +26,7 @@
 /// \file common.hpp Common defs needed everywhere and, as far as is possible, platform specific changes.
 
 /// You can change the namespace of the whole library by changing this value.
-#define NAMESPACE argonaut
+#define NAMESPACE argo
 
 #ifdef _MSC_VER
 #define strerror_r(e, b, l) strerror_s(b, l, e)

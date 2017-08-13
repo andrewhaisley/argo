@@ -1,5 +1,5 @@
-#ifndef _json_argonaut_hpp_
-#define _json_argonaut_hpp_
+#ifndef _json_argo_hpp_
+#define _json_argo_hpp_
 
 /*
  * Copyright (c) 2017 Andrew Haisley
@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-/// \file argonaut.hpp Single file to include to get the full set of headers needed.
+/// \file argo.hpp Single file to include to get the full set of headers needed.
 
 #include "common.hpp"
 #include "json.hpp"

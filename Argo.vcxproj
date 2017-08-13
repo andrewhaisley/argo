@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{E32F4D3B-B7D4-4F0C-937E-2496880D38DF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Argonaut</RootNamespace>
+    <RootNamespace>Argo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -159,7 +159,7 @@
     <ClCompile Include="writer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="argonaut.hpp" />
+    <ClInclude Include="argo.hpp" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="file_reader.hpp" />
     <ClInclude Include="file_writer.hpp" />

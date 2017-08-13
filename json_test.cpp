@@ -20,12 +20,12 @@
  * SOFTWARE.
  */
 
-/// \file json_test.cpp Argonaut test code.
+/// \file json_test.cpp Argo test code.
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "argonaut.hpp"
+#include "argo.hpp"
 
 #ifndef _JSON_WINDOWS_
 #include <sys/types.h>
@@ -35,7 +35,7 @@
 #endif
 
 using namespace std;
-using namespace argonaut;
+using namespace argo;
 
 ofstream jlog;
 
@@ -1175,36 +1175,36 @@ void test_parse()
 void test_numbers()
 {
     string s = "123";
-    auto j = argonaut::parser::parse(s);
+    auto j = argo::parser::parse(s);
     jlog << static_cast<int>(*j) << endl;
     s = "-123";
-    j = argonaut::parser::parse(s);
+    j = argo::parser::parse(s);
     jlog << static_cast<int>(*j) << endl;
 
     s = "123.456";
-    j = argonaut::parser::parse(s);
+    j = argo::parser::parse(s);
     jlog << static_cast<int>(*j) << endl;
 
     s = "-123.456";
-    j = argonaut::parser::parse(s);
+    j = argo::parser::parse(s);
     jlog << static_cast<double>(*j) << endl;
 
     s = "123.456e+3";
-    j = argonaut::parser::parse(s);
+    j = argo::parser::parse(s);
     jlog << static_cast<double>(*j) << endl;
 
     s = "123.456e-3";
-    j = argonaut::parser::parse(s);
+    j = argo::parser::parse(s);
     jlog << static_cast<double>(*j) << endl;
 
     s = "123.456e-2000";
-    j = argonaut::parser::parse(s);
+    j = argo::parser::parse(s);
     jlog << static_cast<double>(*j) << endl;
 
     try
     {
         s = "123.456e+2000";
-        j = argonaut::parser::parse(s);
+        j = argo::parser::parse(s);
         jlog << static_cast<double>(*j) << endl;
         jlog << "FAIL: range test 1 failed, no exception thrown " << s << endl;
     }
@@ -1227,7 +1227,7 @@ void test_numbers()
         {
             s = s + s;
         }
-        j = argonaut::parser::parse(s);
+        j = argo::parser::parse(s);
         jlog << static_cast<int>(*j) << endl;
         jlog << "FAIL: range test 2 failed, no exception thrown " << static_cast<double>(*j) << endl;
     }
@@ -1246,7 +1246,7 @@ void test_numbers()
     try
     {
         s = "1aaaa";
-        j = argonaut::parser::parse(s);
+        j = argo::parser::parse(s);
         jlog << static_cast<double>(*j) << endl;
         jlog << "FAIL: bad format test 1 failed, no exception thrown " << s << endl;
     }
@@ -1266,7 +1266,7 @@ void test_numbers()
     try
     {
         s = "1.1aaaa";
-        j = argonaut::parser::parse(s);
+        j = argo::parser::parse(s);
         jlog << static_cast<double>(*j) << endl;
         jlog << "FAIL: bad format test 2 failed, no exception thrown " << s << endl;
     }
@@ -1286,7 +1286,7 @@ void test_numbers()
     try
     {
         s = "1.1e1";
-        j = argonaut::parser::parse(s);
+        j = argo::parser::parse(s);
         jlog << static_cast<double>(*j) << endl;
         jlog << "FAIL: bad format test 3 failed, no exception thrown " << s << endl;
     }

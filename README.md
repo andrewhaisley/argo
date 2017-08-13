@@ -1,4 +1,4 @@
-# Argonaut
+# Argo
 A flexible and easy to use JSON library that makes the mapping of 
 a structures from a dynamically typed language onto C++ objects 
 as painless as possible. Support for JSON pointer (aka JSON Path)
@@ -14,4 +14,4 @@ unparser::save(*j, "newfile.json");
 ```
 
 # Documentation
-There is full documentation [here](https://andrewhaisley.github.io/argonaut/).
+There is full documentation [here](https://andrewhaisley.github.io/argo/).

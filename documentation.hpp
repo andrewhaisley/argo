@@ -1,6 +1,6 @@
 /// \file documentation.hpp A file containing just documentation for doxygen to pick up and put on the main page.
 
-/*! \mainpage Argonaut JSON Library Main Page
+/*! \mainpage Argo JSON Library Main Page
  * 
  * \section first Yet Another JSON Library?!
  *
@@ -23,12 +23,12 @@
  *
  * \code{.cpp}
  * #include <iostream>
- * #include "argonaut.hpp"
+ * #include "argo.hpp"
  * 
  * int main(int argc, char *argv[])
  * {
  *     std::string s = "{\"one\" : \"hello world\"}";
- *     argonaut::json j;
+ *     argo::json j;
  *     s >> j;
  *     std::cout << j["one"] << std::endl;
  * }
@@ -39,12 +39,12 @@
  * Read a JSON message from one file and write it back out to another.
  *
  * \code{.cpp}
- * #include "argonaut.hpp"
+ * #include "argo.hpp"
  * 
  * int main(int argc, char *argv[])
  * {
- *     auto j = argonaut::parser::load("test_files/test2.json");
- *     argonaut::unparser::save(*j, "test_files/tmp.json");
+ *     auto j = argo::parser::load("test_files/test2.json");
+ *     argo::unparser::save(*j, "test_files/tmp.json");
  * }
  * \endcode
  * 
@@ -54,7 +54,7 @@
  *
  * \code{.cpp}
  *    // create an object
- *    argonaut::json j(argonaut::json::object_e);
+ *    argo::json j(argo::json::object_e);
  *
  *    // add some values
  *    j["one"] = 1;
@@ -62,7 +62,7 @@
  *    j["three"] = "three";
  *    j["four"] = true;
  *    j["five"] = false;
- *    j["six"] = argonaut::json(); // null
+ *    j["six"] = argo::json(); // null
  *    
  *    // print it
  *    std::cout << j << std::endl;
@@ -90,23 +90,23 @@
  * Extract the value of the zeroeth element of the foo array:
  *
  * \code{.cpp}
- *     auto j = argonaut::parser::load("foo.json");
- *     std::cout << j->find(argonaut::pointer("/foo/0")) << std::endl;
+ *     auto j = argo::parser::load("foo.json");
+ *     std::cout << j->find(argo::pointer("/foo/0")) << std::endl;
  * \endcode
  *
  * \section overview Overview
  *
- * The Argonaut library provides a set of C++ classes for manipulating JSON
+ * The Argo library provides a set of C++ classes for manipulating JSON
  * structures as defined by <a href="https://tools.ietf.org/html/rfc7159">RFC7159</a>.
  * It was designed with the following goals in mind:
  *     - Ease of use. C++'s type system doesn't map naturally onto the dynamic
  *                    type systems used by Javascript, Python and others. The aim
  *                    is to provide an interface that is brief and intuitive.
  *     - Performance. If you're using C++ then you probably care about performance.
- *                    Argonaut provides efficient ways to manipulate large JSON 
+ *                    Argo provides efficient ways to manipulate large JSON 
  *                    structures whilst still providing coding simplicity for 
  *                    smaller ones.
- *     - Flexibility. Not all JSON messages follow the standard. Argonaut allows
+ *     - Flexibility. Not all JSON messages follow the standard. Argo allows
  *                    calling code to decide how to handle some of those situations
  *                    should it choose to.
  *     - Conformant.  Every attempt has been made to conform to the 
@@ -114,7 +114,7 @@
  *
  * \section featured Features
  *
- * Argonaut has a number of features:
+ * Argo has a number of features:
  *     - Concise API.
  *     - Direct handling of multiple IO styles (streams, FILEs, file descriptors, strings).
  *     - DOM style representation of JSON messages.
@@ -149,20 +149,20 @@
  * }
  * \endcode
  *
- * When reading, Argonaut handles translates everything into 
+ * When reading, Argo handles translates everything into 
  * <a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a>. When writing
  * it encodes all unicode characaters using \\u sequences.
  *
  * \section numbers Numbers, Ints and Doubles
  *
  * JSON has just numbers. C++, on the other hand, has ints and doubles. When parsing
- * messages Argonaut handles this as follows:
+ * messages Argo handles this as follows:
  *     - if the number is an integer (i.e. if it consists of a sequence of 0-9 digits
  *       and an options leading '-' sign) then it is parsed as an integer. If it is out
  *       of range for the int POD type, then, if the parser fallback_to_double option is true (the
  *       default) an attempt is then made to convert it to a double instead, otherwise parsing fails 
  *       and an exception is thrown.
- *     - if the number is floating point, (e.g. 1.2, 3e+10 etc.) then Argonaut attempts
+ *     - if the number is floating point, (e.g. 1.2, 3e+10 etc.) then Argo attempts
  *       to convert it to a double. If it is out of range, then parsing fails and an
  *       exception is thrown.
  *
@@ -174,7 +174,7 @@
  *
  * Turning floating point numbers into strings is 
  * <a href="http://www.serpentine.com/blog/2011/06/29/here-be-dragons-advances-in-problems-you-didnt-even-know-you-had/">harder
- * than it looks</a>. Argonaut take the approach of writing doubles to the full available precision (17 digits) which means
+ * than it looks</a>. Argo take the approach of writing doubles to the full available precision (17 digits) which means
  * that, in string terms, what comes out will not always match what comes out of a Python or Javascript (or other) program but,
  * in numeric terms once parsed and held in an IEEE floating point number, will. If you care about the exact formatting 
  * of floating point numbers in your output file then use the json(json::number_double_e, "123.5678") constructor to control
@@ -184,7 +184,7 @@
  *
  * \subsection raw Raw Values
  *
- * Argonaut offers the option to parse JSON messages without converting strings into UTF-8 and 
+ * Argo offers the option to parse JSON messages without converting strings into UTF-8 and 
  * without converting numbers into ints or doubles. This allows calling code to handle its
  * own coversions in the case where string values may be invalid (e.g. formatting issues or
  * invalid unicode code points) or where numbers may be too large to fit into the standard
@@ -220,7 +220,7 @@
  * 
  * \section performance Efficiency Peformance vs. Convenience
  *
- * The Argonaut json class comes with a copy constructor and an assignment operator. For
+ * The Argo json class comes with a copy constructor and an assignment operator. For
  * small objects they're convient to use and don't come with too much of a performance hit.
  * E.g. this is probably fine unless you're doing a very large number of times in a tight
  * loop:
@@ -244,7 +244,7 @@
  *
  * \subsection all All Operating Systems & Compilers
  * 
- * The simplest way to install Argonaut is to include the code in your own project and
+ * The simplest way to install Argo is to include the code in your own project and
  * then build it along with everything else. All the .hpp files and all the .cpp
  * files are needed except for documentation.hpp, json_test.cpp and json_example.cpp.
  *
@@ -255,7 +255,7 @@
  * Alternatively, use the included cmake config file to build a static library and link to that:
  *
  * <pre>
- * cd directory-where-you-downloaded-argonaut
+ * cd directory-where-you-downloaded-argo
  * cmake .
  * make
  * </pre>
@@ -263,19 +263,19 @@
  * Then in your own build config on the compile line:
  * 
  * <pre>
- * -Idirectory-where-you-downloaded-argonaut
+ * -Idirectory-where-you-downloaded-argo
  * </pre>
  *
  * And on the link line:
  * <pre>
- * -Ldirectory-where-you-downloaded-argonaut -largonaut
+ * -Ldirectory-where-you-downloaded-argo-largo
  * </pre>
  *
  * \subsection windoze Windows
  *
- * Open Argonaut.vcxproj using Visual Studio 2017 (community edition works fine) and 
+ * Open Argo.vcxproj using Visual Studio 2017 (community edition works fine) and 
  * build it. If you want to incorporate it into an existing project you'll need to 
- * configure your build not to use precompiled headers for the Argonaut files.
+ * configure your build not to use precompiled headers for the Argo files.
  *
  * Note that the Windows version does not provide the file description based 
  * read and write options that the Unix version does. On Windows you are limited to
@@ -284,7 +284,7 @@
  * \section stuff Bits & Pieces
  *
  * JSON vs json - I've tried to stick to the convention of using JSON to refer
- * to bits of text in the JSON format and json to refer to the Argonaut json
+ * to bits of text in the JSON format and json to refer to the Argo json
  * class.
  *
  * AVRO - the library doesn't have support for this right now

@@ -20,35 +20,35 @@
  * SOFTWARE.
  */
 
-/// \file json_example.cpp Argonaut example code.
+/// \file json_example.cpp Argo example code.
 
 #include <iostream>
 #include <fstream>
-#include "argonaut.hpp"
+#include "argo.hpp"
 
 void hello_world()
 {
     std::string s = "{ \"one\" : \"hello world\"}";
-    auto j = argonaut::parser::parse(s);
+    auto j = argo::parser::parse(s);
     std::cout << (*j)["one"] << std::endl;
 }
 
 void parse_file()
 {
-    auto j = argonaut::parser::load("test_files/test2.json");
-    argonaut::unparser::save(*j, "test_files/tmp.json");
+    auto j = argo::parser::load("test_files/test2.json");
+    argo::unparser::save(*j, "test_files/tmp.json");
 }
 
 void json_pointer()
 {
-    auto j = argonaut::parser::load("test_files/test2.json");
-    std::cout << j->find(argonaut::pointer("/0/address")) << std::endl;
+    auto j = argo::parser::load("test_files/test2.json");
+    std::cout << j->find(argo::pointer("/0/address")) << std::endl;
 }
 
 void construct()
 {
     // create an object
-    argonaut::json j(argonaut::json::object_e);
+    argo::json j(argo::json::object_e);
 
     // add some values
     j["one"] = 1;
@@ -56,7 +56,7 @@ void construct()
     j["three"] = "three";
     j["four"] = true;
     j["five"] = false;
-    j["six"] = argonaut::json(); // null
+    j["six"] = argo::json(); // null
     
     // print it
     std::cout << j << std::endl;
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         json_pointer();
         construct();
     }
-    catch (argonaut::json_exception &e)
+    catch (argo::json_exception &e)
     {
         std::cout << e.what() << std::endl;
     }
