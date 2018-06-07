@@ -22,6 +22,7 @@
 
 /// \file json_utf8_exception.cpp The json_utf8_exception class implementation.
 
+#include <string>
 
 #include "common.hpp"
 #include "json_utf8_exception.hpp"

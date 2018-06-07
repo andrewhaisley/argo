@@ -22,6 +22,8 @@
 
 /// \file parser.cpp The parser class implementation.
 
+#include <math.h>
+
 #include <sstream>
 #include <fstream>
 
@@ -92,7 +94,7 @@ unique_ptr<json> parser::parse_number_double(const token &t)
     istringstream is(t.get_raw_value());
     double d;
 
-    if (is >> d)
+    if (is >> d && isfinite(d))
     {
         return unique_ptr<json>(new json(d));
     }

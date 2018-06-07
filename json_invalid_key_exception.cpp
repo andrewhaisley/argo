@@ -23,6 +23,7 @@
 /// \file json_invalid_key_exception.cpp The json_invalid_key_exception class implementation.
 
 #include <string.h>
+#include <string>
 
 #include "common.hpp"
 #include "json_invalid_key_exception.hpp"

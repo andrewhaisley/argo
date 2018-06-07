@@ -22,6 +22,8 @@
 
 /// \file json_parser_exception.cpp The json_parser_exception class implementation.
 
+#include <string>
+
 #include "common.hpp"
 #include "json_parser_exception.hpp"
 
