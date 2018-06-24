@@ -27,7 +27,7 @@
 #include <sstream>
 #include "argo.hpp"
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -1323,7 +1323,7 @@ void test_reader(reader &r)
 void test_readers_on_file(const string &file_name)
 {
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
     {
         jlog << "TESTING FD READER - BLOCK READER\n";
 
@@ -1429,7 +1429,7 @@ void test_writers()
         test_writer("file");
     }
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
     {
         int f = open("test_files/tmp.json", O_CREAT | O_WRONLY, 0);
         fd_writer w(f);

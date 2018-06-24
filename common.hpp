@@ -30,7 +30,7 @@
 
 #ifdef _MSC_VER
 #define strerror_r(e, b, l) strerror_s(b, l, e)
-#define _JSON_WINDOWS_
+#define _ARGO_WINDOWS_
 #endif
 
 #endif

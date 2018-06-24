@@ -74,7 +74,7 @@ namespace NAMESPACE
                 const char   *indent = " ",
                 int          indent_inc = 0);
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
         /**
          * Unparse a json instance to a POSIX file descriptor. See documentation
          * for unparse to stream for other parameter details.

@@ -37,7 +37,7 @@
 #include "json_utf8_exception.hpp"
 #include "json_io_exception.hpp"
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
 #include "fd_reader.hpp"
 #endif
 
@@ -334,7 +334,7 @@ unique_ptr<json> parser::parse(istream &i)
     return p.parse();
 }
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
 unique_ptr<json> parser::parse(int fd)
 {
     fd_reader r(fd, max_message_length, true);

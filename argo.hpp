@@ -41,7 +41,7 @@
 #include "stream_writer.hpp"
 #include "file_writer.hpp"
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
 #include "fd_reader.hpp"
 #include "fd_writer.hpp"
 #endif

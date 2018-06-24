@@ -82,7 +82,7 @@ namespace NAMESPACE
          */
         static std::unique_ptr<json> parse(std::istream &i);
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
         /**
          * Convenience method. Parse a JSON message read from a POSIX file descriptor. If you
          * need more detailed control of the options, create a reader and parser object

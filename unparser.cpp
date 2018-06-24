@@ -34,7 +34,7 @@
 #include "file_writer.hpp"
 #include "stream_writer.hpp"
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
 #include "fd_writer.hpp"
 #endif
 
@@ -173,7 +173,7 @@ void unparser::unparse(
     u.unparse(j, 0);
 }
 
-#ifndef _JSON_WINDOWS_
+#ifndef _ARGO_WINDOWS_
 void unparser::unparse(
         int        fd,
         const json &j,
