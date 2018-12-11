@@ -210,6 +210,10 @@ json::json(const char *s)
     m_value.u_string = new string(s);
 }
 
+json::json(null_t) noexcept : m_type(null_e)
+{
+}
+
 json::json(unique_ptr<string> s)
 {
     m_type = string_e;
@@ -283,6 +287,13 @@ json &json::operator=(const vector<unique_ptr<json>> &a)
     {
         m_value.u_array->push_back(unique_ptr<json>(new json(*v)));
     }
+    return *this;
+}
+
+json &json::operator=(null_t)
+{
+    reset();
+    m_type = null_e;
     return *this;
 }
 
