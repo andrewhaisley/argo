@@ -34,6 +34,7 @@
 
 namespace NAMESPACE
 {
+    typedef decltype(nullptr) null_t;
     /**
      * \brief All json things are represented by instances of this class.
      *
@@ -154,6 +155,11 @@ namespace NAMESPACE
         json(const char *s);
 
         /**
+         * New json instance of a null type
+         */
+        json(null_t) noexcept;
+
+        /**
          * New json instance of string type. In this case ownership of the string
          * is taken over by the json object. The caller will need to move() the 
          * unique_ptr to call this - which makes the transfer of ownership
@@ -223,6 +229,13 @@ namespace NAMESPACE
          * arrays.
          */
         json &operator=(const std::vector<std::unique_ptr<json>> &a);
+
+        /**
+         * Assign the instance a null value. All previous values are erased and/or
+         * freed. All values are deep copied so this can be inefficient for large
+         * arrays.
+         */
+        json &operator=(null_t);
 
         /**
          * Get the type of a JSON instance.
