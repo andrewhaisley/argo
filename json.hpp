@@ -34,7 +34,6 @@
 
 namespace NAMESPACE
 {
-    typedef decltype(nullptr) null_t;
     /**
      * \brief All json things are represented by instances of this class.
      *
@@ -64,6 +63,9 @@ namespace NAMESPACE
     class json
     {
     public:
+
+        // Convenience definition for creating null instances
+        typedef decltype(nullptr) null_t;
 
         /**
          * JSON types as per RFC 4627 but with numbers split into int and double.

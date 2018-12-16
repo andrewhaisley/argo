@@ -62,7 +62,7 @@
  *    j["three"] = "three";
  *    j["four"] = true;
  *    j["five"] = false;
- *    j["six"] = argo::json(); // null
+ *    j["six"] = nullptr; // null - can also use json()
  *    
  *    // print it
  *    std::cout << j << std::endl;

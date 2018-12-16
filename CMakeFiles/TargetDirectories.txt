@@ -1,0 +1,6 @@
+/home/andrew/argo/CMakeFiles/edit_cache.dir
+/home/andrew/argo/CMakeFiles/rebuild_cache.dir
+/home/andrew/argo/CMakeFiles/argo.dir
+/home/andrew/argo/CMakeFiles/json_test.dir
+/home/andrew/argo/CMakeFiles/doc.dir
+/home/andrew/argo/CMakeFiles/json_example.dir

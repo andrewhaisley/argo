@@ -1,0 +1,1 @@
+/usr/bin/c++    -g -Wall -std=c++11   CMakeFiles/json_test.dir/json_test.cpp.o  -o json_test -rdynamic libargo.a 
