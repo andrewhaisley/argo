@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,10 +20,16 @@
  * SOFTWARE.
  */
 
-#include <unistd.h>
+#include "common.hpp"
+
+#ifdef _ARGO_WINDOWS_
+#   include <io.h>
+#else
+#   include <unistd.h>
+#endif
+
 #include <errno.h>
 
-#include "common.hpp"
 #include "fd_reader.hpp"
 #include "json_io_exception.hpp"
 
@@ -32,8 +38,8 @@ using namespace NAMESPACE;
 
 /// \file fd_reader.cpp The fd_reader class implementation.
 
-fd_reader::fd_reader(int fd, int max_message_length, bool block_read) : 
-                            reader(max_message_length, block_read), 
+fd_reader::fd_reader(int fd, int max_message_length, bool block_read) :
+                            reader(max_message_length, block_read),
                             m_fd(fd)
 {
 }
@@ -41,7 +47,7 @@ fd_reader::fd_reader(int fd, int max_message_length, bool block_read) :
 int fd_reader::read_next_char()
 {
     char buf[1];
-    ssize_t n = read(m_fd, buf, 1);
+    size_t n = read(m_fd, buf, 1);
     if (n == 0)
     {
         return EOF;
@@ -62,7 +68,7 @@ int fd_reader::read_next_char()
 
 bool fd_reader::read_next_block()
 {
-    ssize_t n = read(m_fd, m_block, block_size);
+    size_t n = read(m_fd, m_block, block_size);
 
     if (n == 0)
     {
