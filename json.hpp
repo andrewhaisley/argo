@@ -408,6 +408,12 @@ namespace NAMESPACE
         const json &insert(const std::string &name, std::unique_ptr<json> j);
 
         /**
+         * Convenience function to check if an object type has a specific entry.
+         * \throw json_exception if the instance isn't an object.
+         */
+        bool has(const std::string &name) const;
+
+        /**
          * Gets the uninterpretted raw text for a scalar value from the JSON file or string that was parsed.
          * For objects and arrays, this will be empty.
          */

@@ -317,6 +317,11 @@ map<string, unique_ptr<json>> &json::get_object()
     return *m_value.u_object;
 }
 
+bool json::has(const std::string &name) const
+{
+    return (*m_value.u_object).find(name) != (*m_value.u_object).end();
+}
+
 const map<string, unique_ptr<json>> &json::get_object() const
 {
     return *m_value.u_object;
