@@ -47,7 +47,8 @@ fd_reader::fd_reader(int fd, int max_message_length, bool block_read) :
 int fd_reader::read_next_char()
 {
     char buf[1];
-    size_t n = read(m_fd, buf, 1);
+    int n = read(m_fd, buf, 1);
+
     if (n == 0)
     {
         return EOF;
@@ -68,7 +69,7 @@ int fd_reader::read_next_char()
 
 bool fd_reader::read_next_block()
 {
-    size_t n = read(m_fd, m_block, block_size);
+    int n = read(m_fd, m_block, block_size);
 
     if (n == 0)
     {
