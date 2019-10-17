@@ -53,7 +53,7 @@ if doxygen.found()
     doc_conf.set('DOXYGEN_OUTPUT', meson.current_build_dir())
 
     doxyfile = configure_file(
-        input : 'Doxyfile.in',
+        input : 'doxygen.conf',
         output : 'Doxyfile',
         configuration : doc_conf
     )
