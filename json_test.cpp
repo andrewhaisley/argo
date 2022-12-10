@@ -1534,7 +1534,7 @@ void test_options()
                 jlog << "FAIL: don't convert number returned an incorrect raw value\n";
             }
         }
-        catch (json_parser_exception)
+        catch (json_parser_exception &e)
         {
             jlog << "FAIL: don't convert number threw an exception\n";
         }
@@ -1557,7 +1557,7 @@ void test_options()
                 jlog << "FAIL: don't convert string returned an incorrect raw value:'" << j1->get_raw_value() << "'" << endl;
             }
         }
-        catch (json_parser_exception)
+        catch (json_parser_exception &e)
         {
             jlog << "FAIL: don't convert string threw an exception\n";
         }
