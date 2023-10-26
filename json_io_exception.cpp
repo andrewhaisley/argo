@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -64,11 +64,12 @@ json_io_exception::json_io_exception(exception_type et) noexcept : json_exceptio
 json_io_exception::json_io_exception(exception_type et, int posix_errno) noexcept : json_exception(et)
 {
     char buffer[max_message_length];
+    strerror_r(posix_errno, buffer, max_message_length);
 
-    snprintf(m_message, max_message_length, "%s : %s", get_main_message(), strerror_r(posix_errno, buffer, max_message_length));
+    snprintf(m_message, max_message_length, "%s : %s", get_main_message(), buffer);
 }
 
 json_io_exception::json_io_exception(exception_type et, size_t s) noexcept : json_exception(et)
 {
-    snprintf(m_message, max_message_length, "%s : %ld", get_main_message(), s);
+    snprintf(m_message, max_message_length, "%s : %zu", get_main_message(), s);
 }

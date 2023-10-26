@@ -36,6 +36,8 @@ namespace NAMESPACE
     {
     public:
 
+        virtual ~stream_reader() {}
+
         /**
          * Constructor.
          * \param   s                   IOSTREAMS input stream. The instance does not take
