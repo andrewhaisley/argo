@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -50,7 +50,7 @@ json_utf8_exception::json_utf8_exception(exception_type et, unsigned int i) noex
 
 void json_utf8_exception::add_byte_index(size_t byte_index) noexcept
 {
-    snprintf(m_message, max_message_length, "%s at or near byte %ld", get_main_message(), byte_index);
+    snprintf(m_message, max_message_length, "%s at or near byte %zu", get_main_message(), byte_index);
 }
 
 size_t json_utf8_exception::get_byte_index() const noexcept
