@@ -43,6 +43,8 @@ namespace NAMESPACE
     {
     public:
 
+        virtual ~reader() {}
+
         /// Amount of data to read at once when in block read mode.
         static const int block_size = 8192;
 

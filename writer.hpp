@@ -42,6 +42,8 @@ namespace NAMESPACE
     {
     public:
 
+        virtual ~writer() {}
+
         /// Constructor.
         writer();
 

@@ -34,6 +34,8 @@ namespace NAMESPACE
     {
     public:
 
+        virtual ~fd_reader() {}
+
         /**
          * Constructor.
          * \param   fd                  POSIX stream file descriptor. The instance does not take

@@ -36,6 +36,8 @@ namespace NAMESPACE
     {
     public:
 
+        virtual ~file_reader() {}
+
         /**
          * Constructor.
          * \param   f                   STDIO file. The instance does not take
