@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,6 +41,12 @@ json::json() noexcept : m_type(null_e)
 json::~json()
 {
     reset();
+}
+
+void json::set_string(std::string *s)
+{
+    m_type = string_e;
+    m_value.u_string = s;
 }
 
 void json::reset()
@@ -122,7 +128,7 @@ void json::move_json(json &other)
         reset();
         m_type = other.m_type;
         m_value = other.m_value;
-        m_raw_value = move(other.m_raw_value);
+        m_raw_value = std::move(other.m_raw_value);
 
         other.m_type = null_e;
     }
@@ -200,8 +206,7 @@ json::json(bool b)
 
 json::json(const string &s)
 {
-    m_type = string_e;
-    m_value.u_string = new string(s);
+    set_string(new string(s));
 }
 
 json::json(const char *s)
@@ -247,8 +252,7 @@ json &json::operator=(bool b)
 json &json::operator=(const string &s)
 {
     reset();
-    m_type = string_e;
-    m_value.u_string = new string(s);
+    set_string(new string(s));
     return *this;
 }
 
@@ -274,7 +278,7 @@ json &json::operator=(const map<string, unique_ptr<json>> &o)
     m_type = object_e;
     for (const auto &p : o)
     {
-        (*m_value.u_object)[p.first] = unique_ptr<json>(new json(*p.second));
+        (*m_value.u_object).emplace(p.first, unique_ptr<json>(new json(*p.second)));
     }
     return *this;
 }
@@ -613,8 +617,8 @@ bool json::object_equal(const json &other) const
 {
     return m_value.u_object->size() == other.m_value.u_object->size() &&
             equal(
-                m_value.u_object->begin(), 
-                m_value.u_object->end(), 
+                m_value.u_object->begin(),
+                m_value.u_object->end(),
                 other.m_value.u_object->begin(),
                 [] (const pair<const string, unique_ptr<json>> &a, const pair<const string, unique_ptr<json>> &b)
                         { return a.first == b.first && *(a.second) == *(b.second); });
@@ -622,10 +626,10 @@ bool json::object_equal(const json &other) const
 
 bool json::array_equal(const json &other) const
 {
-    return m_value.u_array->size() == other.m_value.u_array->size() && 
+    return m_value.u_array->size() == other.m_value.u_array->size() &&
             equal(
-                m_value.u_array->begin(), 
-                m_value.u_array->end(), 
+                m_value.u_array->begin(),
+                m_value.u_array->end(),
                 other.m_value.u_array->begin(),
                 [] (const unique_ptr<json> &a, const unique_ptr<json> &b)
                         { return *a == *b; });

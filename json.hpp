@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -70,16 +70,16 @@ namespace NAMESPACE
         /**
          * JSON types as per RFC 4627 but with numbers split into int and double.
          */
-        typedef enum 
-        { 
-            object_e, 
-            array_e, 
-            boolean_e, 
-            null_e, 
-            number_int_e, 
-            number_double_e, 
-            string_e 
-        } 
+        typedef enum
+        {
+            object_e,
+            array_e,
+            boolean_e,
+            null_e,
+            number_int_e,
+            number_double_e,
+            string_e
+        }
         type;
 
         /**
@@ -151,6 +151,16 @@ namespace NAMESPACE
          */
         json(const std::string &s);
 
+#ifdef _ARGO_STRING_VIEW_
+        /**
+         * New json instance of string type. In this case the string is copied.
+         */
+        inline json(std::string_view sv)
+        {
+            set_string(new std::string(sv));
+        }
+#endif
+
         /**
          * New json instance of string type. In this case the string is copied.
          */
@@ -163,7 +173,7 @@ namespace NAMESPACE
 
         /**
          * New json instance of string type. In this case ownership of the string
-         * is taken over by the json object. The caller will need to move() the 
+         * is taken over by the json object. The caller will need to move() the
          * unique_ptr to call this - which makes the transfer of ownership
          * explicit.
          */
@@ -175,7 +185,7 @@ namespace NAMESPACE
         json &operator=(const json &other);
 
         /**
-         * Move assignment. Shallow copy therefore much more efficient than a 
+         * Move assignment. Shallow copy therefore much more efficient than a
          * deep copy.
          */
         json &operator=(json &&other) noexcept;
@@ -210,10 +220,22 @@ namespace NAMESPACE
          */
         json &operator=(const std::string &s);
 
+#ifdef _ARGO_STRING_VIEW_
         /**
          * Assign the instance a string value. All previous values are erased and/or
-         * freed. In this case ownership of the string is taken over by the json object. 
-         * The caller will need to move() the unique_ptr to call this - which makes 
+         * freed. In this case, a copy of the string is made.
+         */
+        inline json &operator=(std::string_view sv)
+        {
+            set_string(new std::string(sv));
+            return *this;
+        }
+#endif
+
+        /**
+         * Assign the instance a string value. All previous values are erased and/or
+         * freed. In this case ownership of the string is taken over by the json object.
+         * The caller will need to move() the unique_ptr to call this - which makes
          * the transfer of ownership explicit.
          */
         json &operator=(std::unique_ptr<std::string> s);
@@ -299,7 +321,7 @@ namespace NAMESPACE
 
         /**
          * Find an entry in an object instance by name. If the entry
-         * doesn't exist, a new one is created with a json(null_e) 
+         * doesn't exist, a new one is created with a json(null_e)
          * value. Note, this is the same semantics as the STL map []
          * operator.
          * \throw json_exception if the instance isn't an object.
@@ -308,7 +330,7 @@ namespace NAMESPACE
 
         /**
          * Find an entry in an object instance by name. If the entry
-         * doesn't exist, a new one is created with a json(null_e) 
+         * doesn't exist, a new one is created with a json(null_e)
          * value. Note, this is the same semantics as the STL map []
          * operator.
          * \throw json_exception if the instance isn't an object.
@@ -342,7 +364,7 @@ namespace NAMESPACE
         /**
          * Find an entry in an array instance by index. If the index
          * is out of range, an exception is thrown. This method is
-         * here to provide disambiguation from char * when a 0 literal is 
+         * here to provide disambiguation from char * when a 0 literal is
          * used.
          * \throw json_exception if the instance isn't an array.
          * \throw json_array_index_range_exception if the index is out of range.
@@ -360,7 +382,7 @@ namespace NAMESPACE
         /**
          * Find an entry in an array instance by index. If the index
          * is out of range, an exception is thrown. This method is
-         * here to provide disambiguation from char * when a 0 literal is 
+         * here to provide disambiguation from char * when a 0 literal is
          * \throw json_exception if the instance isn't an array.
          * \throw json_array_index_range_exception if the index is out of range.
          */
@@ -433,7 +455,7 @@ namespace NAMESPACE
 
         /**
          * < operator. This will not work if either side is a raw value and only works for numbers
-         * and strings. Strings can only be compared with strings but ints and double may be    
+         * and strings. Strings can only be compared with strings but ints and double may be
          * compared with each other and will be cast to doubles first.
          * \throw   json_exception  if either instance is a raw value (constructed with json(type, raw_value)
          *                          or if the types aren't comparable.
@@ -442,7 +464,7 @@ namespace NAMESPACE
 
         /**
          * < operator. This will not work if either side is a raw value and only works for numbers
-         * and strings. Strings can only be compared with strings but ints and double may be    
+         * and strings. Strings can only be compared with strings but ints and double may be
          * compared with each other and will be cast to doubles first.
          * \throw   json_exception  if either instance is a raw value (constructed with json(type, raw_value)
          *                          or if the types aren't comparable.
@@ -451,7 +473,7 @@ namespace NAMESPACE
 
         /**
          * > operator. This will not work if either side is a raw value and only works for numbers
-         * and strings. Strings can only be compared with strings but ints and double may be    
+         * and strings. Strings can only be compared with strings but ints and double may be
          * compared with each other and will be cast to doubles first.
          * \throw   json_exception  if either instance is a raw value (constructed with json(type, raw_value)
          *                          or if the types aren't comparable.
@@ -460,7 +482,7 @@ namespace NAMESPACE
 
         /**
          * > operator. This will not work if either side is a raw value and only works for numbers
-         * and strings. Strings can only be compared with strings but ints and double may be    
+         * and strings. Strings can only be compared with strings but ints and double may be
          * compared with each other and will be cast to doubles first.
          * \throw   json_exception  if either instance is a raw value (constructed with json(type, raw_value)
          *                          or if the types aren't comparable.
@@ -468,56 +490,56 @@ namespace NAMESPACE
         bool operator>=(const json &other) const;
 
         /**
-         * Full set of relevant comparison operators. 
+         * Full set of relevant comparison operators.
          */
 
-        /// == operator - throws for raw values 
+        /// == operator - throws for raw values
         bool operator==(int i) const;
-        /// == operator - throws for raw values 
+        /// == operator - throws for raw values
         bool operator==(double d) const;
-        /// == operator - throws for raw values 
+        /// == operator - throws for raw values
         bool operator==(const std::string &s) const;
-        /// == operator - throws for raw values 
+        /// == operator - throws for raw values
         bool operator==(const char *s) const;
-        /// != operator - throws for raw values 
+        /// != operator - throws for raw values
         bool operator!=(int i) const;
-        /// != operator - throws for raw values 
+        /// != operator - throws for raw values
         bool operator!=(double d) const;
-        /// != operator - throws for raw values 
+        /// != operator - throws for raw values
         bool operator!=(const std::string &s) const;
-        /// != operator - throws for raw values 
+        /// != operator - throws for raw values
         bool operator!=(const char *s) const;
-        /// < operator - throws for raw values 
+        /// < operator - throws for raw values
         bool operator<(int i) const;
-        /// < operator - throws for raw values 
+        /// < operator - throws for raw values
         bool operator<(double d) const;
-        /// < operator - throws for raw values 
+        /// < operator - throws for raw values
         bool operator<(const std::string &s) const;
-        /// < operator - throws for raw values 
+        /// < operator - throws for raw values
         bool operator<(const char *s) const;
-        /// <= operator - throws for raw values 
+        /// <= operator - throws for raw values
         bool operator<=(int i) const;
-        /// <= operator - throws for raw values 
+        /// <= operator - throws for raw values
         bool operator<=(double d) const;
-        /// <= operator - throws for raw values 
+        /// <= operator - throws for raw values
         bool operator<=(const std::string &s) const;
-        /// <= operator - throws for raw values 
+        /// <= operator - throws for raw values
         bool operator<=(const char *s) const;
-        /// > operator - throws for raw values 
+        /// > operator - throws for raw values
         bool operator>(int i) const;
-        /// > operator - throws for raw values 
+        /// > operator - throws for raw values
         bool operator>(double d) const;
-        /// > operator - throws for raw values 
+        /// > operator - throws for raw values
         bool operator>(const std::string &s) const;
-        /// > operator - throws for raw values 
+        /// > operator - throws for raw values
         bool operator>(const char *s) const;
-        /// >= operator - throws for raw values 
+        /// >= operator - throws for raw values
         bool operator>=(int i) const;
-        /// >= operator - throws for raw values 
+        /// >= operator - throws for raw values
         bool operator>=(double d) const;
-        /// >= operator - throws for raw values 
+        /// >= operator - throws for raw values
         bool operator>=(const std::string &s) const;
-        /// >= operator - throws for raw values 
+        /// >= operator - throws for raw values
         bool operator>=(const char *s) const;
 
         /**
@@ -527,6 +549,8 @@ namespace NAMESPACE
         const json &find(const pointer &p) const;
 
     private:
+
+        void set_string(std::string *s);
 
         /**
          * A union to hold the value of the json instance. Done as a union so as to
@@ -562,7 +586,7 @@ namespace NAMESPACE
 
         /**
          * Raw string value of int, double and string types. This is held in the case
-         * where the value can't be represented as an int, double or STL string. This can 
+         * where the value can't be represented as an int, double or STL string. This can
          * happen for a variety of reasons:<br>
          *   An integer is too large to be held in the available int size.<br>
          *   An floating point number is too large to be held in the available double size.<br>
