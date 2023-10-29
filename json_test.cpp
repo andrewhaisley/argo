@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -573,7 +573,7 @@ void test_comparison_operators()
     test_comparison_operators_same(d1, d2, i3);
     test_comparison_operators_same(d1, d2, d3);
 }
-    
+
 void test_append()
 {
     json a(json::array_e);
@@ -1311,7 +1311,7 @@ void test_reader(reader &r)
     sum += c;
     jlog << "FIRST CHAR : " << c << endl;
     int n = 1;
-    while ((c = r.next() != EOF)) 
+    while ((c = r.next() != EOF))
     {
         sum += c;
         n++;
@@ -1506,7 +1506,7 @@ void test_options()
         }
         catch (json_parser_exception &e)
         {
-            if (e.get_type() == json_exception::number_out_of_range_e)  
+            if (e.get_type() == json_exception::number_out_of_range_e)
             {
                 jlog << "PASS: int that was too large to be an int threw correct exception type\n";
             }
@@ -1589,14 +1589,30 @@ void test_options()
 
 int check_results()
 {
-    ifstream f1("test_files/known_good_jlog.txt");
-    ifstream f2("test_files/jlog.txt");
+    ifstream f1("./test_files/known_good_jlog.txt");
+    ifstream f2("./test_files/jlog.txt");
+
+    if (!f1.is_open())
+    {
+        cerr << "TESTS FAILED - couldn't open test_files/known_good_jlog.txt\n";
+        return 1;
+    }
+
+    if (!f2.is_open())
+    {
+        cerr << "TESTS FAILED - couldn't open test_files/jlog.txt\n";
+        return 1;
+    }
 
     string line1;
     string line2;
 
+    size_t line_number = 0;
+
     while (getline(f1, line1))
     {
+        line_number++;
+
         if (getline(f2, line2))
         {
             if (line1 == line2)
@@ -1604,7 +1620,7 @@ int check_results()
                 continue;
             }
         }
-        cerr << "TESTS FAILED - compare test_files/jlog.txt with test_files/known_good_jlog.txt\n";
+        cerr << "TESTS FAILED - compare test_files/jlog.txt with test_files/known_good_jlog.txt (line " << line_number << ")\n";
         return 1;
     }
 
@@ -1616,7 +1632,7 @@ int check_results()
     }
     else
     {
-        cerr << "TESTS FAILED - compare test_files/jlog.txt with test_files/known_good_jlog.txt\n";
+        cerr << "TESTS FAILED - compare test_files/jlog.txt with test_files/known_good_jlog.txt (jlog was longer than known_good)\n";
         return 1;
     }
 

@@ -16,3 +16,6 @@
 !README
 !*.md
 !meson.build
+
+# ignore builds
+*[Bb]uild*
