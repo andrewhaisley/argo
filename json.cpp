@@ -43,10 +43,20 @@ json::~json()
     reset();
 }
 
-void json::set_string(std::string *s)
+void json::become_string(const std::string& s)
 {
     m_type = string_e;
-    m_value.u_string = s;
+    construct_string(s);
+}
+
+void json::construct_string()
+{
+    new (&m_value.u_string) std::string;
+}
+
+void json::construct_string(const std::string& s)
+{
+    new (&m_value.u_string) std::string(s);
 }
 
 void json::reset()
@@ -62,8 +72,7 @@ void json::reset()
         m_value.u_array = nullptr;
         break;
     case string_e:
-        delete m_value.u_string;
-        m_value.u_string = nullptr;
+        m_value.u_string.~string();
         break;
     default:
         break;
@@ -75,38 +84,45 @@ void json::reset()
 
 void json::copy_json(const json &other)
 {
-    if (this != &other)
+    if (this == &other) return;
+
+    reset();
+    m_type = other.m_type;
+    m_raw_value = other.m_raw_value;
+
+    if (m_type == object_e)
     {
-        reset();
-        m_type = other.m_type;
-        m_raw_value = other.m_raw_value;
+        m_value.u_object = new json::json_object;
 
-        if (m_type == object_e)
+        for (const auto &p : *other.m_value.u_object)
         {
-            m_value.u_object = new map<string, unique_ptr<json>>;
+            (*m_value.u_object)[p.first] = unique_ptr<json>(new json(*p.second));
+        }
+    }
+    else if (m_type == array_e)
+    {
+        m_value.u_array = new json::json_array;
 
-            for (const auto &p : *other.m_value.u_object)
-            {
-                (*m_value.u_object)[p.first] = unique_ptr<json>(new json(*p.second));
-            }
-        }
-        else if (m_type == array_e)
+        for (const auto &v : *other.m_value.u_array)
         {
-            m_value.u_array = new vector<unique_ptr<json>>;
-
-            for (const auto &v : *other.m_value.u_array)
-            {
-                m_value.u_array->push_back(unique_ptr<json>(new json(*v)));
-            }
+            m_value.u_array->push_back(unique_ptr<json>(new json(*v)));
         }
-        else if (m_type == string_e)
-        {
-            m_value.u_string = other.m_value.u_string == nullptr ? nullptr : new string(*other.m_value.u_string);
-        }
-        else
-        {
-            m_value = other.m_value;
-        }
+    }
+    else if (m_type == string_e)
+    {
+        construct_string(other.m_value.u_string);
+    }
+    else if (m_type == boolean_e)
+    {
+        m_value.u_boolean = other.m_value.u_boolean;
+    }
+    else if (m_type == number_int_e)
+    {
+        m_value.u_number_int = other.m_value.u_number_int;
+    }
+    else if (m_type == number_double_e)
+    {
+        m_value.u_number_double = other.m_value.u_number_double;
     }
 }
 
@@ -123,15 +139,38 @@ json &json::operator=(const json &other)
 
 void json::move_json(json &other)
 {
-    if (this != &other)
-    {
-        reset();
-        m_type = other.m_type;
-        m_value = other.m_value;
-        m_raw_value = std::move(other.m_raw_value);
+    if (this == &other) return;
 
-        other.m_type = null_e;
+    reset();
+    m_type = other.m_type;
+    if (m_type == object_e)
+    {
+        m_value.u_object = other.m_value.u_object;
     }
+    else if (m_type == array_e)
+    {
+        m_value.u_array = other.m_value.u_array;
+    }
+    else if (m_type == string_e)
+    {
+        construct_string(other.m_value.u_string);
+    }
+    else if (m_type == boolean_e)
+    {
+        m_value.u_boolean = other.m_value.u_boolean;
+    }
+    else if (m_type == number_int_e)
+    {
+        m_value.u_number_int = other.m_value.u_number_int;
+    }
+    else if (m_type == number_double_e)
+    {
+        m_value.u_number_double = other.m_value.u_number_double;
+    }
+
+    m_raw_value = std::move(other.m_raw_value);
+
+    other.m_type = null_e;
 }
 
 json &json::operator=(json &&other) noexcept
@@ -150,13 +189,13 @@ json::json(type t) : m_type(t)
     switch (m_type)
     {
     case object_e:
-        m_value.u_object = new map<string, unique_ptr<json>>();
+        m_value.u_object = new json::json_object;
         break;
     case array_e:
-        m_value.u_array = new vector<unique_ptr<json>>();
+        m_value.u_array = new json::json_array;
         break;
     case string_e:
-        m_value.u_string = new string;
+        construct_string();
         break;
     case boolean_e:
         m_value.u_boolean = false;
@@ -182,8 +221,10 @@ json::json(type t, const string &raw_value) : m_type(t), m_raw_value(raw_value)
         throw json_exception(json_exception::not_number_or_string_e, get_instance_type_name());
     }
 
-    // just in case this is a string
-    m_value.u_string = nullptr;
+    if (t == string_e)
+    {
+        construct_string();
+    }
 }
 
 json::json(int i)
@@ -206,13 +247,12 @@ json::json(bool b)
 
 json::json(const string &s)
 {
-    set_string(new string(s));
+    become_string(s);
 }
 
 json::json(const char *s)
 {
-    m_type = string_e;
-    m_value.u_string = new string(s);
+    become_string(s);
 }
 
 json::json(null_t) noexcept : m_type(null_e)
@@ -221,8 +261,7 @@ json::json(null_t) noexcept : m_type(null_e)
 
 json::json(unique_ptr<string> s)
 {
-    m_type = string_e;
-    m_value.u_string = s.release();
+    become_string(*s);
 }
 
 json &json::operator=(int i)
@@ -252,27 +291,25 @@ json &json::operator=(bool b)
 json &json::operator=(const string &s)
 {
     reset();
-    set_string(new string(s));
+    become_string(s);
     return *this;
 }
 
 json &json::operator=(const char *s)
 {
     reset();
-    m_type = string_e;
-    m_value.u_string = new string(s);
+    become_string(s);
     return *this;
 }
 
 json &json::operator=(unique_ptr<string> s)
 {
     reset();
-    m_type = string_e;
-    m_value.u_string = s.release();
+    become_string(*s);
     return *this;
 }
 
-json &json::operator=(const map<string, unique_ptr<json>> &o)
+json &json::operator=(const json::json_object &o)
 {
     reset();
     m_type = object_e;
@@ -283,7 +320,7 @@ json &json::operator=(const map<string, unique_ptr<json>> &o)
     return *this;
 }
 
-json &json::operator=(const vector<unique_ptr<json>> &a)
+json &json::operator=(const json_array &a)
 {
     reset();
     m_type = array_e;
@@ -306,17 +343,17 @@ json::type json::get_instance_type() const
     return m_type;
 }
 
-vector<unique_ptr<json>> &json::get_array()
+json::json_array &json::get_array()
 {
     return *m_value.u_array;
 }
 
-const vector<unique_ptr<json>> &json::get_array() const
+const json::json_array &json::get_array() const
 {
     return *m_value.u_array;
 }
 
-map<string, unique_ptr<json>> &json::get_object()
+json::json_object &json::get_object()
 {
     return *m_value.u_object;
 }
@@ -326,7 +363,7 @@ bool json::has(const std::string &name) const
     return (*m_value.u_object).find(name) != (*m_value.u_object).end();
 }
 
-const map<string, unique_ptr<json>> &json::get_object() const
+const json::json_object &json::get_object() const
 {
     return *m_value.u_object;
 }
@@ -384,7 +421,7 @@ json::operator const std::string&() const
     }
     else if (m_type == string_e)
     {
-        return *(m_value.u_string);
+        return m_value.u_string;
     }
     else
     {
@@ -605,7 +642,7 @@ bool json::string_equal(const json &other) const
 {
     if (m_raw_value.size() == 0 && other.m_raw_value.size() == 0)
     {
-        return *m_value.u_string == *other.m_value.u_string;
+        return m_value.u_string == other.m_value.u_string;
     }
     else
     {
