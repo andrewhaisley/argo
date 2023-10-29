@@ -159,9 +159,8 @@ namespace NAMESPACE
          * New json instance of string type. In this case the string is copied.
          */
         inline json(std::string_view sv)
-        {
-            set_string(sv);
-        }
+            : json(std::string(sv))
+        { }
 #endif
 
         /**
@@ -230,7 +229,7 @@ namespace NAMESPACE
          */
         inline json &operator=(std::string_view sv)
         {
-            set_string(sv);
+            become_string(std::string(sv));
             return *this;
         }
 #endif
@@ -552,8 +551,19 @@ namespace NAMESPACE
         const json &find(const pointer &p) const;
 
     private:
-        void become_string(const std::string& s);
+        void destroy_object();
+        void construct_object();
+        void move_construct_object(json_object&& o);
+        void copy_construct_object(const json_object &o);
 
+        void destroy_array();
+        void construct_array();
+        void move_construct_array(json_array&& a);
+        void copy_construct_array(const json_array &a);
+
+
+        void become_string(const std::string& s);
+        void destroy_string();
         void construct_string();
         void construct_string(const std::string& s);
 
@@ -568,9 +578,9 @@ namespace NAMESPACE
             ~json_value() { }
 
             /// Objects - represented as an STL map of name -> json instance.
-            json_object *u_object;
+            json_object u_object;
             /// Arrays - STL vector of json instances.
-            json_array *u_array;
+            json_array u_array;
             /// Bool value.
             bool u_boolean;
             /// int representation of a number (not set if the raw option is used).
