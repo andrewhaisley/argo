@@ -63,8 +63,8 @@ json_io_exception::json_io_exception(exception_type et) noexcept : json_exceptio
 
 json_io_exception::json_io_exception(exception_type et, int posix_errno) noexcept : json_exception(et)
 {
-    char buffer[max_message_length];
-    strerror_r(posix_errno, buffer, max_message_length);
+    char buffer[max_message_length - 3];
+    strerror_r(posix_errno, buffer, max_message_length - 3);
 
     snprintf(m_message, max_message_length, "%s : %s", get_main_message(), buffer);
 }

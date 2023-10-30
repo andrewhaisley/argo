@@ -67,6 +67,9 @@ namespace NAMESPACE
         // Convenience definition for creating null instances
         typedef decltype(nullptr) null_t;
 
+        typedef std::map<std::string, std::unique_ptr<json>> json_object;
+        typedef std::vector<std::unique_ptr<json>> json_array;
+
         /**
          * JSON types as per RFC 4627 but with numbers split into int and double.
          */
@@ -156,9 +159,8 @@ namespace NAMESPACE
          * New json instance of string type. In this case the string is copied.
          */
         inline json(std::string_view sv)
-        {
-            set_string(new std::string(sv));
-        }
+            : json(std::string(sv))
+        { }
 #endif
 
         /**
@@ -227,7 +229,7 @@ namespace NAMESPACE
          */
         inline json &operator=(std::string_view sv)
         {
-            set_string(new std::string(sv));
+            become_string(std::string(sv));
             return *this;
         }
 #endif
@@ -245,14 +247,14 @@ namespace NAMESPACE
          * freed. All values are deep copied so this can be inefficient for large
          * objects.
          */
-        json &operator=(const std::map<std::string, std::unique_ptr<json>> &o);
+        json &operator=(const json_object &o);
 
         /**
          * Assign the instance an array value. All previous values are erased and/or
          * freed. All values are deep copied so this can be inefficient for large
          * arrays.
          */
-        json &operator=(const std::vector<std::unique_ptr<json>> &a);
+        json &operator=(const json_array &a);
 
         /**
          * Assign the instance a null value. All previous values are erased and/or
@@ -275,25 +277,25 @@ namespace NAMESPACE
          * Get the underlying vector of JSON instances in an array JSON instance.
          * \throw json_exception if the instance isn't an array.
          */
-        std::vector<std::unique_ptr<json>> &get_array();
+        json_array &get_array();
 
         /**
          * Get the underlying const vector of JSON instances in a const array of JSON instances.
          * \throw json_exception if the instance isn't an array.
          */
-        const std::vector<std::unique_ptr<json>> &get_array() const;
+        const json_array &get_array() const;
 
         /**
          * Get the underlying map of JSON instances in an object JSON instance.
          * \throw json_exception if the instance isn't an object.
          */
-        std::map<std::string, std::unique_ptr<json>> &get_object();
+        json_object &get_object();
 
         /**
          * Get the underlying const map of JSON instances in a const object JSON instance.
          * \throw json_exception if the instance isn't an object.
          */
-        const std::map<std::string, std::unique_ptr<json>> &get_object() const;
+        const json_object &get_object() const;
 
         /**
          * Cast the object to an int.
@@ -549,20 +551,36 @@ namespace NAMESPACE
         const json &find(const pointer &p) const;
 
     private:
+        void destroy_object();
+        void construct_object();
+        void move_construct_object(json_object&& o);
+        void copy_construct_object(const json_object &o);
 
-        void set_string(std::string *s);
+        void destroy_array();
+        void construct_array();
+        void move_construct_array(json_array&& a);
+        void copy_construct_array(const json_array &a);
+
+
+        void become_string(const std::string& s);
+        void destroy_string();
+        void construct_string();
+        void construct_string(const std::string& s);
 
         /**
          * A union to hold the value of the json instance. Done as a union so as to
          * minimise space usage although that complicates constructors, destructors
          * etc.
          */
-        typedef union
+        typedef union json_value
         {
+            json_value() { }
+            ~json_value() { }
+
             /// Objects - represented as an STL map of name -> json instance.
-            std::map<std::string, std::unique_ptr<json>> *u_object;
+            json_object u_object;
             /// Arrays - STL vector of json instances.
-            std::vector<std::unique_ptr<json>> *u_array;
+            json_array u_array;
             /// Bool value.
             bool u_boolean;
             /// int representation of a number (not set if the raw option is used).
@@ -570,7 +588,7 @@ namespace NAMESPACE
             /// double representation of a number (not set if the raw option is used).
             double u_number_double;
             /// UTF-8 string representation of tha value (not set if the raw option is used).
-            std::string *u_string;
+            std::string u_string;
         }
         json_value;
 

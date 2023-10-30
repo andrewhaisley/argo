@@ -14,5 +14,11 @@
 !*.vcxproj
 !*.conf
 !README
+!LICENSE
+!.gitignore
+!.gitattributes
 !*.md
 !meson.build
+
+# ignore builds
+*[Bb]uild*
