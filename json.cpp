@@ -372,6 +372,20 @@ json &json::operator=(null_t)
     return *this;
 }
 
+json json::from_object(json_object o)
+{
+    json j(object_e);
+    j.move_construct_object(std::move(o));
+    return j;
+}
+
+json json::from_array(json_array a)
+{
+    json j(array_e);
+    j.move_construct_array(std::move(a));
+    return j;
+}
+
 json::type json::get_instance_type() const
 {
     return m_type;
@@ -428,7 +442,7 @@ json::operator int() const
     }
     else
     {
-        throw json_exception(json_exception::not_number_e);
+        throw json_exception(json_exception::not_number_e, get_instance_type_name());
     }
 }
 
@@ -448,7 +462,7 @@ json::operator double() const
     }
     else
     {
-        throw json_exception(json_exception::not_number_e);
+        throw json_exception(json_exception::not_number_e, get_instance_type_name());
     }
 }
 
@@ -699,6 +713,11 @@ bool json::operator==(const json &other) const
 bool json::operator!=(const json &other) const
 {
     return !(*this == other);
+}
+
+bool json::operator==(bool b) const
+{
+    return static_cast<bool>(*this) == b;
 }
 
 bool json::operator==(int i) const

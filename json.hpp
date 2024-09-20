@@ -182,6 +182,18 @@ namespace NAMESPACE
         json(std::unique_ptr<std::string> s);
 
         /**
+         * New json instance of object type. All values are deep copied so this can
+         * be inefficient for large objects.
+         */
+        static json from_object(json_object o);
+
+        /**
+         * New json instance of array type. All values are deep copied so this can
+         * be inefficient for large arrays.
+         */
+        static json from_array(json_array a);
+
+        /**
          * Assignment. Full deep copy.
          */
         json &operator=(const json &other);
@@ -495,6 +507,8 @@ namespace NAMESPACE
          * Full set of relevant comparison operators.
          */
 
+        /// == operator - throws for raw values
+        bool operator==(bool b) const;
         /// == operator - throws for raw values
         bool operator==(int i) const;
         /// == operator - throws for raw values

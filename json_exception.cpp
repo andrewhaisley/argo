@@ -77,6 +77,9 @@ json_exception::json_exception(exception_type et, const char *json_type_name) no
     case not_number_or_string_e:
         snprintf(m_message, max_message_length, "attempt to set a raw value of an instance of type %s (only works for number and string)", json_type_name);
         break;
+    case not_number_e:
+        snprintf(m_message, max_message_length, "instance type is %s not number", json_type_name);
+        break;
     default:
         strncpy(m_message, "generic", max_message_length);
         break;
