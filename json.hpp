@@ -67,7 +67,7 @@ namespace NAMESPACE
         // Convenience definition for creating null instances
         typedef decltype(nullptr) null_t;
 
-        typedef std::map<std::string, std::unique_ptr<json>> json_object;
+        typedef std::map<std::string, json> json_object;
         typedef std::vector<json> json_array;
 
         /**

@@ -61,7 +61,7 @@ parser::parser(
 {
 }
 
-std::unique_ptr<json> parser::parse_number_int(const token &t)
+json parser::parse_number_int(const token &t)
 {
     std::istringstream is(t.get_raw_value());
 
@@ -69,7 +69,7 @@ std::unique_ptr<json> parser::parse_number_int(const token &t)
 
     if (is >> i)
     {
-        return std::unique_ptr<json>(new json(i));
+        return json(i);
     }
     else
     {
@@ -88,14 +88,14 @@ std::unique_ptr<json> parser::parse_number_int(const token &t)
     }
 }
 
-std::unique_ptr<json> parser::parse_number_double(const token &t)
+json parser::parse_number_double(const token &t)
 {
     std::istringstream is(t.get_raw_value());
     double d;
 
     if (is >> d && isfinite(d))
     {
-        return std::unique_ptr<json>(new json(d));
+        return json(d);
     }
     else
     {
@@ -107,7 +107,7 @@ std::unique_ptr<json> parser::parse_number_double(const token &t)
     }
 }
 
-std::unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
+json parser::parse_value(lexer &l, size_t nesting_depth)
 {
     const token &t = l.next();
 
@@ -124,7 +124,7 @@ std::unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
         }
         else
         {
-            return std::unique_ptr<json>(new json(json::number_int_e, t.get_raw_value()));
+            return json(json::number_int_e, t.get_raw_value());
         }
     case token::number_double_e:
         if (m_convert_numbers)
@@ -133,14 +133,14 @@ std::unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
         }
         else
         {
-            return std::unique_ptr<json>(new json(json::number_double_e, t.get_raw_value()));
+            return json(json::number_double_e, t.get_raw_value());
         }
     case token::string_e:
         if (m_convert_strings)
         {
             try
             {
-                return std::unique_ptr<json>(new json(utf8::json_string_to_utf8(t.get_raw_value())));
+                return json(utf8::json_string_to_utf8(t.get_raw_value()));
             }
             catch (json_utf8_exception &e)
             {
@@ -150,14 +150,14 @@ std::unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
         }
         else
         {
-            return std::unique_ptr<json>(new json(json::string_e, t.get_raw_value()));
+            return json(json::string_e, t.get_raw_value());
         }
     case token::false_e:
-        return std::unique_ptr<json>(new json(false));
+        return false;
     case token::true_e:
-        return std::unique_ptr<json>(new json(true));
+        return true;
     case token::null_e:
-        return std::unique_ptr<json>(new json);
+        return nullptr;
     default:
         throw json_parser_exception(
                             json_parser_exception::unexpected_token_e,
@@ -166,7 +166,7 @@ std::unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
     }
 }
 
-std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
+json parser::parse_array(lexer &l, size_t nesting_depth)
 {
     if (nesting_depth > m_max_nesting_depth)
     {
@@ -176,7 +176,8 @@ std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
                             m_reader.get_byte_index());
     }
 
-    std::unique_ptr<json> array = std::unique_ptr<json>(new json(json::array_e));
+    json array(json::array_e);
+    json::json_array& a = array.get_array();
 
     const token &t1 = l.next();
 
@@ -187,7 +188,7 @@ std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
     else
     {
         l.put_back_last();
-        array->get_array().push_back(*parse_value(l, nesting_depth));
+        a.push_back(parse_value(l, nesting_depth));
     }
 
     while (true)
@@ -196,7 +197,7 @@ std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
 
         if (t2.get_type() == token::value_separator_e)
         {
-            array->get_array().push_back(*parse_value(l, nesting_depth));
+            a.push_back(parse_value(l, nesting_depth));
         }
         else if (t2.get_type() == token::end_array_e)
         {
@@ -214,7 +215,7 @@ std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
     return array;
 }
 
-void parser::parse_name_value_pair(lexer &l, std::unique_ptr<json> &object, size_t nesting_depth)
+void parser::parse_name_value_pair(lexer &l, json::json_object &object, size_t nesting_depth)
 {
     const token &t1 = l.next();
 
@@ -249,10 +250,10 @@ void parser::parse_name_value_pair(lexer &l, std::unique_ptr<json> &object, size
                             m_reader.get_byte_index());
     }
 
-    object->get_object()[name] = parse_value(l, nesting_depth);
+    object[name] = parse_value(l, nesting_depth);
 }
 
-std::unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
+json parser::parse_object(lexer &l, size_t nesting_depth)
 {
     if (nesting_depth > m_max_nesting_depth)
     {
@@ -262,7 +263,8 @@ std::unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
                             m_reader.get_byte_index());
     }
 
-    std::unique_ptr<json> object = std::unique_ptr<json>(new json(json::object_e));
+    json object(json::object_e);
+    json::json_object& o = object.get_object();
 
     const token &t1 = l.next();
 
@@ -278,7 +280,7 @@ std::unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
 
     while (true)
     {
-        parse_name_value_pair(l, object, nesting_depth);
+        parse_name_value_pair(l, o, nesting_depth);
 
         const token &t2 = l.next();
 
@@ -323,7 +325,7 @@ std::unique_ptr<json> parser::parse()
             }
         }
     }
-    return res;
+    return std::unique_ptr<json>(new json(std::move(res)));
 }
 
 std::unique_ptr<json> parser::parse(std::istream &i)

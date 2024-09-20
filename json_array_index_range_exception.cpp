@@ -23,6 +23,7 @@
 /// \file json_array_index_range_exception.cpp The json_array_index_range_exception class implementation.
 
 #include <string.h>
+#include <stdio.h>
 
 #include "common.hpp"
 #include "json_array_index_range_exception.hpp"

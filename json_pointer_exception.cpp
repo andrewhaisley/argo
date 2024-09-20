@@ -22,6 +22,7 @@
 
 /// \file json_pointer_exception.cpp The json_pointer_exception class implementation.
 
+#include <stdio.h>
 #include <string.h>
 
 #include "common.hpp"

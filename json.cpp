@@ -62,9 +62,7 @@ void json::move_construct_object(json_object&& o)
 void json::copy_construct_object(const json_object &o)
 {
     construct_object();
-    std::transform(o.begin(), o.end(), std::inserter(m_value.u_object, m_value.u_object.begin()),
-                   [] (const std::pair<const std::string, std::unique_ptr<json>> &p)
-                        { return std::pair<const std::string, std::unique_ptr<json>>(p.first, std::unique_ptr<json>(new json(*p.second))); });
+    std::copy(o.begin(), o.end(), std::inserter(m_value.u_object, m_value.u_object.begin()));
 }
 
 // arrays
@@ -303,7 +301,7 @@ json::json(null_t) noexcept : m_type(null_e)
 
 json::json(std::unique_ptr<std::string> s)
 {
-    become_string(*s.release());
+    become_string(*s);
 }
 
 json &json::operator=(int i)
@@ -489,15 +487,7 @@ json::operator bool() const
 json &json::operator[](const std::string &name)
 {
     json_object& o = get_object();
-    auto i = o.find(name);
-    if (i == o.end())
-    {
-        return *((o)[name] = std::unique_ptr<json>(new json));
-    }
-    else
-    {
-        return *(i->second);
-    }
+    return o[name];
 }
 
 json &json::operator[](const char *name)
@@ -565,7 +555,7 @@ const json &json::operator[](const std::string &name) const
     }
     else
     {
-        return *(i->second);
+        return (i->second);
     }
 }
 
@@ -583,20 +573,18 @@ const json &json::append(const json &j)
 
 const json &json::append(std::unique_ptr<json> j)
 {
-    return append(*j.release());
+    return append(*j);
 }
 
 const json &json::insert(const std::string &name, const json &j)
 {
-    return insert(name, std::unique_ptr<json>(new json(j)));
+    json_object& o = get_object();
+    return o[name] = j;
 }
 
 const json &json::insert(const std::string &name, std::unique_ptr<json> j)
 {
-    json_object& o = get_object();
-    json *r;
-    o.emplace(name, std::unique_ptr<json>(r = j.release()));
-    return *r;
+    return insert(name, *j);
 }
 
 const char *json::get_instance_type_name() const
@@ -660,9 +648,7 @@ bool json::object_equal(const json &other) const
             equal(
                 m_value.u_object.begin(),
                 m_value.u_object.end(),
-                other.m_value.u_object.begin(),
-                [] (const std::pair<const std::string, std::unique_ptr<json>> &a, const std::pair<const std::string, std::unique_ptr<json>> &b)
-                        { return a.first == b.first && *(a.second) == *(b.second); });
+                other.m_value.u_object.begin());
 }
 
 bool json::array_equal(const json &other) const
@@ -671,9 +657,7 @@ bool json::array_equal(const json &other) const
             equal(
                 m_value.u_array.begin(),
                 m_value.u_array.end(),
-                other.m_value.u_array.begin(),
-                [] (const json &a, const json &b)
-                        { return a == b; });
+                other.m_value.u_array.begin());
 }
 
 bool json::operator==(const json &other) const
@@ -918,7 +902,7 @@ const json &json::find(const pointer &p) const
                 }
                 else
                 {
-                    res = i->second.get();
+                    res = &i->second;
                 }
             }
             else

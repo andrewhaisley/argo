@@ -57,7 +57,7 @@ token &token::operator=(token &&other)
     {
         m_type = other.m_type;
         other.m_type = null_e;
-        m_raw_value = move(other.m_raw_value);
+        m_raw_value = std::move(other.m_raw_value);
     }
     return *this;
 }

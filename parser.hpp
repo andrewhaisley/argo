@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,7 +47,7 @@ namespace NAMESPACE
     void operator>>(std::string &stream, json &e);
 
     /**
-     * \brief A recursive decent parser for JSON messages. 
+     * \brief A recursive decent parser for JSON messages.
      *
      * A class to parse JSON messages from an input source and store
      * the results in a json object instance.
@@ -56,18 +56,18 @@ namespace NAMESPACE
     {
     public:
 
-        /// The default maximum length of a message that can be parsed. 
+        /// The default maximum length of a message that can be parsed.
         static const size_t max_message_length = 10*1024*1024;
 
         /**
-         * The default maximum length of any individual lexical token 
+         * The default maximum length of any individual lexical token
          * (string and number being the relevant ones in this context).
          */
         static const size_t max_token_length = 100*1024;
 
         /**
-         * The default maximum nesting depth (objects and arrays) of a message 
-         * that can be parsed. 
+         * The default maximum nesting depth (objects and arrays) of a message
+         * that can be parsed.
          */
         static const size_t max_nesting_depth = 1000;
 
@@ -141,20 +141,20 @@ namespace NAMESPACE
 
         /**
          * Constructor. Create a parser that will read from the given reader.
-         * If you need to read from some other type of source, then create an 
+         * If you need to read from some other type of source, then create an
          * appropriate derived class of reader and pass that in here.
          *
          * \param r                    Where to read the message from.
-         * \param read_all             If true, read the whole file to the end and 
+         * \param read_all             If true, read the whole file to the end and
          *                             throw an exception if there is anything other
          *                             than white space following a parseable JSON
-         *                             message. If false, read until the end of the 
+         *                             message. If false, read until the end of the
          *                             first parseable JSON message and leave it at that.
-         * \param p_max_nesting_depth  The maximum total depth of nested objects and 
+         * \param p_max_nesting_depth  The maximum total depth of nested objects and
          *                             arrays allowed.
          * \param p_max_token_length    The maximum length of any individual token,
          *                              You can change this if you have a strangely
-         *                              huge string in a message or you can make it     
+         *                              huge string in a message or you can make it
          *                              smaller if you have very constrained memory
          *                              availability.
          * \param p_convert_numbers     If true, convert numbers to ints or doubles
@@ -170,8 +170,8 @@ namespace NAMESPACE
          *                              using the json(type, raw_string) method but
          *                              leave the caller to do any conversion. This is
          *                              useful when dealing with messages with broken
-         *                              Unicode characters and the like in them. 
-         * \throw json_parser_exception Thrown when there is something syntactically 
+         *                              Unicode characters and the like in them.
+         * \throw json_parser_exception Thrown when there is something syntactically
          *                              wrong with the message.
          * \throw json_io_exception     Thrown when something goes wrong with reading.
          * \throw json_utf_exception    Thrown when an invalid string is found in the
@@ -195,13 +195,13 @@ namespace NAMESPACE
 
     private:
 
-        std::unique_ptr<json> parse_number_int(const token &t);
-        std::unique_ptr<json> parse_number_double(const token &t);
-        std::unique_ptr<json> parse_string(const token &t);
-        std::unique_ptr<json> parse_value(lexer &l, size_t nesting_depth);
-        std::unique_ptr<json> parse_array(lexer &l, size_t nesting_depth);
-        void parse_name_value_pair(lexer &l, std::unique_ptr<json> &object, size_t nesting_depth);
-        std::unique_ptr<json> parse_object(lexer &l, size_t nesting_depth);
+        json parse_number_int(const token &t);
+        json parse_number_double(const token &t);
+        json parse_string(const token &t);
+        json parse_value(lexer &l, size_t nesting_depth);
+        json parse_array(lexer &l, size_t nesting_depth);
+        void parse_name_value_pair(lexer &l, json::json_object &object, size_t nesting_depth);
+        json parse_object(lexer &l, size_t nesting_depth);
 
         /// Reader to get characters from.
         reader &m_reader;

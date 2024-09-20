@@ -582,7 +582,7 @@ void test_append()
     const json &ae2 = a.append("asdf");
     jlog << "appended was " << ae2 << " len is " << a.get_array().size() << endl;
     unique_ptr<json> ae3(new json(1.23));
-    a.append(move(ae3));
+    a.append(std::move(ae3));
     jlog << " len is " << a.get_array().size() << endl;
     jlog << a << endl;
 }
@@ -595,7 +595,7 @@ void test_insert()
     o.insert("two", 2.123);
     o.insert("three", "asfdsad");
     unique_ptr<json> x(new json(1.23));
-    o.insert("four", move(x));
+    o.insert("four", std::move(x));
 
     jlog << o << endl;
 }

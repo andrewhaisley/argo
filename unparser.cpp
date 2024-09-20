@@ -72,15 +72,15 @@ void unparser::unparse_object(const json &j, int indent_level)
     {
         print_indent(indent_level + m_indent_inc);
         m_writer << '"' << p.first << '"' << m_space << ':' << m_space;
-        if (p.second->get_instance_type() == json::object_e ||
-            p.second->get_instance_type() == json::array_e)
+        if (p.second.get_instance_type() == json::object_e ||
+            p.second.get_instance_type() == json::array_e)
         {
             m_writer << m_newline;
-            unparse(*(p.second), indent_level + (m_indent_inc * 2));
+            unparse((p.second), indent_level + (m_indent_inc * 2));
         }
         else
         {
-            unparse(*(p.second), indent_level + m_indent_inc);
+            unparse((p.second), indent_level + m_indent_inc);
         }
         if (n-- > 1)
         {
