@@ -68,7 +68,7 @@ namespace NAMESPACE
         typedef decltype(nullptr) null_t;
 
         typedef std::map<std::string, std::unique_ptr<json>> json_object;
-        typedef std::vector<std::unique_ptr<json>> json_array;
+        typedef std::vector<json> json_array;
 
         /**
          * JSON types as per RFC 4627 but with numbers split into int and double.

@@ -187,7 +187,7 @@ std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
     else
     {
         l.put_back_last();
-        array->get_array().push_back(parse_value(l, nesting_depth));
+        array->get_array().push_back(*parse_value(l, nesting_depth));
     }
 
     while (true)
@@ -196,7 +196,7 @@ std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
 
         if (t2.get_type() == token::value_separator_e)
         {
-            array->get_array().push_back(parse_value(l, nesting_depth));
+            array->get_array().push_back(*parse_value(l, nesting_depth));
         }
         else if (t2.get_type() == token::end_array_e)
         {

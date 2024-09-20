@@ -99,12 +99,12 @@ void unparser::unparse_array(const json &j, int indent_level)
     int n = j.get_array().size();
     for (const auto &i : j.get_array())
     {
-        if (i->get_instance_type() != json::object_e &&
-            i->get_instance_type() != json::array_e)
+        if (i.get_instance_type() != json::object_e &&
+            i.get_instance_type() != json::array_e)
         {
             print_indent(indent_level + m_indent_inc);
         }
-        unparse(*i, indent_level + m_indent_inc);
+        unparse(i, indent_level + m_indent_inc);
         if (n-- > 1)
         {
             m_writer << ',' << m_space;

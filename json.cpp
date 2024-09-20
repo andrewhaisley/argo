@@ -88,8 +88,7 @@ void json::move_construct_array(json_array&& a)
 void json::copy_construct_array(const json_array &a)
 {
     construct_array();
-    std::transform(a.begin(), a.end(), std::back_inserter(m_value.u_array),
-                   [] (const std::unique_ptr<json> &p) { return std::unique_ptr<json>(new json(*p)); });
+    std::copy(a.begin(), a.end(), std::back_inserter(m_value.u_array));
 }
 
 // strings
@@ -511,7 +510,7 @@ json &json::operator[](size_t index)
     json_array& a = get_array();
     if (index < a.size())
     {
-        return *(a)[index];
+        return (a)[index];
     }
     else
     {
@@ -536,7 +535,7 @@ const json &json::operator[](size_t index) const
     const json_array& a = get_array();
     if (index < a.size())
     {
-        return *(a)[index];
+        return (a)[index];
     }
     else
     {
@@ -577,15 +576,14 @@ const json &json::operator[](const char *name) const
 
 const json &json::append(const json &j)
 {
-    return append(std::unique_ptr<json>(new json(j)));
+    json_array& a = get_array();
+    a.push_back(j);
+    return a.back();
 }
 
 const json &json::append(std::unique_ptr<json> j)
 {
-    json_array& a = get_array();
-    json *jp = j.release();
-    a.push_back(std::unique_ptr<json>(jp));
-    return *jp;
+    return append(*j.release());
 }
 
 const json &json::insert(const std::string &name, const json &j)
@@ -674,8 +672,8 @@ bool json::array_equal(const json &other) const
                 m_value.u_array.begin(),
                 m_value.u_array.end(),
                 other.m_value.u_array.begin(),
-                [] (const std::unique_ptr<json> &a, const std::unique_ptr<json> &b)
-                        { return *a == *b; });
+                [] (const json &a, const json &b)
+                        { return a == b; });
 }
 
 bool json::operator==(const json &other) const
@@ -934,7 +932,7 @@ const json &json::find(const pointer &p) const
             {
                 if (t.get_index() < res->m_value.u_array.size())
                 {
-                    res = (res->m_value.u_array)[t.get_index()].get();
+                    res = &(res->m_value.u_array)[t.get_index()];
                 }
                 else
                 {
