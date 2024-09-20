@@ -164,15 +164,13 @@ std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
     size_t src_index = 0;
     size_t dst_index = 0;
 
-    std::string *dst = new std::string(src.size(), '\0');
-
-    std::unique_ptr<std::string> res(dst);
+    std::string dst(src.size(), '\0');
 
     while (src_index < src.size())
     {
         if (src[src_index] != '\\')
         {
-            (*dst)[dst_index++] = src[src_index++];
+            dst[dst_index++] = src[src_index++];
         }
         else
         {
@@ -183,25 +181,25 @@ std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
             case '"':
             case '\\':
             case '/':
-                (*dst)[dst_index++] = c;
+                dst[dst_index++] = c;
                 break;
             case 'b':
-                (*dst)[dst_index++] = '\b';
+                dst[dst_index++] = '\b';
                 break;
             case 'f':
-                (*dst)[dst_index++] = '\f';
+                dst[dst_index++] = '\f';
                 break;
             case 'n':
-                (*dst)[dst_index++] = '\n';
+                dst[dst_index++] = '\n';
                 break;
             case 'r':
-                (*dst)[dst_index++] = '\r';
+                dst[dst_index++] = '\r';
                 break;
             case 't':
-                (*dst)[dst_index++] = '\t';
+                dst[dst_index++] = '\t';
                 break;
             case 'u':
-                parse_unicode(src, src_index, *dst, dst_index);
+                parse_unicode(src, src_index, dst, dst_index);
                 break;
             default:
                 throw json_utf8_exception(json_utf8_exception::invalid_string_escape_e, c);
@@ -209,8 +207,8 @@ std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
         }
     }
 
-    dst->resize(dst_index);
-    return res;
+    dst.resize(dst_index);
+    return std::unique_ptr<std::string>(new std::string(std::move(dst)));
 }
 
 unsigned int utf8::utf8_length(uint8_t c)
@@ -239,10 +237,10 @@ unsigned int utf8::utf8_length(uint8_t c)
 
 std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
 {
-    std::unique_ptr<std::string> res(new std::string);
+    std::string res;
 
     // We need at least the same number of characters as the source.
-    res->reserve(src.size());
+    res.reserve(src.size());
 
     size_t src_index = 0;
 
@@ -277,28 +275,28 @@ std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
             switch (uc)
             {
             case '"':
-                *res += "\\\"";
+                res += "\\\"";
                 break;
             case '\\':
-                *res += "\\\\";
+                res += "\\\\";
                 break;
             case '\b':
-                *res += "\\b";
+                res += "\\b";
                 break;
             case '\f':
-                *res += "\\f";
+                res += "\\f";
                 break;
             case '\n':
-                *res += "\\n";
+                res += "\\n";
                 break;
             case '\r':
-                *res += "\\r";
+                res += "\\r";
                 break;
             case '\t':
-                *res += "\\t";
+                res += "\\t";
                 break;
             default:
-                *res += static_cast<char>(uc);
+                res += static_cast<char>(uc);
             }
         }
         else if (uc <= 0xffff)
@@ -313,7 +311,7 @@ std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
         }
     }
 
-    return res;
+    return std::unique_ptr<std::string>(new std::string(std::move(res)));
 }
 
 bool utf8::valid_unicode(char32_t uc)
@@ -321,11 +319,11 @@ bool utf8::valid_unicode(char32_t uc)
     return (uc <= 0x0010ffffu) && !(uc >= 0xd800u && uc <= 0xdfffu);
 }
 
-void utf8::add_hex_string(std::unique_ptr<std::string> &dst, char32_t uc)
+void utf8::add_hex_string(std::string &dst, char32_t uc)
 {
-    *dst += "\\u";
-    *dst += to_hex((uc >> 12) & 0x0f);
-    *dst += to_hex((uc >> 8) & 0x0f);
-    *dst += to_hex((uc >> 4) & 0x0f);
-    *dst += to_hex(uc & 0x0f);
+    dst += "\\u";
+    dst += to_hex((uc >> 12) & 0x0f);
+    dst += to_hex((uc >> 8) & 0x0f);
+    dst += to_hex((uc >> 4) & 0x0f);
+    dst += to_hex(uc & 0x0f);
 }

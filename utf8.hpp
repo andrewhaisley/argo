@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,10 +33,10 @@
 namespace NAMESPACE
 {
     /**
-     * \brief Methods to convert JSON format string to UTF-8 and vice-versa. 
+     * \brief Methods to convert JSON format string to UTF-8 and vice-versa.
      *
      * This only really exists because the C++ standard libraries for this are
-     * not widely implemented yet. 
+     * not widely implemented yet.
      */
     class utf8
     {
@@ -67,22 +67,21 @@ namespace NAMESPACE
         static void set_and_check_unicode_byte(std::string &dst, size_t &dst_index, char c);
 
         static void parse_unicode(
-                const std::string &src, 
-                size_t            &src_index, 
+                const std::string &src,
+                size_t            &src_index,
                 std::string       &dst,
                 size_t            &dst_index);
 
         static char32_t parse_hex(
-                const std::string &src, 
+                const std::string &src,
                 size_t            &src_index);
 
         static unsigned int utf8_length(uint8_t c);
 
         static bool valid_unicode(char32_t uc);
 
-        static void add_hex_string(std::unique_ptr<std::string> &dst, char32_t uc);
+        static void add_hex_string(std::string &dst, char32_t uc);
     };
 }
 
 #endif
-
