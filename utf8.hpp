@@ -55,32 +55,6 @@ namespace NAMESPACE
          * \param src   A UTF-8 string.
          */
         static std::unique_ptr<std::string> utf8_to_json_string(const std::string &src);
-
-    private:
-
-        static char next_char(const std::string &s, size_t &index);
-
-        static unsigned int from_hex(char c);
-
-        static char to_hex(unsigned int i);
-
-        static void set_and_check_unicode_byte(std::string &dst, size_t &dst_index, char c);
-
-        static void parse_unicode(
-                const std::string &src,
-                size_t            &src_index,
-                std::string       &dst,
-                size_t            &dst_index);
-
-        static char32_t parse_hex(
-                const std::string &src,
-                size_t            &src_index);
-
-        static unsigned int utf8_length(uint8_t c);
-
-        static bool valid_unicode(char32_t uc);
-
-        static void add_hex_string(std::string &dst, char32_t uc);
     };
 }
 

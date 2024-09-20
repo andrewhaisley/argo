@@ -28,7 +28,7 @@
 
 using namespace NAMESPACE;
 
-unsigned int utf8::from_hex(char c)
+static unsigned int utf8_from_hex(char c)
 {
     c = tolower(c);
 
@@ -46,7 +46,7 @@ unsigned int utf8::from_hex(char c)
     }
 }
 
-char utf8::to_hex(unsigned int i)
+static char utf8_to_hex(unsigned int i)
 {
     if (i <= 9)
     {
@@ -62,7 +62,7 @@ char utf8::to_hex(unsigned int i)
     }
 }
 
-char utf8::next_char(const std::string &s, size_t &index)
+static char utf8_next_char(const std::string &s, size_t &index)
 {
     if (index < s.size())
     {
@@ -74,19 +74,19 @@ char utf8::next_char(const std::string &s, size_t &index)
     }
 }
 
-char32_t utf8::parse_hex(const std::string &src, size_t &src_index)
+static char32_t utf8_parse_hex(const std::string &src, size_t &src_index)
 {
     char32_t res = 0;
 
-    res |= from_hex(next_char(src, src_index)) << 12;
-    res |= from_hex(next_char(src, src_index)) << 8;
-    res |= from_hex(next_char(src, src_index)) << 4;
-    res |= from_hex(next_char(src, src_index));
+    res |= utf8_from_hex(utf8_next_char(src, src_index)) << 12;
+    res |= utf8_from_hex(utf8_next_char(src, src_index)) << 8;
+    res |= utf8_from_hex(utf8_next_char(src, src_index)) << 4;
+    res |= utf8_from_hex(utf8_next_char(src, src_index));
 
     return res;
 }
 
-void utf8::set_and_check_unicode_byte(std::string &dst, size_t &dst_index, char c)
+static void utf8_set_and_check_unicode_byte(std::string &dst, size_t &dst_index, char c)
 {
     if (c == 0)
     {
@@ -98,7 +98,45 @@ void utf8::set_and_check_unicode_byte(std::string &dst, size_t &dst_index, char 
     }
 }
 
-void utf8::parse_unicode(
+static bool utf8_valid_unicode(char32_t uc)
+{
+    return (uc <= 0x0010ffffu) && !(uc >= 0xd800u && uc <= 0xdfffu);
+}
+
+static void utf8_add_hex_string(std::string &dst, char32_t uc)
+{
+    dst += "\\u";
+    dst += utf8_to_hex((uc >> 12) & 0x0f);
+    dst += utf8_to_hex((uc >> 8) & 0x0f);
+    dst += utf8_to_hex((uc >> 4) & 0x0f);
+    dst += utf8_to_hex(uc & 0x0f);
+}
+
+static unsigned int utf8_length(uint8_t c)
+{
+    if ((c & 0x80) == 0)
+    {
+        return 1;
+    }
+    else if ((c & 0xe0) == 0xc0)
+    {
+        return 2;
+    }
+    else if ((c & 0xf0) == 0xe0)
+    {
+        return 3;
+    }
+    else if ((c & 0xf8) == 0xf0)
+    {
+        return 4;
+    }
+    else
+    {
+       return 0;
+    }
+}
+
+static void utf8_parse_unicode(
                 const std::string &src,
                 size_t            &src_index,
                 std::string       &dst,
@@ -111,24 +149,24 @@ void utf8::parse_unicode(
         src[src_index + 4] == '\\' &&
         src[src_index + 5] == 'u')
     {
-        char32_t high_surrogate = parse_hex(src, src_index);
+        char32_t high_surrogate = utf8_parse_hex(src, src_index);
 
-        (void)next_char(src, src_index);
-        (void)next_char(src, src_index);
+        (void)utf8_next_char(src, src_index);
+        (void)utf8_next_char(src, src_index);
 
-        char32_t low_surrogate = parse_hex(src, src_index);
+        char32_t low_surrogate = utf8_parse_hex(src, src_index);
 
         uc = ((high_surrogate - 0xD800) << 10 | (low_surrogate - 0xDC00)) + 0x10000;
     }
     else
     {
-        uc = parse_hex(src, src_index);
+        uc = utf8_parse_hex(src, src_index);
     }
 
     // I would use the nice new C++11 standard conversion templates for this but
     // they're not fully supported by compilers in the wild just yet.
 
-    if (valid_unicode(uc))
+    if (utf8_valid_unicode(uc))
     {
         if (uc < 0x80)
         {
@@ -136,21 +174,21 @@ void utf8::parse_unicode(
         }
         else if (uc < 0x800)
         {
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 6) | 0xc0));
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 6) | 0xc0));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
         }
         else if (uc < 0x10000)
         {
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 12) | 0xe0));
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 6) & 0x3f) | 0x80));
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 12) | 0xe0));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 6) & 0x3f) | 0x80));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
         }
         else
         {
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 18) | 0xf0));
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 12) & 0x3f) | 0x80));
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 6) & 0x3f) | 0x80));
-            set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 18) | 0xf0));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 12) & 0x3f) | 0x80));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 6) & 0x3f) | 0x80));
+            utf8_set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
         }
     }
     else
@@ -174,7 +212,7 @@ std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
         }
         else
         {
-            char c = next_char(src, ++src_index);
+            char c = utf8_next_char(src, ++src_index);
 
             switch (c)
             {
@@ -199,7 +237,7 @@ std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
                 dst[dst_index++] = '\t';
                 break;
             case 'u':
-                parse_unicode(src, src_index, dst, dst_index);
+                utf8_parse_unicode(src, src_index, dst, dst_index);
                 break;
             default:
                 throw json_utf8_exception(json_utf8_exception::invalid_string_escape_e, c);
@@ -209,30 +247,6 @@ std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
 
     dst.resize(dst_index);
     return std::unique_ptr<std::string>(new std::string(std::move(dst)));
-}
-
-unsigned int utf8::utf8_length(uint8_t c)
-{
-    if ((c & 0x80) == 0)
-    {
-        return 1;
-    }
-    else if ((c & 0xe0) == 0xc0)
-    {
-        return 2;
-    }
-    else if ((c & 0xf0) == 0xe0)
-    {
-        return 3;
-    }
-    else if ((c & 0xf8) == 0xf0)
-    {
-        return 4;
-    }
-    else
-    {
-       return 0;
-    }
 }
 
 std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
@@ -255,16 +269,16 @@ std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
         case 1:
             break;
         case 2:
-            uc = ((uc << 6) & 0x7ff) | (next_char(src, src_index) & 0x3f);
+            uc = ((uc << 6) & 0x7ff) | (utf8_next_char(src, src_index) & 0x3f);
             break;
         case 3:
-            uc = ((uc << 12) & 0xffff) | ((next_char(src, src_index) << 6) & 0xfff);
-            uc |= next_char(src, src_index) & 0x3f;
+            uc = ((uc << 12) & 0xffff) | ((utf8_next_char(src, src_index) << 6) & 0xfff);
+            uc |= utf8_next_char(src, src_index) & 0x3f;
             break;
         case 4:
-            uc = ((uc << 18) & 0x1fffff) | ((next_char(src, src_index) << 12) & 0x3ffff);
-            uc |= (next_char(src, src_index) << 6) & 0xfff;
-            uc |= next_char(src, src_index) & 0x3f;
+            uc = ((uc << 18) & 0x1fffff) | ((utf8_next_char(src, src_index) << 12) & 0x3ffff);
+            uc |= (utf8_next_char(src, src_index) << 6) & 0xfff;
+            uc |= utf8_next_char(src, src_index) & 0x3f;
             break;
         default:
             throw json_utf8_exception(json_utf8_exception::invalid_utf8_sequence_length_e, l);
@@ -301,29 +315,15 @@ std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
         }
         else if (uc <= 0xffff)
         {
-            add_hex_string(res, uc);
+            utf8_add_hex_string(res, uc);
         }
         else
         {
             uc -= 0x10000;
-            add_hex_string(res, (uc >> 10) + 0xD800);
-            add_hex_string(res, (uc & 0x3ff) + 0xDC00);
+            utf8_add_hex_string(res, (uc >> 10) + 0xD800);
+            utf8_add_hex_string(res, (uc & 0x3ff) + 0xDC00);
         }
     }
 
     return std::unique_ptr<std::string>(new std::string(std::move(res)));
-}
-
-bool utf8::valid_unicode(char32_t uc)
-{
-    return (uc <= 0x0010ffffu) && !(uc >= 0xd800u && uc <= 0xdfffu);
-}
-
-void utf8::add_hex_string(std::string &dst, char32_t uc)
-{
-    dst += "\\u";
-    dst += to_hex((uc >> 12) & 0x0f);
-    dst += to_hex((uc >> 8) & 0x0f);
-    dst += to_hex((uc >> 4) & 0x0f);
-    dst += to_hex(uc & 0x0f);
 }
