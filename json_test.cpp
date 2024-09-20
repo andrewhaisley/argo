@@ -1709,6 +1709,34 @@ void test_pointer()
     }
 }
 
+void test_invalid_data_access()
+{
+    std::unique_ptr<json> obj = parser::parse("{ \"one\" : 1 }");
+    try
+    {
+        (void)obj->get_array();
+
+
+        jlog << "FAIL: get_array() didn't throw exception\n";
+    }
+    catch (json_exception& e)
+    {
+        jlog << "PASS: get_array() threw correct exception type\n";
+    }
+
+    std::unique_ptr<json> arr = parser::parse("[1, 2, 3]");
+    try
+    {
+        (void)arr->get_object();
+
+        jlog << "FAIL: get_object() didn't throw exception\n";
+    }
+    catch (json_exception& e)
+    {
+        jlog << "PASS: get_object() threw correct exception type\n";
+    }
+}
+
 int main(int argc, char *argv[])
 {
     jlog.open("test_files/jlog.txt");
@@ -1735,6 +1763,7 @@ int main(int argc, char *argv[])
         test_parse();
         test_options();
         test_pointer();
+        test_invalid_data_access();
     }
     catch (json_exception &e)
     {

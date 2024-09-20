@@ -93,7 +93,7 @@ namespace NAMESPACE
         /**
          * Destructor.
          */
-        ~json();
+        ~json() noexcept;
 
         /**
          * Copy constructor. Note that this is a full deep copy so use
@@ -132,27 +132,27 @@ namespace NAMESPACE
          * \param raw_value e.g. 999989999999999999 (too big to be an int)
          * \throw json_exception if t is not one of the allowed types.
          */
-        json(type t, const std::string &raw_value);
+        json(type t, std::string raw_value);
 
         /**
          * New json instance of number int type.
          */
-        json(int i);
+        json(int i) noexcept;
 
         /**
          * New json instance of number double type.
          */
-        json(double d);
+        json(double d) noexcept;
 
         /**
          * New json instance of bool type.
          */
-        json(bool b);
+        json(bool b) noexcept;
 
         /**
          * New json instance of string type. In this case the string is copied.
          */
-        json(const std::string &s);
+        json(std::string s);
 
 #ifdef _ARGO_STRING_VIEW_
         /**
@@ -220,7 +220,7 @@ namespace NAMESPACE
          * Assign the instance a string value. All previous values are erased and/or
          * freed. In this case, a copy of the string is made.
          */
-        json &operator=(const std::string &s);
+        json &operator=(std::string s);
 
 #ifdef _ARGO_STRING_VIEW_
         /**
@@ -551,21 +551,21 @@ namespace NAMESPACE
         const json &find(const pointer &p) const;
 
     private:
-        void destroy_object();
+        void destroy_object() noexcept;
         void construct_object();
         void move_construct_object(json_object&& o);
         void copy_construct_object(const json_object &o);
 
-        void destroy_array();
+        void destroy_array() noexcept;
         void construct_array();
         void move_construct_array(json_array&& a);
         void copy_construct_array(const json_array &a);
 
 
-        void become_string(const std::string& s);
-        void destroy_string();
+        void become_string(std::string s);
+        void destroy_string() noexcept;
         void construct_string();
-        void construct_string(const std::string& s);
+        void construct_string(std::string s);
 
         /**
          * A union to hold the value of the json instance. Done as a union so as to
@@ -617,7 +617,7 @@ namespace NAMESPACE
          * Reset the instance back to a null object. All memory is freed and all
          * values are overwritten.
          */
-        void reset();
+        void reset() noexcept;
 
         /// copy the other object to this one
         void copy_json(const json &other);
@@ -636,6 +636,9 @@ namespace NAMESPACE
 
         /// operator == helper method for arrays
         bool array_equal(const json &other) const;
+
+        /// ensure that the instance is of the correct type
+        void ensure_type(type t, int ex) const;
 
     };
 }
