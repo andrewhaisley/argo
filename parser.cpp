@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,7 +41,6 @@
 #include "fd_reader.hpp"
 #endif
 
-using namespace std;
 using namespace NAMESPACE;
 
 parser::parser(
@@ -49,28 +48,28 @@ parser::parser(
             bool   read_all,
             size_t p_max_token_length,
             size_t p_max_nesting_depth,
-            bool   p_convert_numbers, 
-            bool   p_fallback_to_double, 
+            bool   p_convert_numbers,
+            bool   p_fallback_to_double,
             bool   p_convert_strings) :
                         m_reader(r),
                         m_read_all(read_all),
                         m_max_token_length(p_max_token_length),
                         m_max_nesting_depth(p_max_nesting_depth),
                         m_convert_numbers(p_convert_numbers),
-                        m_fallback_to_double(p_fallback_to_double), 
+                        m_fallback_to_double(p_fallback_to_double),
                         m_convert_strings(p_convert_strings)
 {
 }
 
-unique_ptr<json> parser::parse_number_int(const token &t)
+std::unique_ptr<json> parser::parse_number_int(const token &t)
 {
-    istringstream is(t.get_raw_value());
+    std::istringstream is(t.get_raw_value());
 
     int i;
 
     if (is >> i)
     {
-        return unique_ptr<json>(new json(i));
+        return std::unique_ptr<json>(new json(i));
     }
     else
     {
@@ -89,14 +88,14 @@ unique_ptr<json> parser::parse_number_int(const token &t)
     }
 }
 
-unique_ptr<json> parser::parse_number_double(const token &t)
+std::unique_ptr<json> parser::parse_number_double(const token &t)
 {
-    istringstream is(t.get_raw_value());
+    std::istringstream is(t.get_raw_value());
     double d;
 
     if (is >> d && isfinite(d))
     {
-        return unique_ptr<json>(new json(d));
+        return std::unique_ptr<json>(new json(d));
     }
     else
     {
@@ -108,7 +107,7 @@ unique_ptr<json> parser::parse_number_double(const token &t)
     }
 }
 
-unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
+std::unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
 {
     const token &t = l.next();
 
@@ -125,7 +124,7 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
         }
         else
         {
-            return unique_ptr<json>(new json(json::number_int_e, t.get_raw_value()));
+            return std::unique_ptr<json>(new json(json::number_int_e, t.get_raw_value()));
         }
     case token::number_double_e:
         if (m_convert_numbers)
@@ -134,14 +133,14 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
         }
         else
         {
-            return unique_ptr<json>(new json(json::number_double_e, t.get_raw_value()));
+            return std::unique_ptr<json>(new json(json::number_double_e, t.get_raw_value()));
         }
     case token::string_e:
         if (m_convert_strings)
         {
             try
             {
-                return unique_ptr<json>(new json(utf8::json_string_to_utf8(t.get_raw_value())));
+                return std::unique_ptr<json>(new json(utf8::json_string_to_utf8(t.get_raw_value())));
             }
             catch (json_utf8_exception &e)
             {
@@ -151,14 +150,14 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
         }
         else
         {
-            return unique_ptr<json>(new json(json::string_e, t.get_raw_value()));
+            return std::unique_ptr<json>(new json(json::string_e, t.get_raw_value()));
         }
     case token::false_e:
-        return unique_ptr<json>(new json(false));
+        return std::unique_ptr<json>(new json(false));
     case token::true_e:
-        return unique_ptr<json>(new json(true));
+        return std::unique_ptr<json>(new json(true));
     case token::null_e:
-        return unique_ptr<json>(new json);
+        return std::unique_ptr<json>(new json);
     default:
         throw json_parser_exception(
                             json_parser_exception::unexpected_token_e,
@@ -167,7 +166,7 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
     }
 }
 
-unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
+std::unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
 {
     if (nesting_depth > m_max_nesting_depth)
     {
@@ -177,7 +176,7 @@ unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
                             m_reader.get_byte_index());
     }
 
-    unique_ptr<json> array = unique_ptr<json>(new json(json::array_e));
+    std::unique_ptr<json> array = std::unique_ptr<json>(new json(json::array_e));
 
     const token &t1 = l.next();
 
@@ -211,15 +210,15 @@ unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
                             m_reader.get_byte_index());
         }
     }
-    
+
     return array;
 }
 
-void parser::parse_name_value_pair(lexer &l, unique_ptr<json> &object, size_t nesting_depth)
+void parser::parse_name_value_pair(lexer &l, std::unique_ptr<json> &object, size_t nesting_depth)
 {
     const token &t1 = l.next();
 
-    string name;
+    std::string name;
 
     if (t1.get_type() == token::string_e)
     {
@@ -253,7 +252,7 @@ void parser::parse_name_value_pair(lexer &l, unique_ptr<json> &object, size_t ne
     object->get_object()[name] = parse_value(l, nesting_depth);
 }
 
-unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
+std::unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
 {
     if (nesting_depth > m_max_nesting_depth)
     {
@@ -263,7 +262,7 @@ unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
                             m_reader.get_byte_index());
     }
 
-    unique_ptr<json> object = unique_ptr<json>(new json(json::object_e));
+    std::unique_ptr<json> object = std::unique_ptr<json>(new json(json::object_e));
 
     const token &t1 = l.next();
 
@@ -303,7 +302,7 @@ unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
     return object;
 }
 
-unique_ptr<json> parser::parse()
+std::unique_ptr<json> parser::parse()
 {
     m_reader.reset_byte_index();
 
@@ -327,7 +326,7 @@ unique_ptr<json> parser::parse()
     return res;
 }
 
-unique_ptr<json> parser::parse(istream &i)
+std::unique_ptr<json> parser::parse(std::istream &i)
 {
     stream_reader r(&i, max_message_length, true);
     parser p(r);
@@ -335,7 +334,7 @@ unique_ptr<json> parser::parse(istream &i)
 }
 
 #ifndef _ARGO_WINDOWS_
-unique_ptr<json> parser::parse(int fd)
+std::unique_ptr<json> parser::parse(int fd)
 {
     fd_reader r(fd, max_message_length, true);
     parser p(r);
@@ -343,28 +342,28 @@ unique_ptr<json> parser::parse(int fd)
 }
 #endif
 
-unique_ptr<json> parser::parse(FILE *s)
+std::unique_ptr<json> parser::parse(FILE *s)
 {
     file_reader r(s, max_message_length, true);
     parser p(r);
     return p.parse();
 }
 
-unique_ptr<json> parser::parse(const char *s)
+std::unique_ptr<json> parser::parse(const char *s)
 {
-    istringstream i(s);
+    std::istringstream i(s);
     return parse(i);
 }
 
-unique_ptr<json> parser::parse(const string &s)
+std::unique_ptr<json> parser::parse(const std::string &s)
 {
-    istringstream i(s);
+    std::istringstream i(s);
     return parse(i);
 }
 
-unique_ptr<json> parser::load(const string &file_name)
+std::unique_ptr<json> parser::load(const std::string &file_name)
 {
-    ifstream is(file_name);
+    std::ifstream is(file_name);
 
     if (is)
     {
@@ -376,13 +375,13 @@ unique_ptr<json> parser::load(const string &file_name)
     }
 }
 
-istream &NAMESPACE::operator>>(istream &stream, json &j)
+std::istream &NAMESPACE::operator>>(std::istream &stream, json &j)
 {
-    j = move(*parser::parse(stream));
+    j = std::move(*parser::parse(stream));
     return stream;
 }
 
-void NAMESPACE::operator>>(string &s, json &j)
+void NAMESPACE::operator>>(std::string &s, json &j)
 {
-    j = move(*parser::parse(s));
+    j = std::move(*parser::parse(s));
 }

@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,12 +26,11 @@
 #include "stream_reader.hpp"
 #include "json_io_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 
-stream_reader::stream_reader(istream *s, int max_message_length, bool block_read) : 
-                                reader(max_message_length, block_read), 
+stream_reader::stream_reader(std::istream *s, int max_message_length, bool block_read) :
+                                reader(max_message_length, block_read),
                                 m_stream(s)
 {
 }
@@ -45,7 +44,7 @@ bool stream_reader::read_next_block()
 {
     m_stream->read(reinterpret_cast<char *>(m_block), block_size);
 
-    streamsize n = m_stream->gcount();
+    std::streamsize n = m_stream->gcount();
 
     if (n > 0)
     {

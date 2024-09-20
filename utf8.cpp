@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,7 +26,6 @@
 #include "utf8.hpp"
 #include "json_utf8_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 unsigned int utf8::from_hex(char c)
@@ -63,7 +62,7 @@ char utf8::to_hex(unsigned int i)
     }
 }
 
-char utf8::next_char(const string &s, size_t &index)
+char utf8::next_char(const std::string &s, size_t &index)
 {
     if (index < s.size())
     {
@@ -75,7 +74,7 @@ char utf8::next_char(const string &s, size_t &index)
     }
 }
 
-char32_t utf8::parse_hex(const string &src, size_t &src_index)
+char32_t utf8::parse_hex(const std::string &src, size_t &src_index)
 {
     char32_t res = 0;
 
@@ -87,7 +86,7 @@ char32_t utf8::parse_hex(const string &src, size_t &src_index)
     return res;
 }
 
-void utf8::set_and_check_unicode_byte(string &dst, size_t &dst_index, char c)
+void utf8::set_and_check_unicode_byte(std::string &dst, size_t &dst_index, char c)
 {
     if (c == 0)
     {
@@ -100,15 +99,15 @@ void utf8::set_and_check_unicode_byte(string &dst, size_t &dst_index, char c)
 }
 
 void utf8::parse_unicode(
-                const string &src, 
-                size_t       &src_index, 
-                string       &dst,
-                size_t       &dst_index)
+                const std::string &src,
+                size_t            &src_index,
+                std::string       &dst,
+                size_t            &dst_index)
 {
     char32_t uc = 0;
 
     // is this basic multilingual or a UTF-16 surrogate pair?
-    if ((src_index + 10) <= src.size() && 
+    if ((src_index + 10) <= src.size() &&
         src[src_index + 4] == '\\' &&
         src[src_index + 5] == 'u')
     {
@@ -135,18 +134,18 @@ void utf8::parse_unicode(
         {
             dst[dst_index++] = static_cast<char>(uc);
         }
-        else if (uc < 0x800) 
+        else if (uc < 0x800)
         {
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 6) | 0xc0));
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
         }
-        else if (uc < 0x10000) 
+        else if (uc < 0x10000)
         {
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 12) | 0xe0));
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 6) & 0x3f) | 0x80));
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc & 0x3f) | 0x80));
         }
-        else 
+        else
         {
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>((uc >> 18) | 0xf0));
             set_and_check_unicode_byte(dst, dst_index, static_cast<char>(((uc >> 12) & 0x3f) | 0x80));
@@ -160,14 +159,14 @@ void utf8::parse_unicode(
     }
 }
 
-unique_ptr<string> utf8::json_string_to_utf8(const string &src)
+std::unique_ptr<std::string> utf8::json_string_to_utf8(const std::string &src)
 {
     size_t src_index = 0;
     size_t dst_index = 0;
 
-    string *dst = new string(src.size(), '\0');
+    std::string *dst = new std::string(src.size(), '\0');
 
-    unique_ptr<string> res(dst);
+    std::unique_ptr<std::string> res(dst);
 
     while (src_index < src.size())
     {
@@ -204,7 +203,7 @@ unique_ptr<string> utf8::json_string_to_utf8(const string &src)
             case 'u':
                 parse_unicode(src, src_index, *dst, dst_index);
                 break;
-            default: 
+            default:
                 throw json_utf8_exception(json_utf8_exception::invalid_string_escape_e, c);
             }
         }
@@ -238,9 +237,9 @@ unsigned int utf8::utf8_length(uint8_t c)
     }
 }
 
-unique_ptr<string> utf8::utf8_to_json_string(const string &src)
+std::unique_ptr<std::string> utf8::utf8_to_json_string(const std::string &src)
 {
-    unique_ptr<string> res(new string);
+    std::unique_ptr<std::string> res(new std::string);
 
     // We need at least the same number of characters as the source.
     res->reserve(src.size());
@@ -267,7 +266,7 @@ unique_ptr<string> utf8::utf8_to_json_string(const string &src)
         case 4:
             uc = ((uc << 18) & 0x1fffff) | ((next_char(src, src_index) << 12) & 0x3ffff);
             uc |= (next_char(src, src_index) << 6) & 0xfff;
-            uc |= next_char(src, src_index) & 0x3f;  
+            uc |= next_char(src, src_index) & 0x3f;
             break;
         default:
             throw json_utf8_exception(json_utf8_exception::invalid_utf8_sequence_length_e, l);
@@ -298,7 +297,7 @@ unique_ptr<string> utf8::utf8_to_json_string(const string &src)
             case '\t':
                 *res += "\\t";
                 break;
-            default: 
+            default:
                 *res += static_cast<char>(uc);
             }
         }
@@ -322,7 +321,7 @@ bool utf8::valid_unicode(char32_t uc)
     return (uc <= 0x0010ffffu) && !(uc >= 0xd800u && uc <= 0xdfffu);
 }
 
-void utf8::add_hex_string(unique_ptr<string> &dst, char32_t uc)
+void utf8::add_hex_string(std::unique_ptr<std::string> &dst, char32_t uc)
 {
     *dst += "\\u";
     *dst += to_hex((uc >> 12) & 0x0f);

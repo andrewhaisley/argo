@@ -35,14 +35,13 @@
 #include "fd_writer.hpp"
 #include "json_io_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 fd_writer::fd_writer(int fd) : writer(), m_fd(fd)
 {
 }
 
-void fd_writer::write(const string &s)
+void fd_writer::write(const std::string &s)
 {
     if (::write(m_fd, s.c_str(), s.size()) == -1)
     {

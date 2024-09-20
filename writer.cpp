@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +28,6 @@
 #include "common.hpp"
 #include "writer.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 writer::writer()
@@ -52,7 +51,7 @@ writer &NAMESPACE::operator<<(writer& w, char c)
 
 writer &NAMESPACE::operator<<(writer& w, int i)
 {
-    ostringstream ss;
+    std::ostringstream ss;
     ss << i;
     w.write(ss.str());
     return w;
@@ -60,8 +59,8 @@ writer &NAMESPACE::operator<<(writer& w, int i)
 
 writer &NAMESPACE::operator<<(writer& w, double d)
 {
-    ostringstream ss;
-    ss << setprecision(17) << fixed << d;
+    std::ostringstream ss;
+    ss << std::setprecision(17) << std::fixed << d;
     w.write(ss.str());
     return w;
 }

@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +28,6 @@
 #include "common.hpp"
 #include "json_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 json_exception::json_exception(exception_type et) noexcept : exception(), m_type(et)
@@ -85,7 +84,7 @@ json_exception::json_exception(exception_type et, const char *json_type_name) no
 }
 
 json_exception::json_exception(
-                    exception_type et, 
+                    exception_type et,
                     const char     *first_json_type_name,
                     const char     *second_json_type_name) noexcept : exception(), m_type(et)
 {
@@ -109,7 +108,7 @@ json_exception::exception_type json_exception::get_type() const noexcept
     return m_type;
 }
 
-ostream &NAMESPACE::operator<<(ostream& stream, const NAMESPACE::json_exception &e)
+std::ostream &NAMESPACE::operator<<(std::ostream& stream, const NAMESPACE::json_exception &e)
 {
     return stream << e.what();
 }

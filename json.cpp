@@ -32,7 +32,6 @@
 #include "unparser.hpp"
 
 using namespace NAMESPACE;
-using namespace std;
 
 json::json() noexcept : m_type(null_e)
 {
@@ -65,8 +64,8 @@ void json::copy_construct_object(const json_object &o)
 {
     construct_object();
     std::transform(o.begin(), o.end(), std::inserter(m_value.u_object, m_value.u_object.begin()),
-                   [] (const pair<const string, unique_ptr<json>> &p)
-                        { return pair<const string, unique_ptr<json>>(p.first, unique_ptr<json>(new json(*p.second))); });
+                   [] (const std::pair<const std::string, std::unique_ptr<json>> &p)
+                        { return std::pair<const std::string, std::unique_ptr<json>>(p.first, std::unique_ptr<json>(new json(*p.second))); });
 }
 
 // arrays
@@ -91,7 +90,7 @@ void json::copy_construct_array(const json_array &a)
 {
     construct_array();
     std::transform(a.begin(), a.end(), std::back_inserter(m_value.u_array),
-                   [] (const unique_ptr<json> &p) { return unique_ptr<json>(new json(*p)); });
+                   [] (const std::unique_ptr<json> &p) { return std::unique_ptr<json>(new json(*p)); });
 }
 
 // strings
@@ -260,7 +259,7 @@ json::json(type t) : m_type(t)
     }
 }
 
-json::json(type t, const string &raw_value) : m_type(t), m_raw_value(raw_value)
+json::json(type t, const std::string &raw_value) : m_type(t), m_raw_value(raw_value)
 {
     if (t != string_e && t != number_int_e && t != number_double_e)
     {
@@ -291,7 +290,7 @@ json::json(bool b)
     m_value.u_boolean = b;
 }
 
-json::json(const string &s)
+json::json(const std::string &s)
 {
     become_string(s);
 }
@@ -305,7 +304,7 @@ json::json(null_t) noexcept : m_type(null_e)
 {
 }
 
-json::json(unique_ptr<string> s)
+json::json(std::unique_ptr<std::string> s)
 {
     become_string(*s);
 }
@@ -334,7 +333,7 @@ json &json::operator=(bool b)
     return *this;
 }
 
-json &json::operator=(const string &s)
+json &json::operator=(const std::string &s)
 {
     reset();
     become_string(s);
@@ -348,7 +347,7 @@ json &json::operator=(const char *s)
     return *this;
 }
 
-json &json::operator=(unique_ptr<string> s)
+json &json::operator=(std::unique_ptr<std::string> s)
 {
     reset();
     become_string(*s);
@@ -408,7 +407,7 @@ const json::json_object &json::get_object() const
     return m_value.u_object;
 }
 
-const string &json::get_raw_value() const
+const std::string &json::get_raw_value() const
 {
     return m_raw_value;
 }
@@ -485,14 +484,14 @@ json::operator bool() const
     }
 }
 
-json &json::operator[](const string &name)
+json &json::operator[](const std::string &name)
 {
     if (m_type == object_e)
     {
         auto i = m_value.u_object.find(name);
         if (i == m_value.u_object.end())
         {
-            return *((m_value.u_object)[name] = unique_ptr<json>(new json));
+            return *((m_value.u_object)[name] = std::unique_ptr<json>(new json));
         }
         else
         {
@@ -507,7 +506,7 @@ json &json::operator[](const string &name)
 
 json &json::operator[](const char *name)
 {
-    return (*this)[string(name)];
+    return (*this)[std::string(name)];
 }
 
 json &json::operator[](size_t index)
@@ -572,7 +571,7 @@ const json &json::operator[](int index) const
     }
 }
 
-const json &json::operator[](const string &name) const
+const json &json::operator[](const std::string &name) const
 {
     if (m_type == object_e)
     {
@@ -594,20 +593,20 @@ const json &json::operator[](const string &name) const
 
 const json &json::operator[](const char *name) const
 {
-    return (*this)[string(name)];
+    return (*this)[std::string(name)];
 }
 
 const json &json::append(const json &j)
 {
-    return append(unique_ptr<json>(new json(j)));
+    return append(std::unique_ptr<json>(new json(j)));
 }
 
-const json &json::append(unique_ptr<json> j)
+const json &json::append(std::unique_ptr<json> j)
 {
     if (m_type == array_e)
     {
         json *jp = j.release();
-        m_value.u_array.push_back(unique_ptr<json>(jp));
+        m_value.u_array.push_back(std::unique_ptr<json>(jp));
         return *jp;
     }
     else
@@ -616,17 +615,17 @@ const json &json::append(unique_ptr<json> j)
     }
 }
 
-const json &json::insert(const string &name, const json &j)
+const json &json::insert(const std::string &name, const json &j)
 {
-    return insert(name, unique_ptr<json>(new json(j)));
+    return insert(name, std::unique_ptr<json>(new json(j)));
 }
 
-const json &json::insert(const string &name, unique_ptr<json> j)
+const json &json::insert(const std::string &name, std::unique_ptr<json> j)
 {
     if (m_type == object_e)
     {
         json *r;
-        m_value.u_object.emplace(name, unique_ptr<json>(r = j.release()));
+        m_value.u_object.emplace(name, std::unique_ptr<json>(r = j.release()));
         return *r;
     }
     else
@@ -697,7 +696,7 @@ bool json::object_equal(const json &other) const
                 m_value.u_object.begin(),
                 m_value.u_object.end(),
                 other.m_value.u_object.begin(),
-                [] (const pair<const string, unique_ptr<json>> &a, const pair<const string, unique_ptr<json>> &b)
+                [] (const std::pair<const std::string, std::unique_ptr<json>> &a, const std::pair<const std::string, std::unique_ptr<json>> &b)
                         { return a.first == b.first && *(a.second) == *(b.second); });
 }
 
@@ -708,7 +707,7 @@ bool json::array_equal(const json &other) const
                 m_value.u_array.begin(),
                 m_value.u_array.end(),
                 other.m_value.u_array.begin(),
-                [] (const unique_ptr<json> &a, const unique_ptr<json> &b)
+                [] (const std::unique_ptr<json> &a, const std::unique_ptr<json> &b)
                         { return *a == *b; });
 }
 
@@ -765,12 +764,12 @@ bool json::operator==(double d) const
 
 bool json::operator==(const std::string &s) const
 {
-    return static_cast<string>(*this) == s;
+    return static_cast<std::string>(*this) == s;
 }
 
 bool json::operator==(const char *s) const
 {
-    return strcmp(static_cast<string>(*this).c_str(), s) == 0;
+    return strcmp(static_cast<std::string>(*this).c_str(), s) == 0;
 }
 
 bool json::operator!=(int i) const
@@ -785,12 +784,12 @@ bool json::operator!=(double d) const
 
 bool json::operator!=(const std::string &s) const
 {
-    return static_cast<string>(*this) != s;
+    return static_cast<std::string>(*this) != s;
 }
 
 bool json::operator!=(const char *s) const
 {
-    return strcmp(static_cast<string>(*this).c_str(), s) != 0;
+    return strcmp(static_cast<std::string>(*this).c_str(), s) != 0;
 }
 
 bool json::operator<(int i) const
@@ -805,12 +804,12 @@ bool json::operator<(double d) const
 
 bool json::operator<(const std::string &s) const
 {
-    return static_cast<string>(*this) < s;
+    return static_cast<std::string>(*this) < s;
 }
 
 bool json::operator<(const char *s) const
 {
-    return strcmp(static_cast<string>(*this).c_str(), s) < 0;
+    return strcmp(static_cast<std::string>(*this).c_str(), s) < 0;
 }
 
 bool json::operator<=(int i) const
@@ -825,12 +824,12 @@ bool json::operator<=(double d) const
 
 bool json::operator<=(const std::string &s) const
 {
-    return static_cast<string>(*this) < s;
+    return static_cast<std::string>(*this) < s;
 }
 
 bool json::operator<=(const char *s) const
 {
-    return strcmp(static_cast<string>(*this).c_str(), s) <= 0;
+    return strcmp(static_cast<std::string>(*this).c_str(), s) <= 0;
 }
 
 bool json::operator>(int i) const
@@ -845,12 +844,12 @@ bool json::operator>(double d) const
 
 bool json::operator>(const std::string &s) const
 {
-    return static_cast<string>(*this) > s;
+    return static_cast<std::string>(*this) > s;
 }
 
 bool json::operator>(const char *s) const
 {
-    return strcmp(static_cast<string>(*this).c_str(), s) > 0;
+    return strcmp(static_cast<std::string>(*this).c_str(), s) > 0;
 }
 
 bool json::operator>=(int i) const
@@ -865,19 +864,19 @@ bool json::operator>=(double d) const
 
 bool json::operator>=(const std::string &s) const
 {
-    return static_cast<string>(*this) >= s;
+    return static_cast<std::string>(*this) >= s;
 }
 
 bool json::operator>=(const char *s) const
 {
-    return strcmp(static_cast<string>(*this).c_str(), s) >= 0;
+    return strcmp(static_cast<std::string>(*this).c_str(), s) >= 0;
 }
 
 bool json::operator<(const json &other) const
 {
     if (m_type == string_e && other.m_type == string_e)
     {
-        return static_cast<string>(*this) < static_cast<string>(other);
+        return static_cast<std::string>(*this) < static_cast<std::string>(other);
     }
     else if (m_type == number_int_e && other.m_type == number_int_e)
     {
@@ -902,7 +901,7 @@ bool json::operator<=(const json &other) const
 {
     if (m_type == string_e && other.m_type == string_e)
     {
-        return static_cast<string>(*this) <= static_cast<string>(other);
+        return static_cast<std::string>(*this) <= static_cast<std::string>(other);
     }
     else if (m_type == number_int_e && other.m_type == number_int_e)
     {

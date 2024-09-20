@@ -28,7 +28,6 @@
 #include "common.hpp"
 #include "json_io_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 const char *json_io_exception::get_main_message()

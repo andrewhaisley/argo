@@ -33,7 +33,6 @@
 #include "fd_reader.hpp"
 #include "json_io_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 /// \file fd_reader.cpp The fd_reader class implementation.

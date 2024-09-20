@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,7 +38,6 @@
 #include "fd_writer.hpp"
 #endif
 
-using namespace std;
 using namespace NAMESPACE;
 
 unparser::unparser(
@@ -161,12 +160,12 @@ void unparser::unparse(const json &j, int indent_level)
 }
 
 void unparser::unparse(
-        ostream    &o,
-        const json &j,
-        const char *space,
-        const char *newline,
-        const char *indent,
-        int        indent_inc)
+        std::ostream &o,
+        const json   &j,
+        const char   *space,
+        const char   *newline,
+        const char   *indent,
+        int           indent_inc)
 {
     stream_writer w(&o);
     unparser u(w, space, newline, indent, indent_inc);
@@ -202,14 +201,14 @@ void unparser::unparse(
 }
 
 void unparser::save(
-        const json   &j,
-        const string &file_name,
-        const char   *space,
-        const char   *newline,
-        const char   *indent,
-        int          indent_inc)
+        const json        &j,
+        const std::string &file_name,
+        const char        *space,
+        const char        *newline,
+        const char        *indent,
+        int                indent_inc)
 {
-    ofstream os(file_name);
+    std::ofstream os(file_name);
 
     if (os)
     {
@@ -223,15 +222,15 @@ void unparser::save(
     }
 }
 
-ostream &NAMESPACE::operator<<(ostream &stream, const json &j)
+std::ostream &NAMESPACE::operator<<(std::ostream &stream, const json &j)
 {
     unparser::unparse(stream, j);
     return stream;
 }
 
-void NAMESPACE::operator<<(string &s, const json &j)
+void NAMESPACE::operator<<(std::string &s, const json &j)
 {
-    stringstream ss;
+    std::stringstream ss;
     unparser::unparse(ss, j);
     s = ss.str();
 }

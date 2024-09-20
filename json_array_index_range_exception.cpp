@@ -27,7 +27,6 @@
 #include "common.hpp"
 #include "json_array_index_range_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 json_array_index_range_exception::json_array_index_range_exception(exception_type et, size_t i) noexcept : json_exception(et)

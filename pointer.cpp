@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,7 +29,6 @@
 #include "json_pointer_exception.hpp"
 
 using namespace NAMESPACE;
-using namespace std;
 
 pointer::pointer(const std::string &pointer)
 {
@@ -80,7 +79,7 @@ void pointer::build_from_json_string(const std::string &pointer)
     }
 }
 
-bool pointer::next_token(const string &pointer, size_t &start, size_t &end)
+bool pointer::next_token(const std::string &pointer, size_t &start, size_t &end)
 {
     if (start >= pointer.size())
     {
@@ -106,9 +105,9 @@ bool pointer::next_token(const string &pointer, size_t &start, size_t &end)
     }
 }
 
-pointer::token pointer::translate_uri_token(const string &pointer, size_t &start, size_t &end)
+pointer::token pointer::translate_uri_token(const std::string &pointer, size_t &start, size_t &end)
 {
-    string translated;
+    std::string translated;
 
     if (pointer[start++] == '/')
     {
@@ -164,9 +163,9 @@ pointer::token pointer::translate_uri_token(const string &pointer, size_t &start
     }
 }
 
-pointer::token pointer::translate_jsonp_token(const string &pointer, size_t &start, size_t &end)
+pointer::token pointer::translate_jsonp_token(const std::string &pointer, size_t &start, size_t &end)
 {
-    string translated;
+    std::string translated;
 
     if (pointer[start++] == '/')
     {
@@ -209,9 +208,9 @@ pointer::token pointer::translate_jsonp_token(const string &pointer, size_t &sta
     }
 }
 
-pointer::token pointer::make_token(const string &s)
+pointer::token pointer::make_token(const std::string &s)
 {
-    istringstream is(s);
+    std::istringstream is(s);
 
     size_t i;
 
@@ -225,7 +224,7 @@ pointer::token pointer::make_token(const string &s)
     }
 }
 
-int pointer::from_hex(const string &s, size_t index)
+int pointer::from_hex(const std::string &s, size_t index)
 {
     char c = s[index];
 
@@ -247,7 +246,7 @@ pointer::token::token() : m_type(all_e), m_index(0)
 {
 }
 
-pointer::token::token(const string &name) : m_type(object_e), m_name(name), m_index(0)
+pointer::token::token(const std::string &name) : m_type(object_e), m_name(name), m_index(0)
 {
 }
 
@@ -255,7 +254,7 @@ pointer::token::token(size_t index) : m_type(array_e), m_index(index)
 {
 }
 
-const list<pointer::token> &pointer::get_path() const
+const std::list<pointer::token> &pointer::get_path() const
 {
     return m_path;
 }
@@ -265,7 +264,7 @@ pointer::token::type_t pointer::token::get_type() const
     return m_type;
 }
 
-const string &pointer::token::get_name() const
+const std::string &pointer::token::get_name() const
 {
     return m_name;
 }
@@ -275,7 +274,7 @@ size_t pointer::token::get_index() const
     return m_index;
 }
 
-ostream &NAMESPACE::operator<<(ostream &stream, const pointer &p)
+std::ostream &NAMESPACE::operator<<(std::ostream &stream, const pointer &p)
 {
     for (auto &t : p.get_path())
     {
