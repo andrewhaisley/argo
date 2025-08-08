@@ -211,7 +211,7 @@ void json::move_json(json &other)
 
     m_raw_value = std::move(other.m_raw_value);
 
-    other.m_type = null_e;
+    other.reset();
 }
 
 json &json::operator=(json &&other) noexcept

@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,15 +48,15 @@ parser::parser(
             bool   read_all,
             size_t p_max_token_length,
             size_t p_max_nesting_depth,
-            bool   p_convert_numbers,
-            bool   p_fallback_to_double,
+            bool   p_convert_numbers, 
+            bool   p_fallback_to_double, 
             bool   p_convert_strings) :
                         m_reader(r),
                         m_read_all(read_all),
                         m_max_token_length(p_max_token_length),
                         m_max_nesting_depth(p_max_nesting_depth),
                         m_convert_numbers(p_convert_numbers),
-                        m_fallback_to_double(p_fallback_to_double),
+                        m_fallback_to_double(p_fallback_to_double), 
                         m_convert_strings(p_convert_strings)
 {
 }
@@ -211,7 +211,7 @@ json parser::parse_array(lexer &l, size_t nesting_depth)
                             m_reader.get_byte_index());
         }
     }
-
+    
     return array;
 }
 
