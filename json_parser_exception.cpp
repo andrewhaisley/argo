@@ -27,7 +27,6 @@
 #include "common.hpp"
 #include "json_parser_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
 const char *json_parser_exception::get_main_message()
@@ -68,7 +67,7 @@ json_parser_exception::json_parser_exception(exception_type et, char c, size_t b
     snprintf(m_message, max_message_length, "parser exception, %s, at or near byte %zu : 0x%02x", get_main_message(), m_byte_index, c);
 }
 
-json_parser_exception::json_parser_exception(exception_type et, const string &s, size_t byte_index) noexcept:
+json_parser_exception::json_parser_exception(exception_type et, const std::string &s, size_t byte_index) noexcept:
                     json_exception(et),
                     m_byte_index(byte_index)
 {

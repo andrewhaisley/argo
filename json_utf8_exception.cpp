@@ -27,10 +27,9 @@
 #include "common.hpp"
 #include "json_utf8_exception.hpp"
 
-using namespace std;
 using namespace NAMESPACE;
 
-json_utf8_exception::json_utf8_exception(exception_type et, const string &s) noexcept :
+json_utf8_exception::json_utf8_exception(exception_type et, const std::string &s) noexcept :
                     json_exception(et), m_byte_index(0)
 {
     snprintf(m_message, max_message_length, "%s : %s", get_main_message(), s.c_str());

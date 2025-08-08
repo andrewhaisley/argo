@@ -450,3 +450,9 @@ PASS: pointer // compiled successfully
 PASS: pointer #/%2 caused an exception
 PASS: pointer #/%2H caused an exception
 PASS: pointer #/%20 compiled successfully
+PASS: get_array() threw correct exception type
+PASS: get_object() threw correct exception type
+{ "age" : 25,"married" : false,"name" : "John" }
+PASS: from_object() created correct object
+[ "John", 25, false ]
+PASS: from_array() created correct object

@@ -582,7 +582,7 @@ void test_append()
     const json &ae2 = a.append("asdf");
     jlog << "appended was " << ae2 << " len is " << a.get_array().size() << endl;
     unique_ptr<json> ae3(new json(1.23));
-    a.append(move(ae3));
+    a.append(std::move(ae3));
     jlog << " len is " << a.get_array().size() << endl;
     jlog << a << endl;
 }
@@ -595,7 +595,7 @@ void test_insert()
     o.insert("two", 2.123);
     o.insert("three", "asfdsad");
     unique_ptr<json> x(new json(1.23));
-    o.insert("four", move(x));
+    o.insert("four", std::move(x));
 
     jlog << o << endl;
 }
@@ -1709,6 +1709,67 @@ void test_pointer()
     }
 }
 
+void test_invalid_data_access()
+{
+    std::unique_ptr<json> obj = parser::parse("{ \"one\" : 1 }");
+    try
+    {
+        (void)obj->get_array();
+
+
+        jlog << "FAIL: get_array() didn't throw exception\n";
+    }
+    catch (json_exception& e)
+    {
+        jlog << "PASS: get_array() threw correct exception type\n";
+    }
+
+    std::unique_ptr<json> arr = parser::parse("[1, 2, 3]");
+    try
+    {
+        (void)arr->get_object();
+
+        jlog << "FAIL: get_object() didn't throw exception\n";
+    }
+    catch (json_exception& e)
+    {
+        jlog << "PASS: get_object() threw correct exception type\n";
+    }
+}
+
+void test_factory_methods()
+{
+    json j = json::from_object({
+        { "name", json("John") },
+        { "age", json(25) },
+        { "married", json(false) }
+    });
+
+    jlog << j << endl;
+
+    if (j["name"] == "John" && j["age"] == 25 && j["married"] == false)
+    {
+        jlog << "PASS: from_object() created correct object\n";
+    }
+    else
+    {
+        jlog << "FAIL: from_object() created incorrect object\n";
+    }
+
+    json j1 = json::from_array({ json("John"), json(25), json(false) });
+
+    jlog << j1 << endl;
+
+    if (j1[0] == "John" && j1[1] == 25 && j1[2] == false)
+    {
+        jlog << "PASS: from_array() created correct object\n";
+    }
+    else
+    {
+        jlog << "FAIL: from_array() created incorrect object\n";
+    }
+}
+
 int main(int argc, char *argv[])
 {
     jlog.open("test_files/jlog.txt");
@@ -1735,6 +1796,8 @@ int main(int argc, char *argv[])
         test_parse();
         test_options();
         test_pointer();
+        test_invalid_data_access();
+        test_factory_methods();
     }
     catch (json_exception &e)
     {

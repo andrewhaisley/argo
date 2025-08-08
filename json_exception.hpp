@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,20 +25,21 @@
 
 /// \file json_exception.hpp The json_exception class.
 
-#include <stdexcept>
+#include <exception>
+#include <iosfwd>
 
 #include "common.hpp"
 
 namespace NAMESPACE
 {
     /**
-     * \brief Base class for all exceptions thrown by the library. 
+     * \brief Base class for all exceptions thrown by the library.
      *
      * Base class for all exceptions thrown by the library. All exeption
      * types are defined here but subclasses are defined to provide
      * specialised error message and extra parameters (e.g. the byte
      * index where a JSON parsing error occured). For code that doesn't
-     * need to know anything about the specific exception and just wants to 
+     * need to know anything about the specific exception and just wants to
      * log an error message before exiting or continuing, catch exceptions
      * of this class and call what() to get some human readable English
      * text.
@@ -60,7 +61,7 @@ namespace NAMESPACE
         typedef enum
         {
             /// Internal error - the m_type member variable has an invalid value.
-            invalid_json_type_e, 
+            invalid_json_type_e,
             /// Attempt to access a non-existent slot in a json instance.
             invalid_key_e,
             /// Attempt to call a method that assumes the json instance is an array.
@@ -157,7 +158,7 @@ namespace NAMESPACE
          * two objects.
          */
         json_exception(
-                exception_type et, 
+                exception_type et,
                 const char     *first_json_type_name,
                 const char     *second_json_type_name) noexcept;
 
@@ -191,7 +192,7 @@ namespace NAMESPACE
     };
 
     /**
-     * Write the exception object to a stream. This is primarily a shortcut for 
+     * Write the exception object to a stream. This is primarily a shortcut for
      * logging and debugging purposes and is a simple wrapper around the
      * what() method.
      */
