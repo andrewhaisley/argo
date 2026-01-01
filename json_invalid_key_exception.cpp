@@ -30,12 +30,14 @@
 
 using namespace NAMESPACE;
 
+static const char invalid_key_header[] = "invalid object key: ";
+
 json_invalid_key_exception::json_invalid_key_exception(exception_type et, const std::string &key) noexcept : json_exception(et)
 {
     if (et == invalid_key_e)
     {
-        strncpy(m_message, "invalid object key: ", max_message_length);
-        strncpy(m_message, key.c_str(), max_message_length);
+        strncpy(m_message, invalid_key_header, max_message_length);
+        strncpy(m_message, key.c_str(), max_message_length - (sizeof(invalid_key_header) - 1));
     }
     else
     {

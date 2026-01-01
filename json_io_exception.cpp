@@ -57,15 +57,17 @@ const char *json_io_exception::get_main_message()
 
 json_io_exception::json_io_exception(exception_type et) noexcept : json_exception(et)
 {
-    strncpy(m_message, get_main_message(), max_message_length);
+    strncpy(m_message, get_main_message(), max_message_length - 1);
 }
 
 json_io_exception::json_io_exception(exception_type et, int posix_errno) noexcept : json_exception(et)
 {
+    // strerror_r may not always write to the provided buffer, it may return a pointer to
+    // a static string instead.
     char buffer[max_message_length - 3];
-    strerror_r(posix_errno, buffer, max_message_length - 3);
+    const char *errmsg = strerror_r(posix_errno, buffer, max_message_length - 3);
 
-    snprintf(m_message, max_message_length, "%s : %s", get_main_message(), buffer);
+    snprintf(m_message, max_message_length, "%s : %s", get_main_message(), errmsg);
 }
 
 json_io_exception::json_io_exception(exception_type et, size_t s) noexcept : json_exception(et)

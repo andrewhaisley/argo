@@ -26,6 +26,8 @@
 #include "utf8.hpp"
 #include "json_utf8_exception.hpp"
 
+#include <stdint.h> // uint8_t
+
 using namespace NAMESPACE;
 
 static unsigned int utf8_from_hex(char c)
